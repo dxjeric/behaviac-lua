@@ -1,4 +1,4 @@
-package.path = package.path .. ";./?.lua;../lua/?.lua;./lua/?.lua"
+package.path = package.path .. ";./?.lua;../?.lua;./lua/?.lua"
 require "ms"
 printValue("test", d_ms.d_commonFun.loadXml("./player.xml"))
 
