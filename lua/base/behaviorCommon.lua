@@ -27,7 +27,9 @@ triggerMode = {
 }
 
 -- keep this version equal to designers' NewVersion
-constSupportedVersion = 5
+constSupportedVersion   = 5
+-- cCompositeTask 中的任务无效值
+constInvalidChildIndex  = -1
 
 constBaseKeyStrDef = {
     kStrNodeName        = "node",
@@ -174,6 +176,18 @@ function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, father
         return false
     end
 end
+
+function BEHAVIAC_ASSERT(check, msgFormat, ...)
+    if not check then
+        d_ms.d_log.error("BEHAVIAC_ASSERT" .. msgFormat, ...)
+        assert(false)
+    end
+end
+
+BehaviorParseFactory = {}
+function BehaviorParseFactory.parseMethod(methodInfo)
+    return function() print("BehaviorParseFactory.parseMethod") end
+end
 --------------------------------------------------------------------------------------------------------------
 stringUtils = {}
 function stringUtils.isNullOrEmpty(str)
@@ -262,10 +276,3 @@ function getProperty(typeName, valueStr)
     end
 end
 --------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-

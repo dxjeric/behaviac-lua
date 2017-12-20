@@ -1,10 +1,29 @@
-require "luaXML"
 -------------------------------------------------------------------------------------------------------------
-local xml = xml
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
+-------------------------------------------------------------------------------------------------------------
+require "luaXML"
+local xml   = xml
 -------------------------------------------------------------------------------------------------------------
 function isLinux()
     return false
 end
+-------------------------------------------------------------------------------------------------------------
+module "commonFun"
 -------------------------------------------------------------------------------------------------------------
 -- 打印数据
 -- name     : 打印数据的名字
@@ -126,7 +145,7 @@ end
 -- 参数     ：class_name，字符串
 --            super，基类，必须也是一个由class创建的类对象
 -- 返回值   : nil
-function class(class_name, super, heavy)
+function _G.class(class_name, super, heavy)
     local new_class = {}
     new_class.__name = class_name
     new_class.__super = super
@@ -155,16 +174,6 @@ function class(class_name, super, heavy)
         new_class.__fullname = class_name
     end
     env[class_name] = new_class
-end
--------------------------------------------------------------------------------------------------------------
-d_ms = {}
-d_ms.d_log = {}
-function d_ms.d_log.must(formatStr, ...)
-    print(string.format(formatStr, ...))
-end
-
-function d_ms.d_log.error(formatStr, ...)
-    print(string.format(formatStr, ...))
 end
 -------------------------------------------------------------------------------------------------------------
 -- <behavior name="player" agenttype="CBTPlayer" version="5">

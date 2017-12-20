@@ -35,6 +35,10 @@ function cBehaviorTree:setDomains(domains)
     self.m_domains = domains
 end
 
+function cBehaviorTree:isFSM()
+    return self.m_bIsFSM
+end
+
 function cBehaviorTree:behaviorLoadXml(xmlPath)
     local xmlNodes = loadXml(xmlPath)
     if not xmlNodes then
@@ -92,14 +96,19 @@ function cBehaviorTree:isBehaviorTree()
     return true
 end
 
-function cBehaviorTree:InstantiatePars()
+function cBehaviorTree:instantiatePars(vars)
     -- TODO: 这块是获取对应的数据吗
-    d_ms.d_log.error("cBehaviorTree:InstantiatePars is empty")
+    d_ms.d_log.error("cBehaviorTree:instantiatePars is empty")
+    if #self.m_localProps > 0 then
+        for varName, var in pairs(self.m_localProps) do
+            vars[varName]= var
+        end
+    end
 end
 
-function cBehaviorTree:UnInstantiatePars()
+function cBehaviorTree:unInstantiatePars(vars)
     -- TODO: 这块是获取对应的数据吗
-    d_ms.d_log.error("cBehaviorTree:UnInstantiatePars is empty")
+    d_ms.d_log.error("cBehaviorTree:unInstantiatePars is empty 在调用地方直接置空就行")
 end
 
 function cBehaviorTree:loadByProperties(version, agentType, properties)

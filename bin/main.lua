@@ -1,10 +1,6 @@
 package.path = package.path .. ";./?.lua;../lua/?.lua;./lua/?.lua"
-
-require "base.behaviorCommon"
-require "common"
-
-printValue("test", loadXml("./player.xml"))
-
+require "ms"
+printValue("test", d_ms.d_commonFun.loadXml("./player.xml"))
 
 function main_entrance(con, id, data, len, ses, cid, time)
 

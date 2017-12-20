@@ -219,7 +219,7 @@ function cBehaviorNode:loadByProperties(version, agentType, properties)
     local nodeType = self:getClassTypeName()
     print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    -- TODO: 增加 默认BehaviorNodeLoaded 这个放在behavior tree的管理中
+    -- REDO: 增加 默认BehaviorNodeLoaded 这个放在behavior tree的管理中
 end
 
 -- 加载附件 transition effectors

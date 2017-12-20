@@ -4,246 +4,163 @@
 local table = table
 ------------------------------------------------------------------------------------------------------
 d_ms.d_behaviorCommon = require("base.behaviorCommon")
+d_ms.d_behaviorTask   = require("base.behaviorTask")
+d_ms.d_singeChildTask = require("base.singeChildTask")
 ------------------------------------------------------------------------------------------------------
 local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-class("cBehaviorTask")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTask", cBehaviorTask)
+class("cBehaviorTreeTask", d_ms.d_singeChildTask.cSingeChildTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTreeTask", cBehaviorTreeTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBehaviorTreeTask", "cSingeChildTask")
 ------------------------------------------------------------------------------------------------------
-function cBehaviorTask:__init()
-    self.m_attachments  = false
-    self.m_status       = EBTStatus.BT_INVALID
-    self.m_node         = false
-    self.m_parent       = false
-    self.m_id           = -1
-    self.m_bHasManagingParent = false
+function cBehaviorTreeTask:__init()
+    self.m_lastTreeTask = false     -- REDO: 默认值
+    self.m_endStatus    = -1        -- REDO: 默认值
+    self.m_localVars    = {}        -- behaviac::map<uint32_t, IInstantiatedVariable*>
+end
+
+function cBehaviorTreeTask:setRootTask(pRootBehaviorTask)
+    self:addChild(pRootBehaviorTask)
 end
 ------------------------------------------------------------------------------------------------------
-function cBehaviorTask:init(node)
-    self.m_node = node
-    self.m_id   = node:getId()
+-- 这块是不需要的处理处理
+-- BehaviorTreeTask target
+function cBehaviorTreeTask:CopyTo(target)
+    -- 同copyTo()
+    d_ms.d_log.error("cBehaviorTreeTask:CopyTo 不需要函数")
 end
 
-function cBehaviorTask:destroyTask(behaviorTask)
-    behaviorTask:release()
+function cBehaviorTreeTask:Save(ioNode)
+    d_ms.d_log.error("cBehaviorTreeTask:Save 不需要函数")
 end
 
-function cBehaviorTask:release()
-    self:freeAttachments()
+function cBehaviorTreeTask:Load(ioNode)
+    d_ms.d_log.error("cBehaviorTreeTask:Load 不需要函数")
 end
 
-function cBehaviorTask:freeAttachments()
-    if self.m_attachments then
-        for _, oneAttachment in ipairs(self.m_attachments) do
-            oneAttachment:release()
-        end
+-- return false if the event handling  needs to be stopped
+-- return true, the event hanlding will be checked furtherly
+-- function cBehaviorTreeTask:onEvent(obj, eventName, eventParams)
+-- end
+------------------------------------------------------------------------------------------------------
+function cBehaviorTreeTask:resume(obj, status)
+    return d_ms.d_singeChildTask.cSingeChildTask.resumeBranch(self, obj, status)
+end
 
-        self.m_attachments = false
+-- template<typename VariableType> void BehaviorTreeTask::SetVariable(const char* variableName, VariableType value
+function cBehaviorTreeTask:setVariable(variableName, value)
+    self.m_localVars[variableName] = value
+end
+
+function cBehaviorTreeTask:addVariables(vars)
+    if vars then
+         for varName, var in pairs(vars) do
+            self.m_localVars[varName] = var
+         end
     end
 end
 
-function cBehaviorTask:clear()
-    self.m_status   = EBTStatus.BT_INVALID
-    self.m_parent   = 0
-    self.m_id       = -1
-    self.m_node     = 0
-    self:freeAttachments()
-end
-------------------------------------------------------------------------------------------------------
-function cBehaviorTask:getTickInfoByNode(obj, node, action)
-    d_ms.d_log.error("getTickInfoByNode is empty")
-    return "cBehaviorTask:getTickInfoByNode"
+-- return the path relative to the workspace path
+function cBehaviorTreeTask:getName()
+    BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:getName m_node is not exist")
+    BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:getName m_node:isBehaviorTree")
+
+    return self.m_node:getName()
 end
 
-function cBehaviorTask:getTickInfoByTask(obj, task, action)
-    d_ms.d_log.error("getTickInfoByTask is empty")
-    return "cBehaviorTask:getTickInfoByTask"
-end
-
-function cBehaviorTask:getId()
-    return self.m_id
-end
-
-function cBehaviorTask:setId(id)
-    self.m_id = id
-end
-
-function cBehaviorTask:getNode()
-    return self.m_node
-end
-
-function cBehaviorTask:getStatus()
-    return self.m_status
-end
-
--- parent is BranchTask
-function cBehaviorTask:setParent(parent)
-    assert(parent.isBranchTask(), "cBehaviorTask:setParent must be BranchTask")
-    self.m_parent = parent
-end
-
--- 返回值 BranchTask
-function cBehaviorTask:getParent()
-    return self.m_parent
-end
-
-function cBehaviorTask:SetHasManagingParent(bHasManagingParent)
-    self.m_bHasManagingParent = bHasManagingParent
-end
-------------------------------------------------------------------------------------------------------
-function cBehaviorTask:attach(attachment)
-    if not self.m_attachments then
-        self.m_attachments = {}
-    end
-
-    table.insert(self.m_attachments, attachment)
-end
-
-function cBehaviorTask:getTaskById(id)
-    if self.m_id == id then
-        return self
-    end
-
-    return nil
-end
-
-function cBehaviorTask:copyTo(behaviorTask)
-    behaviorTask.m_status = self.m_status
-end
-
-function cBehaviorTask:save()
-    d_ms.d_log.error("cBehaviorTask:save is empty")
-end
-
-function cBehaviorTask:load()
-    d_ms.d_log.error("cBehaviorTask:load is empty")
-end
-
-function cBehaviorTask:getClassNameString()
+function cBehaviorTreeTask:clear()
     if self.m_node then
-        return self.m_node:getClassNameString()
+        BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:clear m_node:isBehaviorTree")
+        -- self.m_node:unInstantiatePars(self.m_localVars)
+        self.m_localVars = {}
     end
 
-    return "SubBT"
-end
-------------------------------------------------------------------------------------------------------
-function cBehaviorTask:exec(obj)
-    self:execByInputChildStatus(obj, EBTStatus.BT_RUNNING)
+    d_ms.d_behaviorTask.cBehaviorTask.clear(self)
+
+    self.m_root:release()
+    self.m_root = false
+    self.m_currentTask = false
 end
 
--- 同 EBTStatus exec(Agent* pAgent, EBTStatus childStatus)
-function cBehaviorTask:execByInputChildStatus(obj, childStatus)
-    local bEnterResult = false
-    if self.m_status == EBTStatus.BT_RUNNING then
-        bEnterResult = true
-    else
-        self.m_status = EBTStatus.BT_INVALID
-        bEnterResult = self:onEnterAction(obj)
+function cBehaviorTreeTask:setEndStatus(status)
+    self.m_endStatus = status
+end
+
+function endHandler(node, obj, userData)
+    if (node.m_status == EBTStatus.BT_RUNNING || node.m_status == EBTStatus.BT_INVALID)  then
+        node:onExitAction(obj, userData)
+        node.m_status = userData
+        node:setCurrentTask(false)
     end
 
-    if bEnterResult then
-        local bValid = self:checkParentUpdatePreconditions(obj)
-        if bValid then
-            self.m_status = self:updateCurrent(obj, childStatus)
-        else
-            self.m_status = EBTStatus.BT_FAILURE
-            if self:getCurrentTask() then
-                self:updateCurrent(obj, EBTStatus.BT_FAILURE)
-            end
-        end
-
-        if self.m_status == EBTStatus.BT_RUNNING then
-            -- clear it
-            self:onExitAction(obj, self.m_status)
-            -- this node is possibly ticked by its parent or by the topBranch who records it as currrent node so, we can't here reset the topBranch's current nod
-        else
-            local tree = self:getTopManageBranchTask()
-            if tree then
-                tree:setCurrentTask(self)
-            end
-        end
-    else
-        self.m_status = EBTStatus.BT_FAILURE
-    end
-    
-    return self.m_status
-end
-
-function cBehaviorTask:checkParentUpdatePreconditions(obj)
-end
-
-function cBehaviorTask:updateCurrent(obj, childStatus)
-end
-
-function cBehaviorTask:getCurrentTask()
-end
-
-function cBehaviorTask:getTopManageBranchTask()
-end
-------------------------------------------------------------------------------------------------------
-function cBehaviorTask:isLeafTask()
-    return false
-end
-
-function cBehaviorTask:isBehaviorTask()
     return true
 end
-------------------------------------------------------------------------------------------------------
-function cBehaviorTask:onEnterAction(obj)
+
+function cBehaviorTreeTask:endDo(obj, status)
+    self:traverse(true, endHandler, obj, status)
 end
 
-function cBehaviorTask:onExitAction(obj, status)
+function cBehaviorTreeTask:init(behaviorNode)
+    BEHAVIAC_ASSERT(behaviorNode, "cBehaviorTreeTask:init behaviorNode is nil")
+
+    d_ms.d_singeChildTask.cSingeChildTask.init(self, behaviorNode)
+    if self.m_node then
+        BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:init m_node:isBehaviorTree")
+        self.m_node:instantiatePars(self.m_localVars)
+    end
 end
 
-------------------------------------------------------------------------------------------------------
-function getRunningNodesHandler()
+function cBehaviorTreeTask:onEnter(obj)
+    print("cBehaviorTreeTask:onEnter", obj.m_objName, self:getName())
+    return true
 end
 
-function cBehaviorTask:getRunningNodes(onlyLeaves)
-    if onlyLeaves == nil then
-        d_ms.d_log.error("cBehaviorTask:getRunningNodes onlyLeaves default value must be true")
-        onlyLeaves = true
+function cBehaviorTreeTask:onExit(obj, status)
+    obj.m_excutingTreeTask = self.m_lastTreeTask
+    print("cBehaviorTreeTask:onExit", obj.m_objName, self:getName())
+    d_ms.d_singeChildTask.cSingeChildTask.onExit(self, obj, status)
+end
+
+function cBehaviorTreeTask:updateCurrent(obj, childStatus)
+    BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:updateCurrent self.m_node is nil")
+    BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:updateCurrent m_node:isBehaviorTree")
+
+    self.m_lastTreeTask = obj.m_excutingTreeTask
+    obj.m_excutingTreeTask = self
+
+    local tree = self.m_node
+    local status = EBTStatus.BT_RUNNING
+    if tree:isFSM() then
+        status = self:update(obj, childStatus)
+    else
+        status = d_ms.d_singeChildTask.cSingeChildTask.updateCurrent(self, obj, childStatus)
     end
 
-    local nodes = {}
-    self:traverse(true, getRunningNodesHandler, nil, nodes)
-    if onlyLeaves and #nodes > 0 then
-        local leaves = {}
-        for _, one in ipairs(nodes) do
-            if one:isLeafTask() then
-                table.insert(leaves, one)
-            end
-        end
-        return leaves
+    return status
+end
+
+function cBehaviorTreeTask:update(obj, childStatus)
+    BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:update self.m_node is false")
+    BEHAVIAC_ASSERT(self.m_root, "cBehaviorTreeTask:update self.m_root is false")
+
+    if childStatus ~= EBTStatus.BT_RUNNING then
+        return childStatus
     end
 
-    return nodes
-end
-
-function abortHandler()
-end
-
-function cBehaviorTask:abort(obj)
-    self:traverse(true, abortHandler, obj)
-end
-
-function resetHandler()
-end
-function cBehaviorTask:reset(obj)
-    self:traverse(true, resetHandler, obj)
-end
-------------------------------------------------------------------------------------------------------
-function cBehaviorTask:getRootTask()
-    local task = self
-    while task.m_parent do
-        task = task.m_parent
+    local status = EBTStatus.BT_INVALID
+    self.m_endStatus = EBTStatus.BT_INVALID
+    status = d_ms.d_singeChildTask.cSingeChildTask.update(self, obj, childStatus)
+    BEHAVIAC_ASSERT(status ~= EBTStatus.BT_INVALID, "cBehaviorTreeTask:update status == EBTStatus.BT_INVALID")
+    
+    -- When the End node takes effect, it always returns BT_RUNNING
+    -- and m_endStatus should always be BT_SUCCESS or BT_FAILURE
+    if status == EBTStatus.BT_RUNNING and self.m_endStatus ~= EBTStatus.BT_INVALID then
+        self:endDo(obj, self.m_endStatus)
+        return self.m_endStatus
     end
 
-    assert(task.isBehaviorTreeTask(), "cBehaviorTask:getRootTask is not BehaviorTreeTask")
-    return tree;
+    return status
 end
-
-
-
