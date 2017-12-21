@@ -1,9 +1,26 @@
 ------------------------------------------------------------------------------------------------------
 -- 行为树 任务节点
 ------------------------------------------------------------------------------------------------------
-local table = table
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
-d_ms.d_behaviorCommon = require("base.behaviorCommon")
+local d_ms = require "ms"
+------------------------------------------------------------------------------------------------------
+module "behavior.base.behaviorTask"
 ------------------------------------------------------------------------------------------------------
 local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local triggerMode           = d_ms.d_behaviorCommon.triggerMode

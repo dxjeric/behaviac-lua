@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作任务节点
+-- 行为树 动作节点
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -10,6 +10,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -20,24 +21,38 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.actionTask"
+module "behavior.node.actions.assignmentTask"
 ------------------------------------------------------------------------------------------------------
-class("cActionTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
+class("cAssignmentTask", d_ms.d_leafTask.cLeafTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cAssignmentTask", cAssignmentTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAssignmentTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
-function cActionTask:__init()
+function cAssignmentTask:__init()
 end
 
-function cActionTask:onenter(obj)
+
+function cAssignmentTask:onEnter(obj)
     return true
 end
 
-function cActionTask:onexit(obj, status)
+function cAssignmentTask:onExit(obj, status)
 end
 
-function cActionTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAction(), "cActionTask:update  self:getNode() and self:getNode():isAction()")
+function cAssignmentTask:update(obj, childStatus)
+    BEHAVIAC_ASSERT(childStatus == EBTStatus.BT_RUNNING, "cAssignmentTask:update childStatus == EBTStatus.BT_RUNNING")
+    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAssignment(), "cAssignmentTask:update self:getNode():isAssignment()")
+
+    local pAssignmentNode = self:getNode()
+    local result = EBTStatus.BT_SUCCESS
+
+    if pAssignmentNode.m_opl then
+        pAssignmentNode.m_opl:setValueCast(obj, pAssignmentNode.m_opr, pAssignmentNode->m_bCast)
+    else
+        result = pAssignmentNode:updateImpl(obj, childStatus)
+    end
+
+    return result
 end

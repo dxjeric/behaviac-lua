@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作任务节点
+-- 行为树 动作节点
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -10,6 +10,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -20,24 +21,32 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.actionTask"
+module "behavior.node.conditions.conditionBaseTask"
 ------------------------------------------------------------------------------------------------------
-class("cActionTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
+class("cConditionTask", d_ms.d_conditionBaseTask.cConditionBaseTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cConditionTask", cConditionTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cConditionTask", "cConditionBaseTask")
 ------------------------------------------------------------------------------------------------------
-function cActionTask:__init()
+function cConditionTask:__init()
 end
 
-function cActionTask:onenter(obj)
+function cConditionTask:onEnter(obj)
     return true
 end
 
-function cActionTask:onexit(obj, status)
+function cConditionTask:onExit(obj, status)
 end
 
-function cActionTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAction(), "cActionTask:update  self:getNode() and self:getNode():isAction()")
+function cConditionTask:update(obj, childStatus)
+    BEHAVIAC_ASSERT(self:getNode():isCondition(), "cConditionTask:update self:getNode():isCondition")
+
+    local pConditionNode = self:getNode()
+    if pConditionNode:evaluate(obj) then
+        return EBTStatus.BT_SUCCESS
+    else
+        return EBTStatus.BT_FAILURE
+    end
 end

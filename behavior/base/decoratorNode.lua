@@ -1,12 +1,29 @@
 ------------------------------------------------------------------------------------------------------
 -- 行为树 描述节点
 ------------------------------------------------------------------------------------------------------
-local d_ms = {}
-d_ms.d_behaviorNode    = require "base.behaviorNode"
-d_ms.d_event           = require "attachments.event"
-d_ms.d_behaviorCommon  = require "base.behaviorCommon"
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
-local constBaseKeyStrDef = d_behaviorCommon.constBaseKeyStrDef
+local d_ms = require "ms"
+------------------------------------------------------------------------------------------------------
+module "behavior.base.decoratorNode"
+------------------------------------------------------------------------------------------------------
+local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorNode", d_ms.d_behaviorNode.cBehaviorNode)
 ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNode", cDecoratorNode)

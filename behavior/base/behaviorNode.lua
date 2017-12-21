@@ -1,10 +1,30 @@
---------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
 -- 行为树 节点基础类
 ------------------------------------------------------------------------------------------------------
-local d_behaviorCommon  = require "base.behaviorCommon"
-local d_event           = require "attachments.event"
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
-local constBaseKeyStrDef = d_behaviorCommon.constBaseKeyStrDef
+local d_ms = require "ms"
+------------------------------------------------------------------------------------------------------
+module "behavior.base.behaviorNode"
+------------------------------------------------------------------------------------------------------
+local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local stringUtils           = d_ms.d_behaviorCommon.stringUtils
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorNode")
 ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorNode", cBehaviorNode)
@@ -86,7 +106,7 @@ end
 ------------------------------------------------------------------------------------------------------
 -- 创建节点 根据node类型
 function cBehaviorNode:create(nodeClass)
-    return factoryCreateNode(nodeClass)
+    return d_ms.d_behaviorCommon.factoryCreateNode(nodeClass)
 end
 -- 数据记载
 -- 参数1: 对象类型
@@ -503,7 +523,7 @@ function cBehaviorNode:isDecoratorNode()
 end
 ------------------------------------------------------------------------------------------------------------------
 function cBehaviorNode:isValid(obj, behaviorTask)
-    d_ms.d_log.error("cBehaviorNode:isValid must be inheritance")
+    d_ms.d_log.info("cBehaviorNode:isValid")
     return true
 end
 
@@ -512,7 +532,7 @@ function cBehaviorNode:evaluteCustomCondition(obj)
         return self.m_customCondition:evaluate(obj)
     end
 
-    return false;
+    return false
 end
 
 function cBehaviorNode:setCustomCondition(node)

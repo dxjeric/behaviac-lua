@@ -1,16 +1,31 @@
 ------------------------------------------------------------------------------------------------------
 -- 行为树 任务节点
 ------------------------------------------------------------------------------------------------------
-local table = table
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
-d_ms.d_behaviorCommon = require("base.behaviorCommon")
-d_ms.d_behaviorTask   = require("base.behaviorTask")
-d_ms.d_singeChildTask = require("base.singeChildTask")
+local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
-local triggerMode           = d_ms.d_behaviorCommon.triggerMode
-local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
-local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
+module "behavior.base.behaviorTreeTask"
+------------------------------------------------------------------------------------------------------
+local constBaseKeyStrDef        = d_ms.d_behaviorCommon.constBaseKeyStrDef
+local triggerMode               = d_ms.d_behaviorCommon.triggerMode
+local EBTStatus                 = d_ms.d_behaviorCommon.EBTStatus
+local constInvalidChildIndex    = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorTreeTask", d_ms.d_singeChildTask.cSingeChildTask)
 ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTreeTask", cBehaviorTreeTask)

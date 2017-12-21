@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作任务节点
+-- 行为树 动作节点
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -20,24 +20,34 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local stringUtils           = d_ms.d_behaviorCommon.stringUtils
+local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
+local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.actionTask"
+module "behavior.node.actions.waitForSignal"
 ------------------------------------------------------------------------------------------------------
-class("cActionTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
+class("cWaitForSignal", d_ms.d_behaviorNode.cBehaviorNode)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitForSignal", cWaitForSignal)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitForSignal", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
-function cActionTask:__init()
+-- Always return Running until the predicates of WaitforSignal node become true,
+-- or executing child node and return execution result.
+function cWaitForSignal:__init()
 end
 
-function cActionTask:onenter(obj)
-    return true
+function cWaitForSignal:isValid(obj, task)
+    if not task:getNode() or not task:getNode():isWaitForSignal() then
+        return false
+    end
+
+    return d_ms.d_behaviorNode.cBehaviorNode.isValid(self, obj, task)
 end
 
-function cActionTask:onexit(obj, status)
+function cWaitForSignal:checkIfSignaled(obj)
+    return self:evaluteCustomCondition(obj)
 end
 
-function cActionTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAction(), "cActionTask:update  self:getNode() and self:getNode():isAction()")
+function cWaitForSignal:createTask()
+    return d_ms.d_waitForSignalTask.cWaitForSignalTask.new()
 end

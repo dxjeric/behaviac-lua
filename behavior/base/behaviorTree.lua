@@ -1,10 +1,29 @@
 ------------------------------------------------------------------------------------------------------
 -- 行为树
 ------------------------------------------------------------------------------------------------------
-local constBaseKeyStrDef = constBaseKeyStrDef
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
-local d_ms = {}
-d_ms.d_behaviorNode = require "behaviorNode"
+local d_ms = require "ms"
+------------------------------------------------------------------------------------------------------
+module "behavior.base.behaviorTree"
+------------------------------------------------------------------------------------------------------
+local constBaseKeyStrDef = d_ms.d_behaviorCommon.constBaseKeyStrDef
+local EBTStatus          = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorTree", d_ms.d_behaviorNode.cBehaviorNode)
 ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTree", cBehaviorTree)

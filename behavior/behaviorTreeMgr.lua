@@ -1,5 +1,5 @@
-------------------------------------------------------------------------------------------------------
--- 行为树 动作任务节点
+-----------------------------------------------------------------------------------------------------
+-- 行为树 节点基础类
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -20,24 +20,24 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local triggerMode           = d_ms.d_behaviorCommon.triggerMode
+local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.actionTask"
+module "behavior.behaviorTreeMgr"
 ------------------------------------------------------------------------------------------------------
-class("cActionTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
+local behaviorTrees = {}
+function loadBehaviorTree(path)
+    return tree
+end
 ------------------------------------------------------------------------------------------------------
-function cActionTask:__init()
+local constPreloadBehaviors = true
+function preloadBehaviors()
+    return constPreloadBehaviors
 end
 
-function cActionTask:onenter(obj)
-    return true
+local constUseIntValue = true
+function getUseIntValue()
+    return constUseIntValue
 end
-
-function cActionTask:onexit(obj, status)
-end
-
-function cActionTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAction(), "cActionTask:update  self:getNode() and self:getNode():isAction()")
-end
+------------------------------------------------------------------------------------------------------

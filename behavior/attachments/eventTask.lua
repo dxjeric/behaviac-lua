@@ -20,21 +20,52 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-module "behavior.base.attachmentTask"
+module "behavior.attachments.eventTask"
 ------------------------------------------------------------------------------------------------------
 local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
-class("cAttachmentTask")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAttachmentTask", cAttachmentTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAttachmentTask", "cBehaviorTask")
+class("cEventTask", d_ms.d_attachmentTask.cAttachmentTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cEventTask", cEventTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEventTask", "cAttachmentTask")
 ------------------------------------------------------------------------------------------------------
-function cAttachmentTask:__init()
-
+function cEventTask:__init()
 end
 
-function cAttachmentTask:traverse(childFirst, handler, obj, userData)
-	handler(self, obj, userData)
+function cEventTask:onEnter(obj)
+    return true
 end
 
+function cEventTask:onExit(obj, status)
+    return true
+end
+
+function cEventTask:triggeredOnce()
+    local pEventNode = self:getNode()
+    return pEventNode.m_bTriggeredOnce
+end
+
+function cEventTask:getTriggerMode()
+    local pEventNode = self:getNode()
+    return pEventNode.m_triggerMode 
+end
+
+function cEventTask:getEventName()
+    local pEventNode = self:getNode()
+    return pEventNode.m_eventName 
+end
+
+function cEventTask:update(obj, childStatus)
+    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isEvent(), "cEventTask:update self:getNode():isEvent()")
+    local pEventNode = self:getNode()
+    if pEventNode.m_referencedBehaviorPath ~= "" then
+        if obj then
+            local tm = self:getTriggerMode()
+            obj:bteventtree(pEventNode->m_referencedBehaviorPath, tm)
+            obj:btexec()
+        end
+    end
+
+    return EBTStatus.BT_SUCCESS
+end

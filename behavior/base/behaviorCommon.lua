@@ -1,6 +1,25 @@
 --------------------------------------------------------------------------------------------------------------
 -- 行为树 共用定义文件
 --------------------------------------------------------------------------------------------------------------
+local _G            = _G
+local os            = os
+local xml           = xml
+local next          = next
+local type          = type
+local table         = table
+local print         = print
+local error         = error
+local pairs         = pairs
+local assert        = assert
+local ipairs        = ipairs
+local rawget        = rawget
+local getfenv       = getfenv
+local tostring      = tostring
+local setmetatable  = setmetatable
+local getmetatable  = getmetatable
+--------------------------------------------------------------------------------------------------------------
+module "behavior.base.behaviorCommon"
+--------------------------------------------------------------------------------------------------------------
 -- 执行返回
 EBTStatus = {
     BT_INVALID = 0,     -- 无效
@@ -24,6 +43,21 @@ EPreconditionPhase = {
 triggerMode = {
     TM_Transfer = 1,
     TM_Return   = 2,
+}
+
+EOperatorType = {
+    E_INVALID       = 0,
+    E_ASSIGN        = 1,    -- =
+    E_ADD           = 2,    -- +
+    E_SUB           = 3,    -- -
+    E_MUL           = 4,    -- *
+    E_DIV           = 5,    -- /
+    E_EQUAL         = 6,    -- ==
+    E_NOTEQUAL      = 7,    -- !=
+    E_GREATER       = 8,    -- >
+    E_LESS          = 9,    -- <
+    E_GREATEREQUAL  = 10,   -- >=
+    E_LESSEQUAL     = 11,   -- <=
 }
 
 -- keep this version equal to designers' NewVersion
@@ -55,10 +89,6 @@ constBaseKeyStrDef = {
     kStrDescriptorRefs  = "DescriptorRefs",
 }
 --------------------------------------------------------------------------------------------------------------
-function log(...)
-    print(...)
-end
---------------------------------------------------------------------------------------------------------------
 nodeFactory = {}
 --------------------------------------------------------------------------------------------------------------
 function registNodeCreateFun(nodeName, fun)
@@ -66,7 +96,7 @@ function registNodeCreateFun(nodeName, fun)
     assert(type(fun) == "function", string.format("registNodeCreateFun param fun is not function (%s)", type(fun)))
 
     if nodeFactory[nodeName] then
-        log("registNodeCreateFun has regist key = %s", nodeName)
+        d_ms.d_log.error("registNodeCreateFun has regist key = %s", nodeName)
         return
     end
 
@@ -79,7 +109,7 @@ function registNodeClass(nodeName, nodeClass)
     assert(type(nodeClass.new) == "function", string.format("registNodeClass param nodeClass has not new function"))
 
     if nodeFactory[nodeName] then
-        log("registNodeCreateFun has regist key = %s", nodeName)
+        d_ms.d_log.error("registNodeCreateFun has regist key = %s", nodeName)
         return
     end
 
@@ -88,7 +118,7 @@ end
 
 function factoryCreateNode(nodeName)
     if not nodeFactory[nodeName] then
-        log("registNodeCreateFun has regist key = %s", nodeName)
+        d_ms.d_log.error("registNodeCreateFun has regist key = %s", nodeName)
         return nil
     else
         return nodeFactory[nodeName]()
@@ -100,7 +130,7 @@ FATHER_CLASS_INFO = {}
 BEHAVIAC_DYNAMIC_TYPES = {}
 STATIC_BEHAVIAC_HierarchyLevels = setmetatable({}, {__index = function() return 0 end})
 
-function ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
+function _G.ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
     if BEHAVIAC_DYNAMIC_TYPES[className] and BEHAVIAC_DYNAMIC_TYPES[className] ~= classDeclare then
         assert(false, "ADD_BEHAVIAC_DYNAMIC_TYPE had add different TYPE" .. className)
         return
@@ -110,13 +140,13 @@ function ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
 end
 -- 同C++ 
 -- 在调用BEHAVIAC_DECLARE_DYNAMIC_TYPE这个之前必须先调用 ADD_BEHAVIAC_DYNAMIC_TYPE
-function BEHAVIAC_DECLARE_DYNAMIC_TYPE(nodeClassName, fatherClassName)
+function _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE(nodeClassName, fatherClassName)
     FATHER_CLASS_INFO[nodeClassName] = fatherClassName
     BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(nodeClassName)
     BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
 end
 
-function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
+function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
     assert(BEHAVIAC_DYNAMIC_TYPES[className], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", className))
 
     BEHAVIAC_DYNAMIC_TYPES[className].sm_HierarchyLevel = 0
@@ -125,7 +155,7 @@ function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
     end
 end
 
-function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
+function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
     assert(BEHAVIAC_DYNAMIC_TYPES[nodeClassName], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", nodeClassName))
     assert(BEHAVIAC_DYNAMIC_TYPES[fatherClassName], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", fatherClassName))
 
@@ -150,7 +180,7 @@ function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, father
 
 
     BEHAVIAC_DYNAMIC_TYPES[nodeClassName].getClassHierarchyInfoDecl = function(self)
-        print("getClassHierarchyInfoDecl 这个到底是做什么的")
+        d_ms.d_log.error("getClassHierarchyInfoDecl 这个到底是做什么的")
         return "getClassHierarchyInfoDecl"
     end
 
@@ -163,7 +193,7 @@ function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, father
     end
 
     BEHAVIAC_DYNAMIC_TYPES[nodeClassName].getClassTypeId = function(self)
-        print("getClassTypeId", nodeClassName)
+        d_ms.d_log.error("getClassTypeId = %s", nodeClassName)
         return 1
     end
 
@@ -177,16 +207,87 @@ function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, father
     end
 end
 
-function BEHAVIAC_ASSERT(check, msgFormat, ...)
+function _G.BEHAVIAC_ASSERT(check, msgFormat, ...)
     if not check then
         d_ms.d_log.error("BEHAVIAC_ASSERT" .. msgFormat, ...)
         assert(false)
     end
 end
+--------------------------------------------------------------------------------------------------------------
+local paramMt = {}
+function paramMt:run(obj)
+
+end
+
+function paramMt:getIValueFrom(obj, method)
+end
+
+function paramMt:getIValue(obj)
+end
+
+function paramMt:setValueCast(obj, opr, cast)
+end
+
+function paramMt:getValue(obj)
+end
+
+function paramMt:getClassTypeNumberId()
+end
+
+
+-- Compute(pAgent, pComputeNode->m_opr1, pComputeNode->m_opr2, pComputeNode->m_operator);
+function paramMt:compute(obj, opr1, opr2, operator)
+end
+
+function paramMt:getValue(obj)
+end
+
+function paramMt:compare(obj, right, comparisonType)
+end
+
 
 BehaviorParseFactory = {}
 function BehaviorParseFactory.parseMethod(methodInfo)
-    return function() print("BehaviorParseFactory.parseMethod") end
+    return setmetatable({}, paramMt)
+end
+
+function BehaviorParseFactory.parseProperty(propertyStr)
+    return setmetatable({}, paramMt)
+end
+
+function BehaviorParseFactory.parseMethodOutMethodName(methodInfo)
+    return methon, methonName
+end
+
+function BehaviorParseFactory.parseOperatorType(operatorTypeStr)
+    if operatorTypeStr == "Invalid" then
+        return EOperatorType.E_INVALID
+    elseif operatorTypeStr == "Assign" then
+        return EOperatorType.E_ASSIGN
+    elseif operatorTypeStr == "Add" then
+        return EOperatorType.E_ADD
+    elseif operatorTypeStr == "Sub" then
+        return EOperatorType.E_SUB
+    elseif operatorTypeStr == "Mul" then
+        return EOperatorType.E_MUL
+    elseif operatorTypeStr == "Div" then
+        return EOperatorType.E_DIV
+    elseif operatorTypeStr == "Equal" then
+        return EOperatorType.E_EQUAL
+    elseif operatorTypeStr == "NotEqual" then
+        return EOperatorType.E_NOTEQUAL
+    elseif operatorTypeStr == "Greater" then
+        return EOperatorType.E_GREATER
+    elseif operatorTypeStr == "Less" then
+        return EOperatorType.E_LESS
+    elseif operatorTypeStr == "GreaterEqual" then
+        return EOperatorType.E_GREATEREQUAL
+    elseif operatorTypeStr == "LessEqual" then
+        return EOperatorType.E_LESSEQUAL
+    end
+    
+    BEHAVIAC_ASSERT(false)
+    return EOperatorType.E_INVALID
 end
 --------------------------------------------------------------------------------------------------------------
 stringUtils = {}
@@ -195,6 +296,14 @@ function stringUtils.isNullOrEmpty(str)
         return true
     end
     return false
+end
+
+function stringUtils.isValidString(str)
+    if not str or str == "" then
+        return false
+    end
+
+    return true
 end
 --------------------------------------------------------------------------------------------------------------
 CRC = {}

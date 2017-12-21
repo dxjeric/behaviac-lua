@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作任务节点
+-- 行为树 动作节点
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -20,24 +20,33 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
+local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local stringUtils           = d_ms.d_behaviorCommon.stringUtils
+local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
+local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.actionTask"
+module "behavior.node.actions.noop"
 ------------------------------------------------------------------------------------------------------
-class("cActionTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
+class("cNoop", d_ms.d_behaviorNode.cBehaviorNode)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cNoop", cNoop)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cNoop", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
-function cActionTask:__init()
+-- Nothing to do, just return success.
+function cNoop:__init()
 end
 
-function cActionTask:onenter(obj)
+-- function cNoop:loadByProperties(version, agentType, properties)
+--     d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
+-- end
+
+function cNoop:IsValid(obj, pTask)
+    if not pTask:getNode() or not pTask:getNode():isNoop() then
+        return false
+    end
+
     return true
 end
 
-function cActionTask:onexit(obj, status)
-end
-
-function cActionTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAction(), "cActionTask:update  self:getNode() and self:getNode():isAction()")
+function cNoop:createTask()
+    return d_ms.d_noopTask.cNoopTask.new()
 end
