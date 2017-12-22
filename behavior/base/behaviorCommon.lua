@@ -245,6 +245,13 @@ end
 function paramMt:compare(obj, right, comparisonType)
 end
 
+function paramMt:setTaskParams(obj, treeTask)
+end
+
+function paramMt:getValueByRetrunType(obj, bVector, returnType)
+
+end
+
 
 BehaviorParseFactory = {}
 function BehaviorParseFactory.parseMethod(methodInfo)
@@ -290,6 +297,24 @@ function BehaviorParseFactory.parseOperatorType(operatorTypeStr)
     return EOperatorType.E_INVALID
 end
 --------------------------------------------------------------------------------------------------------------
+State = {}
+function State.updateTransitions(obj, behaviorNode, transitions, nextStateId, status)
+    local bTransitioned = false
+    if transitions then
+        for _, transition in ipairs(transitions) do
+            if transition:evaluate(obj, status) then
+                nextStateId = transition:getTargetStateId()
+                BEHAVIAC_ASSERT(nextStateId ~= -1)
+                transition:applyEffects(obj, ENodePhase.E_BOTH)
+                bTransitioned = true
+                break
+            end
+        end
+    end
+
+    return bTransitioned, nextStateId
+end
+--------------------------------------------------------------------------------------------------------------
 stringUtils = {}
 function stringUtils.isNullOrEmpty(str)
     if not str or str == "" then
@@ -304,6 +329,23 @@ function stringUtils.isValidString(str)
     end
 
     return true
+end
+
+function stringUtils.compare(str1, str2, bIgnoreCase)
+    if bIgnoreCase == nil then
+        d_ms.d_log.error("stringUtils.compare bIgnoreCase default is true")
+        bIgnoreCase = true
+    end
+
+    if bIgnoreCase then
+        str1 = string.lower(str1)
+        str2 = string.lower(str2)
+    end
+    if str1 == str2 then
+        return true
+    end
+
+    return false
 end
 --------------------------------------------------------------------------------------------------------------
 CRC = {}

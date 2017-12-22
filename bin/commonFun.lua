@@ -34,6 +34,12 @@ end
 
 function redoGetFrameSinceStartup()
 end
+
+function table.copy(t)
+    local r = t
+    
+    return r
+end
 -------------------------------------------------------------------------------------------------------------
 bits = {}
 function bits.and(a, b)

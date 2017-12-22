@@ -354,13 +354,13 @@ function cBehaviorNode:getChild(index)
     if self.m_children then
         return self.m_children[index]
     else
-        return nil
+        return false
     end
 end
 
 function cBehaviorNode:getChildById(nodeid)
     if not self.m_children then
-        return nil
+        return false
     end
 
     for _, child in ipairs(self.m_children) do
@@ -369,7 +369,7 @@ function cBehaviorNode:getChildById(nodeid)
         end
     end
 
-    return nil
+    return false
 end
 
 function cBehaviorNode:getParent()
