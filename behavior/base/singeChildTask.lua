@@ -111,7 +111,7 @@ function cSingeChildTask:addChild(pBehavior)
 end
 
 function cSingeChildTask:getTaskById(id)
-    BEHAVIAC_ASSERT(id ~= constInvalidChildIndex);
+    BEHAVIAC_ASSERT(id ~= -1);
     
     local behaviorTask = d_ms.d_branchTask.cBranchTask.getTaskById(self, id)
     if behaviorTask then

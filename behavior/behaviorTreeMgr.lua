@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local math          = math
 local table         = table
 local print         = print
 local error         = error
@@ -37,6 +38,17 @@ end
 
 function createBehaviorTreeTask(path)
         
+end
+------------------------------------------------------------------------------------------------------
+-- REDO: 这个后续可以修改
+function getRandomValue(method, obj)
+    local value = 0
+    if method then
+        value = method:getValue(obj)
+    else
+        value = math.random(10000)/10000
+    end
+    return value
 end
 ------------------------------------------------------------------------------------------------------
 local constPreloadBehaviors = true

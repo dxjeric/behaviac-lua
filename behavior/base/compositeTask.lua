@@ -117,7 +117,7 @@ function cCompositeTask:addChild(behaviorTask)
 end
 
 function cCompositeTask:getTaskById(id)
-    BEHAVIAC_ASSERT(id ~= constInvalidChildIndex, "getTaskById id ~= -1")
+    BEHAVIAC_ASSERT(id ~= -1, "getTaskById id ~= -1")
     
     local behaviorTask = d_ms.d_branchTask.cBranchTask.getTaskById(self, id)
     if behaviorTask then

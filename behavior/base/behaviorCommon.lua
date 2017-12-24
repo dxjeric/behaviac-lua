@@ -62,8 +62,8 @@ EOperatorType = {
 
 -- keep this version equal to designers' NewVersion
 constSupportedVersion   = 5
--- cCompositeTask 中的任务无效值
-constInvalidChildIndex  = -1
+-- cCompositeTask 中的任务索引无效值
+constInvalidChildIndex  = 0
 
 constBaseKeyStrDef = {
     kStrNodeName        = "node",
