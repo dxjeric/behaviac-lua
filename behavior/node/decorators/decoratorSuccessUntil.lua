@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作节点
+-- 行为树 条件节点基础类
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -10,7 +10,6 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
-local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -22,18 +21,29 @@ local getmetatable  = getmetatable
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorSuccessUntil"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorSuccessUntil", d_ms.d_decoratorCount.cDecoratorCount)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorSuccessUntil", cDecoratorSuccessUntil)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorSuccessUntil", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
-
+-- UntilFailureUntil node always return Success until it reaches a specified number of count.
+-- when reach time exceed the count specified return Failure. If the specified number of count
+-- is -1, then always return Success.
+function cDecoratorSuccessUntil:__init()
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorSuccessUntil:isValid(obj, task)
+    if not task:getNode() or not task:getNode():isDecoratorSuccessUntil() then
+        return false
+    end
+
+    return d_ms.d_decoratorCount.cDecoratorCount.isValid(self, obj, task)
+end
+
+function cDecoratorSuccessUntil:createTask()
+    return d_ms.d_decoratorSuccessUntilTask.cDecoratorSuccessUntilTask.new()
 end

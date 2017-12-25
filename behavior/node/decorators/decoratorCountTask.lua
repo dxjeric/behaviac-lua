@@ -24,16 +24,40 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorCountTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorCountTask", d_ms.d_decoratorTask.cDecoratorTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountTask", cDecoratorCountTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
-
+function cDecoratorCountTask:__init()
+    self.m_n = 0
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorCountTask:copyTo(target)
+    d_ms.d_decoratorTask.cDecoratorTask.copyTo(self, target)
+    BEHAVIAC_ASSERT(target:isDecoratorCountTask(), "cDecoratorCountTask:copyTo target:isDecoratorCountTask")
+    target.m_n = self.m_n
+end
+
+function cDecoratorCountTask:getCount(obj)
+    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorCount(), "cDecoratorCountTask:getCount self:getNode():isDecoratorCount")
+
+    if self:getNode() then
+        return self:getNode():getCount()
+    else
+        return 0
+    end
+end
+
+function cDecoratorCountTask:onEnter(obj)
+    d_ms.d_decoratorTask.cDecoratorTask.onEnter(self)
+
+    local count = self:getCount(obj)
+    if count == 0 then
+        return false
+    end
+
+    self.m_n = count
+    return true
 end

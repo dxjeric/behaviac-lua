@@ -24,16 +24,34 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorLogTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorLogTask", d_ms.d_decoratorTask.cDecoratorTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLogTask", cDecoratorLogTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLogTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
-
+function cDecoratorLogTask:__init()
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorLogTask:save(node)
+    d_ms.d_log.error("cDecoratorLogTask:save")
+end
+
+function cDecoratorLogTask:load(node)
+    d_ms.d_log.error("cDecoratorLogTask:load")
+end
+
+function cDecoratorLogTask:onenter(obj)
+    d_ms.d_decoratorTask.cDecoratorTask.onEnter(obj)
+
+    self.m_start = redoGetFrameSinceStartup()
+    self.m_frames = self:getFrames(obj)
+
+    return self.m_frames > 0
+end
+
+function cDecoratorLogTask:decorate(status)
+    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorLog(), "cDecoratorLogTask:decorate self:getNode():isDecoratorLog")
+    BEHAVIAC_LOGINFO("DecoratorLogTask:%s\n", self:getNode().m_message)
+    return status
 end

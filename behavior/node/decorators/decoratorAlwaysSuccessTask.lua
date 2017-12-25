@@ -24,16 +24,16 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorAlwaysSuccessTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorAlwaysRunningTask", d_ms.d_decoratorTask.cDecoratorTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", cDecoratorAlwaysRunningTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
+function cDecoratorAlwaysRunningTask:__init()
 
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorAlwaysRunningTask:decorate(status)
+    return EBTStatus.BT_SUCCESS
 end

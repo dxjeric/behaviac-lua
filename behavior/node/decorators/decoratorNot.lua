@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作节点
+-- 行为树 条件节点基础类
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -10,7 +10,6 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
-local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -22,18 +21,32 @@ local getmetatable  = getmetatable
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorNot"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorNot", d_ms.d_decoratorNode.cDecoratorNode)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNot", cDecoratorNot)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNot", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
-
+-- Not Node inverts the return value of child. But keeping the Running value unchanged.
+function cDecoratorNot:__init()
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorNot:isValid(obj, task)
+    if not task:getNode() or not task:getNode():isDecoratorNot() then
+        return false
+    end
+
+    return d_ms.d_decoratorNode.cDecoratorNode.isValid(self, obj, task)
+end
+
+function cDecoratorNot:evaluate(obj)
+    BEHAVIAC_ASSERT(#self.m_children == 1, "cDecoratorNot:evaluate #self.m_children == 1")
+    return not self.m_children[1]:evaluate(obj)
+end
+
+function cDecoratorNot:createTask()
+    return d_ms.d_decoratorNotTask.cDecoratorNotTask.new()
 end

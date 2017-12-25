@@ -24,16 +24,31 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorNotTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorNotTask", d_ms.d_decoratorTask.cDecoratorTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNotTask", cDecoratorNotTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNotTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
-
+function cDecoratorNotTask:__init()
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorNotTask:save()
+    d_ms.d_log.error("cDecoratorNotTask:save")
+end
+
+function cDecoratorNotTask:load()
+    d_ms.d_log.error("cDecoratorNotTask:load")
+end
+
+function cDecoratorNotTask:decorate(status)
+    if status == EBTStatus.BT_FAILURE then
+        return EBTStatus.BT_SUCCESS
+    end
+
+    if status == EBTStatus.BT_SUCCESS then
+        return EBTStatus.BT_FAILURE
+    end
+
+    return status
 end

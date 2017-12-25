@@ -24,16 +24,28 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorWeightTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorWeightTask", d_ms.d_decoratorTask.cDecoratorTask)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorWeightTask", cDecoratorWeightTask)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorWeightTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
-
+function cDecoratorWeightTask:__init()
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorWeightTask:getWeight(obj)
+    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorWeight(), "cDecoratorWeightTask:getWeight self:getNode():isDecoratorWeight")
+    return self:getNode():getWeight(obj)
+end
+
+function cDecoratorWeightTask:decorate(status)
+    return status
+end
+
+function cDecoratorWeightTask:save(IONode)
+    d_ms.d_log.error("cDecoratorWeightTask:save")
+end
+
+function cDecoratorWeightTask:load(IONode)
+    d_ms.d_log.error("cDecoratorWeightTask:load")
 end

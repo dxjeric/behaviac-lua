@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作节点
+-- 行为树 条件节点基础类
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
@@ -10,7 +10,6 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
-local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -21,19 +20,28 @@ local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
-local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
-local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
+local EBTStatus     = d_ms.d_behaviorCommon.EBTStatus
+local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorAlwaysFailureTask"
+module "behavior.node.decorators.decoratorAlwaysSuccess"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+class("cDecoratorAlwaysSuccess", d_ms.d_decoratorNode.cDecoratorNode)
+ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysSuccess", cDecoratorAlwaysSuccess)
+BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysSuccess", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysFailureTask:__init()
+-- No matter what child return. DecoratorAlwaysSuccess always return Success. it can only has one child node.
+function cDecoratorAlwaysSuccess:__init()
 
 end
 
-function cDecoratorAlwaysFailureTask:decorate(status)
-    return EBTStatus.BT_FAILURE
+function cDecoratorAlwaysSuccess:isValid(obj, task)
+    if not task:getNode() or not task:getNode():isDecoratorAlwaysSuccess() then
+        return false
+    end
+
+    return d_ms.d_decoratorNode.cDecoratorNode.isValid(self, obj, task)
+end
+
+function cDecoratorAlwaysSuccess:createTask()
+    return d_ms.d_decoratorAlwaysSuccessTask.cDecoratorAlwaysSuccessTask.new()
 end
