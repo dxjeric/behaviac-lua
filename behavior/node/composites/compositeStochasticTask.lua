@@ -7,6 +7,7 @@ local xml           = xml
 local next          = next
 local type          = type
 local math          = math
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -26,7 +27,7 @@ local EBTStatus              = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory   = d_ms.d_behaviorCommon.BehaviorParseFactory
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.noopTask"
+module "behavior.node.composites.compositeStochasticTask"
 ------------------------------------------------------------------------------------------------------
 class("cCompositeStochasticTask", d_ms.d_compositeTask.cCompositeTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeStochasticTask", cCompositeStochasticTask)
@@ -89,7 +90,8 @@ function cCompositeStochasticTask:randomChild(obj)
     local pNode = self:getNode()
 
     if #self.m_set ~= #self.m_children then
-        sefm_set.resize(this->m_children.size());
+        -- self.m_set.resize(this->m_children.size());
+        -- do nothing
     end
 
     local n = #self.m_set
@@ -105,7 +107,7 @@ function cCompositeStochasticTask:randomChild(obj)
         local index1 = math.ceil(n * d_ms.d_behaviorTreeMgr.getRandomValue(method, obj))
         BEHAVIAC_ASSERT(index1 <= n)
 
-        local index2 = math.ceil(n * d_ms.d_behaviorTreeMgr.getRandomValue(method, obj)）
+        local index2 = math.ceil(n * d_ms.d_behaviorTreeMgr.getRandomValue(method, obj))
         BEHAVIAC_ASSERT(index2 <= n)
 
         -- swap

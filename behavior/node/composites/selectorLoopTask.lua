@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -104,7 +105,7 @@ function cSelectorLoopTask:update(obj, childStatus)
         end
 
         local i = index
-        for i = index, i <= #self.m_children then
+        for i = index, i <= #self.m_children do
             -- WithPreconditionTask
             local pSubTree = self.m_children[i]
             BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")

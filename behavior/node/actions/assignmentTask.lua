@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -49,7 +50,7 @@ function cAssignmentTask:update(obj, childStatus)
     local result = EBTStatus.BT_SUCCESS
 
     if pAssignmentNode.m_opl then
-        pAssignmentNode.m_opl:setValueCast(obj, pAssignmentNode.m_opr, pAssignmentNode->m_bCast)
+        pAssignmentNode.m_opl:setValueCast(obj, pAssignmentNode.m_opr, pAssignmentNode.m_bCast)
     else
         result = pAssignmentNode:updateImpl(obj, childStatus)
     end

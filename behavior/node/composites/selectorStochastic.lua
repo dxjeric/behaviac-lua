@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -40,7 +41,7 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorStochastic", "cBehaviorNode")
 function cSelectorStochastic:__init()
 end
 
-function cSelectorProbability:isValid(obj, task)
+function cSelectorStochastic:isValid(obj, task)
     if not task:getNode() or not task:getNode():isSelectorStochastic() then
         return false
     end

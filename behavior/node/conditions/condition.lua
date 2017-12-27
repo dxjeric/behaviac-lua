@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -47,14 +48,14 @@ function cCondition:loadByProperties(version, agentType, properties)
     for _, p in ipairs(properties) do
         if p.name == "Operator" then
             self.m_operator = BehaviorParseFactory.parseOperatorType(p.value)
-        elseif p.name, "Opl" then
+        elseif p.name == "Opl" then
             local pParenthesis = strchr(p.value, '%(')
             if not pParenthesis then
                 self.m_opl = BehaviorParseFactory.parseProperty(p.value)
             else
                 self.m_opl = BehaviorParseFactory.parseMethod(p.value)
             end
-        elseif p.name, "Opr" then
+        elseif p.name == "Opr" then
             local pParenthesis = strchr(p.value, '%(')
             if not pParenthesis then
                 self.m_opr = BehaviorParseFactory.parseProperty(p.value)

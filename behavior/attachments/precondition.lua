@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -57,9 +58,9 @@ function cPreconditionConfig:load(properties)
         elseif p.name == "Phase" then
             if p.value == "Enter" then
                 self.m_phase = EPreconditionPhase.E_ENTER
-            elseif p.value, "Update" then
+            elseif p.value == "Update" then
                 self.m_phase = EPreconditionPhase.E_UPDATE
-            elseif p.value, "Both" then
+            elseif p.value == "Both" then
                 self.m_phase = EPreconditionPhase.E_BOTH
             else
                 BEHAVIAC_ASSERT(false, "cPreconditionConfig:load Phase")

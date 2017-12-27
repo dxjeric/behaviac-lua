@@ -2,25 +2,31 @@
 -- module : behavior
 ------------------------------------------------------------------------------------------------------
 local require = require
+local print   = print
 ------------------------------------------------------------------------------------------------------
 module "ms"
 ------------------------------------------------------------------------------------------------------
-d_LuaXML                        = require "bin.LuaXML"
-d_commonFun                     = require "bin.commonFun"
+d_LuaXML                        = require "LuaXML"
+d_commonFun                     = require "commonFun"
 
 -- base
 d_behaviorCommon                = require "behavior.base.behaviorCommon"
 d_behaviorNode                  = require "behavior.base.behaviorNode"
 d_behaviorTask                  = require "behavior.base.behaviorTask"
 d_attachmentTask                = require "behavior.base.attachmentTask"
-d_behaviorTree                  = require "behavior.base.behaviorTree"
-d_behaviorTreeTask              = require "behavior.base.behaviorTreeTask"
 d_branchTask                    = require "behavior.base.branchTask"
 d_compositeTask                 = require "behavior.base.compositeTask"
 d_decoratorNode                 = require "behavior.base.decoratorNode"
-d_decoratorTask                 = require "behavior.base.decoratorTask"
 d_leafTask                      = require "behavior.base.leafTask"
 d_singeChildTask                = require "behavior.base.singeChildTask"
+d_decoratorTask                 = require "behavior.base.decoratorTask"
+d_behaviorTree                  = require "behavior.base.behaviorTree"
+d_behaviorTreeTask              = require "behavior.base.behaviorTreeTask"
+
+d_action                        = require "behavior.node.actions.action"
+d_actionTask                    = require "behavior.node.actions.actionTask"
+d_conditionBase                 = require "behavior.node.conditions.conditionBase"
+d_conditionBaseTask             = require "behavior.node.conditions.conditionBaseTask"
 
 -- attachments
 d_attachAction                  = require "behavior.attachments.attachAction"
@@ -30,8 +36,6 @@ d_eventTask                     = require "behavior.attachments.eventTask"
 d_precondition                  = require "behavior.attachments.precondition"
 
 -- node.actions
-d_action                        = require "behavior.node.actions.action"
-d_actionTask                    = require "behavior.node.actions.actionTask"
 d_assignment                    = require "behavior.node.actions.assignment"
 d_assignmentTask                = require "behavior.node.actions.assignmentTask"
 d_compute                       = require "behavior.node.actions.compute"
@@ -75,8 +79,6 @@ d_withPreconditionTask          = require "behavior.node.composites.withPrecondi
 d_and                           = require "behavior.node.conditions.and"
 d_andTask                       = require "behavior.node.conditions.andTask"
 d_condition                     = require "behavior.node.conditions.condition"
-d_conditionBase                 = require "behavior.node.conditions.conditionBase"
-d_conditionBaseTask             = require "behavior.node.conditions.conditionBaseTask"
 d_conditionTask                 = require "behavior.node.conditions.conditionTask"
 d_false                         = require "behavior.node.conditions.false"
 d_falseTask                     = require "behavior.node.conditions.falseTask"
@@ -93,9 +95,9 @@ d_decoratorAlwaysRunningTask    = require "behavior.node.decorators.decoratorAlw
 d_decoratorAlwaysSuccess        = require "behavior.node.decorators.decoratorAlwaysSuccess"
 d_decoratorAlwaysSuccessTask    = require "behavior.node.decorators.decoratorAlwaysSuccessTask"
 d_decoratorCount                = require "behavior.node.decorators.decoratorCount"
+d_decoratorCountTask            = require "behavior.node.decorators.decoratorCountTask"
 d_decoratorCountLimit           = require "behavior.node.decorators.decoratorCountLimit"
 d_decoratorCountLimitTask       = require "behavior.node.decorators.decoratorCountLimitTask"
-d_decoratorCountTask            = require "behavior.node.decorators.decoratorCountTask"
 d_decoratorFailureUntil         = require "behavior.node.decorators.decoratorFailureUntil"
 d_decoratorFailureUntilTask     = require "behavior.node.decorators.decoratorFailureUntilTask"
 d_decoratorFrames               = require "behavior.node.decorators.decoratorFrames"
@@ -144,3 +146,5 @@ function d_str.split(str, char)
 
     return ret
 end
+
+p = d_commonFun.printValue

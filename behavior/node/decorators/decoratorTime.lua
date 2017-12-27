@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -36,12 +37,12 @@ function cDecoratorTime:__init()
     self.m_time = false
 end
 
-function cDecoratorNode:release()
+function cDecoratorTime:release()
     d_ms.d_decoratorNode.cDecoratorNode.release(self)
     self.m_time = false
 end
 
-function cDecoratorNode:loadByProperties(version, agentType, properties)
+function cDecoratorTime:loadByProperties(version, agentType, properties)
     d_ms.d_decoratorNode.cDecoratorNode.loadByProperties(self, version, agentType, properties)
 
     for _, p in ipairs(properties) do

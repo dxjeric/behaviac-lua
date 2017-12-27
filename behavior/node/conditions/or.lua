@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -33,7 +34,7 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cOr", "cConditionBase")
 function cOr:__init()
 end
 
-function cAnd:isValid(obj, task)
+function cOr:isValid(obj, task)
     if not task:getNode() or not task:getNode():isOr() then
         return false
     end
@@ -41,7 +42,7 @@ function cAnd:isValid(obj, task)
     return d_ms.d_conditionBase.cConditionBase.isValid(self, obj, task)
 end
 
-function cAnd:evaluate(obj)
+function cOr:evaluate(obj)
     local ret = true
     for _, child in ipairs(self.m_children) do
         ret = child:evaluate(obj)
@@ -53,6 +54,6 @@ function cAnd:evaluate(obj)
     return ret
 end
 
-function cAnd:createTask()
+function cOr:createTask()
     return d_ms.d_orTask.cOrTask.new()
 end

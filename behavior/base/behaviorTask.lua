@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -278,7 +279,7 @@ function cBehaviorTask:getTopManageBranchTask()
     local tree = nil
     local behaviorTask = self.m_parent
 
-    while behaviorTask then
+    while behaviorTask do
         if not behaviorTask:isBehaviorTreeTask() then
             -- to overwrite the child branch
             tree = behaviorTask

@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -42,14 +43,14 @@ function cParallelTask:onEnter(obj)
     return true
 end
 
-function cCompositeTask:onExit(obj, status)
+function cParallelTask:onExit(obj, status)
 
 end
 
-function cCompositeTask:updateCurrent(obj, childStatus)
+function cParallelTask:updateCurrent(obj, childStatus)
     return self:update(obj, childStatus)
 end
 
-function cCompositeTask:update(obj, childStatus)
+function cParallelTask:update(obj, childStatus)
     return self.m_node:parallelUpdate(obj, self.m_children)
 end

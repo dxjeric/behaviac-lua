@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -55,6 +56,6 @@ function cDecoratorLoop:isValid(obj, task)
     return d_ms.d_decoratorNode.cDecoratorNode.isValid(self, obj, task)
 end
 
-function cDecoratorLog:createTask()
+function cDecoratorLoop:createTask()
     return d_ms.d_decoratorLoopTask.cDecoratorLoopTask.new()
 end

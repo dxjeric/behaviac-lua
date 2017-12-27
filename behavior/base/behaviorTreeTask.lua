@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -105,7 +106,7 @@ function cBehaviorTreeTask:setEndStatus(status)
 end
 
 function endHandler(node, obj, userData)
-    if (node.m_status == EBTStatus.BT_RUNNING || node.m_status == EBTStatus.BT_INVALID)  then
+    if (node.m_status == EBTStatus.BT_RUNNING or node.m_status == EBTStatus.BT_INVALID)  then
         node:onExitAction(obj, userData)
         node.m_status = userData
         node:setCurrentTask(false)

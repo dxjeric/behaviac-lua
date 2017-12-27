@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -38,7 +39,7 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cParallel", "cBehaviorNode")
 EFAILURE_POLICY = {
     FAIL_ON_ONE = 0,
     FAIL_ON_ALL = 1,
-end
+}
 
 -- options when a parallel node is considered to be succeeded.
 -- SUCCEED_ON_ONE: the node will return success as soon as one of its children succeeds.
@@ -46,7 +47,7 @@ end
 ESUCCESS_POLICY = {
     SUCCEED_ON_ONE = 0,
     SUCCEED_ON_ALL = 1,
-end
+}
 
 -- options when a parallel node is exited
 -- EXIT_NONE: the parallel node just exit.
@@ -54,7 +55,7 @@ end
 EEXIT_POLICY = {
     EXIT_NONE = 0,
     EXIT_ABORT_RUNNINGSIBLINGS = 1
-end
+}
 
 -- the options of what to do when a child finishes
 -- CHILDFINISH_ONCE: the child node just executes once.
@@ -62,7 +63,7 @@ end
 ECHILDFINISH_POLICY = {
     CHILDFINISH_ONCE = 0,
     CHILDFINISH_LOOP = 1
-end
+}
 
 function cParallel:__init()
     self.m_failPolicy           = EFAILURE_POLICY.FAIL_ON_ONE
@@ -160,7 +161,7 @@ function cParallel:parallelUpdate(obj, children)
     if self.m_exitPolicy == EEXIT_POLICY.EXIT_ABORT_RUNNINGSIBLINGS and (result == EBTStatus.BT_FAILURE or result == EBTStatus.BT_SUCCESS) then
         for _, pChild in ipairs(children) do
             local treeStatus = pChild:getStatus()
-            if (treeStatus == EBTStatus.BT_RUNNING then
+            if treeStatus == EBTStatus.BT_RUNNING then
                 pChild:abort(obj)
             end
         end

@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -45,6 +46,7 @@ end
 
 function cSelectorTask:update(obj, childStatus)
     BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSelectorTask:update self.m_activeChildIndex <= #self.m_children")
-    local status, self.m_activeChildIndex = self:selectorUpdate(obj, childStatus, self.m_activeChildIndex, self.m_children)
+    local status, activeChildIndex = self:selectorUpdate(obj, childStatus, self.m_activeChildIndex, self.m_children)
+    self.m_activeChildIndex = activeChildIndex
     return status
 end

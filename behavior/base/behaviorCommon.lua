@@ -139,7 +139,7 @@ STATIC_BEHAVIAC_HierarchyLevels = setmetatable({}, {__index = function() return 
 
 function _G.ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
     if BEHAVIAC_DYNAMIC_TYPES[className] and BEHAVIAC_DYNAMIC_TYPES[className] ~= classDeclare then
-        assert(false, "ADD_BEHAVIAC_DYNAMIC_TYPE had add different TYPE" .. className)
+        assert(false, "ADD_BEHAVIAC_DYNAMIC_TYPE had add different TYPE " .. className)
         return
     end
 
@@ -162,7 +162,7 @@ function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fat
     STATIC_BEHAVIAC_HierarchyLevels[nodeClassName] = STATIC_BEHAVIAC_HierarchyLevels[fatherClassName] + 1 
     BEHAVIAC_DYNAMIC_TYPES[nodeClassName].sm_HierarchyLevel = STATIC_BEHAVIAC_HierarchyLevels[nodeClassName]
 
-    local checkFunName = string.format("is%s", string.sub(className, 2, -1))
+    local checkFunName = string.format("is%s", string.sub(nodeClassName, 2, -1))
     BEHAVIAC_DYNAMIC_TYPES[nodeClassName][checkFunName] = function() return true end
     local rootFatherName = fatherClassName
     local fName = fatherClassName

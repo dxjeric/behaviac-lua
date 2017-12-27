@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -26,14 +27,14 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
 module "behavior.node.decorators.decoratorAlwaysSuccessTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorAlwaysRunningTask", d_ms.d_decoratorTask.cDecoratorTask)
-_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", cDecoratorAlwaysRunningTask)
-_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", "cDecoratorTask")
+class("cDecoratorAlwaysSuccessTask", d_ms.d_decoratorTask.cDecoratorTask)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysSuccessTask", cDecoratorAlwaysSuccessTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysSuccessTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorAlwaysRunningTask:__init()
+function cDecoratorAlwaysSuccessTask:__init()
 
 end
 
-function cDecoratorAlwaysRunningTask:decorate(status)
+function cDecoratorAlwaysSuccessTask:decorate(status)
     return EBTStatus.BT_SUCCESS
 end

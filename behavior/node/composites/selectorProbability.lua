@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -47,7 +48,7 @@ function cSelectorProbability:loadByProperties(version, agentType, properties)
     for _, p in ipairs(properties) do
         if p.name == "RandomGenerator" then
             if p.value[0] ~= "" then
-                this->m_method = BehaviorParseFactory.parseMethod(p.value)
+                self.m_method = BehaviorParseFactory.parseMethod(p.value)
             end
         else
             -- BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);

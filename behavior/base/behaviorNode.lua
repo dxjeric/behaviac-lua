@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -30,7 +31,7 @@ class("cBehaviorNode")
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorNode", cBehaviorNode)
 ------------------------------------------------------------------------------------------------------
 function cBehaviorNode:__init()
-    self.m_node
+    self.m_node             = false -- 节点数据
     self.m_id               = 0     -- 编辑器生成的ID
     self.m_children         = false -- 子节点 没有子节点为false 存在子节点时为table
     self.m_preconditions    = {}    -- 前置处理
@@ -444,11 +445,11 @@ function cBehaviorNode:applyEffects(obj, phase)
     end
 
     if self.m_bothEffectors == 0 then
-        if phase == ENodePhase.E_SUCCESS && self.m_successEffectors == 0 then
+        if phase == ENodePhase.E_SUCCESS and self.m_successEffectors == 0 then
             return
         end
 
-        if phase == ENodePhase.E_FAILURE && self.m_failureEffectors == 0 then
+        if phase == ENodePhase.E_FAILURE and self.m_failureEffectors == 0 then
             return
         end
     end

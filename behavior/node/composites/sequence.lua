@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -78,7 +79,7 @@ end
 
 function cSequence:evaluate(obj)
     local ret = true    
-    for _, child, in ipairs(self.m_children) do
+    for _, child in ipairs(self.m_children) do
         ret = child:evaluate(obj)
         if not ret then
             break

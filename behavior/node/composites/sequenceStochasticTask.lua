@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -34,8 +35,8 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequenceStochasticTask", "cCompositeStochasti
 function cSequenceStochasticTask:__init()
 end
 
-function cCompositeStochasticTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cCompositeStochasticTask:update self.m_activeChildIndex <= #self.m_children")
+function cSequenceStochasticTask:update(obj, childStatus)
+    BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSequenceStochasticTask:update self.m_activeChildIndex <= #self.m_children")
     
     local bFirst = true
     local node = self.m_node

@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -44,11 +45,11 @@ function cEffectorConfig:load(properties)
     for _, p in ipairs(properties) do
         if p.name == "Phase" then
             if p.value == "Success" then
-                this->m_phase = ENodePhase.E_SUCCESS
+                self.m_phase = ENodePhase.E_SUCCESS
             elseif p.value == "Failure" then
-                this->m_phase = ENodePhase.E_FAILURE
-            elseif p->value == "Both" then
-                this->m_phase = ENodePhase.E_BOTH
+                self.m_phase = ENodePhase.E_FAILURE
+            elseif p.value == "Both" then
+                self.m_phase = ENodePhase.E_BOTH
             else
                 BEHAVIAC_ASSERT(false)
             end

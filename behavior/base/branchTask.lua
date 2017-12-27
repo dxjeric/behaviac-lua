@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -51,7 +52,7 @@ function cBranchTask:setCurrentTask(behaviorTask)
             behaviorTask:setHasManagingParent(true)
         end
     else
-        if self.m_status != EBTStatus.BT_RUNNING then
+        if self.m_status ~= EBTStatus.BT_RUNNING then
             self.m_currentTask = behaviorTask
         end
     end
@@ -91,7 +92,7 @@ function cBranchTask:copyTo(behaviorTask)
     if self.m_currentTask then
         local id = self.m_currentTask:getId()
         local data = {id_ = id}
-        behaviorTask:traverse(true, , false, data)
+        behaviorTask:traverse(true, getIdHandler, false, data)
         behaviorTask.m_currentTask = data.task_
     end
 end
@@ -132,7 +133,7 @@ function cBranchTask:execCurrentTask(obj, childStatus)
                     return EBTStatus.BT_RUNNING
                 end
 
-                if parentBranch ~= self and parentBranch->m_status == status then
+                if parentBranch ~= self and parentBranch.m_status == status then
                     return EBTStatus.BT_FAILURE
                 end
 

@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -34,9 +35,9 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorStochasticTask", "cCompositeStochasti
 function cSelectorStochasticTask:__init()
 end
 
-function cCompositeStochasticTask:update()
+function cSelectorStochasticTask:update()
     local bFirst = true
-    BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cCompositeStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
+    BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cSelectorStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
 
     -- Keep going until a child behavior says its running.
     while true do

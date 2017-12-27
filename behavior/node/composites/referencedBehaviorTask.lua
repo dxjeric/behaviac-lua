@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -55,7 +56,7 @@ function cReferencedBehaviorTask:onEnter(obj)
     local szTreePath = self.m_node:getReferencedTree(obj)
     
     -- to create the task on demand
-    if szTreePath and (not self.m_subTree or stringUtils.compare(szTreePath, self.m_subTree:getName(), true) then
+    if szTreePath and (not self.m_subTree or stringUtils.compare(szTreePath, self.m_subTree:getName(), true)) then
         if self.m_subTree then
             d_ms.d_behaviorTreeMgr.destroyBehaviorTreeTask(self.m_subTree, obj)
         end
@@ -81,7 +82,8 @@ end
 function cReferencedBehaviorTask:update(obj, childStatus)
     BEHAVIAC_ASSERT(self:getNode() and self:getNode():isReferencedBehavior(), "cReferencedBehaviorTask:update self:getNode():isReferencedBehavior")
     local result = self.m_subTree:exec(obj)
-    local bTransitioned, self.m_nextStateId = State.updateTransitions(pAgent, self.m_node, self.m_node.m_transitions, self.m_nextStateId, result)
+    local bTransitioned, nextStateId = State.updateTransitions(obj, self.m_node, self.m_node.m_transitions, self.m_nextStateId, result)
+    self.m_nextStateId = nextStateId
 
     if bTransitioned then
         if result == EBTStatus.BT_RUNNING then

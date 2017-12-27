@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -58,10 +59,10 @@ function cDecoratorLoopTask:update(obj, childStatus)
         BEHAVIAC_ASSERT(self.m_root, "cDecoratorLoopTask:update self.m_root")
 
         local status = EBTStatus.BT_INVALID
-        for i = 1, self.m_n then
+        for i = 1, self.m_n do
             status = self.m_root:exec(obj, childStatus)
             if self.m_node.m_bDecorateWhenChildEnds then
-                while status == EBTStatus.BT_RUNNING then
+                while status == EBTStatus.BT_RUNNING do
                     status = d_ms.d_decoratorCountTask.cDecoratorCountTask.update(self, obj, childStatus)
                 end
             end

@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -25,7 +26,7 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 ------------------------------------------------------------------------------------------------------
 module "behavior.node.conditions.true"
 ------------------------------------------------------------------------------------------------------
-class("False", d_ms.d_conditionBase.cConditionBase)
+class("cFalse", d_ms.d_conditionBase.cConditionBase)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cFalse", cFalse)
 _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cFalse", "cConditionBase")
 ------------------------------------------------------------------------------------------------------

@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -54,7 +55,7 @@ function cEnd:getEndOutside()
     return self.m_endOutside
 end
 
-function cCompute:loadByProperties(version, agentType, properties)
+function cEnd:loadByProperties(version, agentType, properties)
     d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
 
     for _, property in ipairs(properties) do

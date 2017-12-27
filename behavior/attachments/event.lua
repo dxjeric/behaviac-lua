@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class         = class
 local table         = table
 local print         = print
 local error         = error
@@ -27,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.attachments.event"
 ------------------------------------------------------------------------------------------------------
 class("cEvent", d_ms.d_conditionBase.cConditionBase)
-_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAction", cAction)
-_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAction", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cEvent", cEvent)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEvent", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 function cEvent:__init()
     self.m_event            = false
