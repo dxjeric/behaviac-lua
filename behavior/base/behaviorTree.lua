@@ -104,7 +104,7 @@ function cBehaviorTree:loadLocal(version, agentType, xmlNode)
 end
 
 function cBehaviorTree:addLocal(agentType, typeName, name, valueStr)
-    self.m_localProps[name] = getProperty(typeName, valueStr)
+    self.m_localProps[name] = d_ms.d_behaviorCommon.getProperty(typeName, valueStr)
 end
 
 function cBehaviorTree:addPar(agentType, typeName, name, valueStr)

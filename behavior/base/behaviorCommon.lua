@@ -214,6 +214,12 @@ function _G.BEHAVIAC_ASSERT(check, msgFormat, ...)
     end
 end
 --------------------------------------------------------------------------------------------------------------
+BehaviorParseFactory = {}
+constCharByteDoubleQuote    = string.byte('\"')
+constCharByteLeftBracket    = string.byte('[')
+constCharByteRightBracket   = string.byte(']')
+constCharByteLeftBraces     = string.byte('{')
+
 local paramMt = {}
 function paramMt:run(obj)
 
@@ -252,14 +258,108 @@ function paramMt:getValueByRetrunType(obj, bVector, returnType)
 
 end
 
+local function splitParams(str)
+    return d_ms.d_str.split(str, ',')
+end
 
-BehaviorParseFactory = {}
+local function splitTokens(str)
+    local ret = {}
+    if string.byte(str, 1, 1) == constCharByteDoubleQuote then
+        assert(string.byte(str, -1, -1) == constCharByteDoubleQuote, "splitTokens string.byte(str, -1, -1) == constCharByteDoubleQuote")
+        table.inset(ret, str)
+        return ret
+    end
+    
+    local p = d_ms.d_str.split(str, ' ')
+    local len = #p
+
+    if string.byte(p[len], -1, -1) == constCharByteRightBracket then
+        local b = string.find(p[len], '\[')
+        assert(b, "splitTokens string.find(p[len], '\[')")
+        p[len] = string.sub(v, 1, b-1)
+        p[len+1] = string.sub(v, b+1, -1)
+    end
+    return p
+end
+
+local function TParseProperty(str)
+    if stringUtils.isNullOrEmpty(str) then
+        return nil
+    end
+    -- struct
+    local isStructOrConst = (constCharByteLeftBraces == string.byte(str, 1, 1))
+    if not isStructOrConst then
+        local p = splitTokens(str)
+        -- const
+        isStructOrConst = (#p == 1)
+    end
+
+    if isStructOrConst then
+        return BehaviorParseFactory.getConst(str)
+    end
+
+    return BehaviorParseFactory.parseProperty(str)
+end
+
+function BehaviorParseFactory.getConst(str)
+
+end
+
+
 function BehaviorParseFactory.parseMethod(methodInfo)
-    return setmetatable({}, paramMt)
+    local intanceName, className, methodName, paramStr = string.gmatch(methodInfo, "(%w+)%.(%w+)::(%w+)%((.+)%)")()
+    assert(intanceName and className and methodName and paramStr, "BehaviorParseFactory.parseMethod")
+    local data = {
+        intanceName    = intanceName,
+        className      = className,
+        methodName     = methodName,
+        params         = splitParams(paramStr),
+    }
+    return setmetatable(data, paramMt)
 end
 
 function BehaviorParseFactory.parseProperty(propertyStr)
-    return setmetatable({}, paramMt)
+    if stringUtils.isNullOrEmpty(propertyStr) then
+        return nil
+    end
+    local data = {}
+    local properties = splitTokens(propertyStr)
+
+    if properties[1] == "const" then
+        BEHAVIAC_ASSERT(#properties == 3, "BehaviorParseFactory.parseProperty #properties == 3")
+        data.value = getProperty(properties[2], properties[3])
+    else
+        local propStr       = ""
+        local typeName      = ""
+        local indexPropStr  = ""
+        if properties[1] == "static" then
+            BEHAVIAC_ASSERT(#properties == 3 or #properties == 4, "BehaviorParseFactory.parseProperty #properties == 3 or #properties == 4")
+            typeName = properties[2]
+            propStr  = properties[3]
+            if #properties == 4 then
+                indexPropStr = properties[4]
+            end
+        else
+            BEHAVIAC_ASSERT(#properties == 2 or #properties == 3, "BehaviorParseFactory.parseProperty #properties == 2 or #properties == 3")
+            typeName = properties[1]
+            propStr  = properties[2]
+
+            if #properties == 3 then
+                indexPropStr = properties[3]
+            end 
+        end
+
+        local arrayItem   = ""
+        local indexMember = false
+
+        if string.len(indexPropStr) > 0 then
+            arrayItem = "[]"
+            indexMember = TParseProperty(indexPropStr)
+        end
+        local intanceName, className, methodName, paramStr = string.gmatch(propStr, "(%w+)%.(%w+)::(%w+)%((.+)%)")()
+    end
+
+    return setmetatable(data, paramMt)
 end
 
 function BehaviorParseFactory.parseMethodOutMethodName(methodInfo)
@@ -427,3 +527,4 @@ function getProperty(typeName, valueStr)
     end
 end
 --------------------------------------------------------------------------------------------------------------
+-- Self.CBTPlayer::MoveAhead(0)

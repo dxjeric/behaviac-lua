@@ -40,6 +40,17 @@ function d_log.error(formatStr, ...)
     print(string.format(formatStr, ...))
 end
 -------------------------------------------------------------------------------------------------------------
+d_str = {}
+function d_str.split(str, char)
+    local ret = {}
+    local e = 1
+    local b = string.find(str, char, e)
+    while b do
+        table.insert(ret, string.sub(str, e, b - 1))
+        e = b + 1
+        b = string.find(str, char, e)
+    end
+    table.insert(ret, string.sub(str, e, -1))
 
-
-
+    return ret
+end
