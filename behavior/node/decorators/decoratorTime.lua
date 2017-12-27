@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorTime"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorTime", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTime", cDecoratorTime)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTime", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTime", cDecoratorTime)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTime", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 -- It returns Running result until it reaches the time limit specified, no matter which
 -- value its child return. Or return the child's value.

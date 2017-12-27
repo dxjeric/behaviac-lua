@@ -26,8 +26,8 @@ local constBaseKeyStrDef = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local EBTStatus          = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorTree", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTree", cBehaviorTree)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBehaviorTree", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTree", cBehaviorTree)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBehaviorTree", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 function cBehaviorTree:__init()
     self.m_name         = ""

@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.conditions.or"
 ------------------------------------------------------------------------------------------------------
 class("cOr", d_ms.d_conditionBase.cConditionBase)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cOr", cOr)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cOr", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cOr", cOr)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cOr", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 -- Boolean arithmetical operation ||
 function cOr:__init()

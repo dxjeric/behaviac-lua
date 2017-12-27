@@ -28,8 +28,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.parallelTask"
 ------------------------------------------------------------------------------------------------------
 class("cParallelTask", d_ms.d_compositeTask.cCompositeTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cParallelTask", cParallelTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cParallelTask", "cCompositeTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cParallelTask", cParallelTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cParallelTask", "cCompositeTask")
 ------------------------------------------------------------------------------------------------------
 -- Execute behaviors in parallel
 -- There are two policies that control the flow of execution:

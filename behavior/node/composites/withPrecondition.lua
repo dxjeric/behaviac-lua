@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.sequence"
 ------------------------------------------------------------------------------------------------------
 class("cWithPrecondition", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWithPrecondition", cWithPrecondition)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWithPrecondition", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWithPrecondition", cWithPrecondition)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWithPrecondition", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- WithPrecondition is the precondition of SelectorLoop child. must be used in conjunction with SelectorLoop.
 -- WithPrecondition can return SUCCESS or FAILURE. child would execute when it returns SUCCESS, or not.

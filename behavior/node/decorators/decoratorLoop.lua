@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorLoop"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorLoop", d_ms.d_decoratorCount.cDecoratorCount)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLoop", cDecoratorLoop)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLoop", "cDecoratorCount")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLoop", cDecoratorLoop)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLoop", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
 -- DecoratorLoop can be set a integer Count value. It increases inner count value when it updates.
 -- It always return Running until inner count less equal than integer Count value. Or returns the child

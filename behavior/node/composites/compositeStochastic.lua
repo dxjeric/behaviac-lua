@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.compositeStochastic"
 ------------------------------------------------------------------------------------------------------
 class("cCompositeStochastic", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeStochastic", cCompositeStochastic)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompositeStochastic", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeStochastic", cCompositeStochastic)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompositeStochastic", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 function cCompositeStochastic:__init()
     self.m_method   = false

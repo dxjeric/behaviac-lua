@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.selector"
 ------------------------------------------------------------------------------------------------------
 class("cSelector", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSelector", cSelector)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelector", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelector", cSelector)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelector", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Selectors tick each of their children one at a time from top to bottom. If a child returns
 -- Success, then so does the Selector. If it returns Failure, the Selector will move on to the

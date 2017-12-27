@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.sequence"
 ------------------------------------------------------------------------------------------------------
 class("cSequenceStochastic", d_ms.d_compositeStochastic.cCompositeStochastic)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSequenceStochastic", cSequenceStochastic)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequenceStochastic", "cCompositeStochastic")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSequenceStochastic", cSequenceStochastic)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequenceStochastic", "cCompositeStochastic")
 ------------------------------------------------------------------------------------------------------
 -- SequenceStochastic tick each of their children in a random order. If a child returns Failure,
 -- so does the Sequence. If it returns Success, the Sequence will move on to the next child in line

@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.assignmentTask"
 ------------------------------------------------------------------------------------------------------
 class("cAssignmentTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAssignmentTask", cAssignmentTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAssignmentTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAssignmentTask", cAssignmentTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAssignmentTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cAssignmentTask:__init()
 end

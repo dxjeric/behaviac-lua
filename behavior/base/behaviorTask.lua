@@ -27,7 +27,7 @@ local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorTask")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTask", cBehaviorTask)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTask", cBehaviorTask)
 ------------------------------------------------------------------------------------------------------
 function cBehaviorTask:__init()
     self.m_attachments  = false

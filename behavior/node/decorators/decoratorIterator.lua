@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorIterator"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorIterator", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorIterator", cDecoratorIterator)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorIterator", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorIterator", cDecoratorIterator)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorIterator", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorIterator:__init()
     self.m_opl = false

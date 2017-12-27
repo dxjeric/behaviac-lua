@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorTimeTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorTimeTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTimeTask", cDecoratorTimeTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTimeTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTimeTask", cDecoratorTimeTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTimeTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorTimeTask:__init()
     self.m_start    = 0

@@ -28,8 +28,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.selectorLoopTask"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorLoopTask", d_ms.d_compositeTask.cCompositeTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorLoopTask", cSelectorLoopTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorLoopTask", "cCompositeTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorLoopTask", cSelectorLoopTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorLoopTask", "cCompositeTask")
 ------------------------------------------------------------------------------------------------------
 function cSelectorLoopTask:__init()
 end

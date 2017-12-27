@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorNotTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorNotTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNotTask", cDecoratorNotTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNotTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNotTask", cDecoratorNotTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNotTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorNotTask:__init()
 end

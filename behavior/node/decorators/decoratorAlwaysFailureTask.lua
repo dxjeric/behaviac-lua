@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorAlwaysFailureTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorAlwaysFailureTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", cDecoratorAlwaysFailureTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailureTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorAlwaysFailureTask:__init()
 

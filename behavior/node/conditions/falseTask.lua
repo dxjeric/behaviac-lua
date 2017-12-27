@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.conditions.orTask"
 ------------------------------------------------------------------------------------------------------
 class("cFalseTask", d_ms.d_conditionBaseTask.cConditionBaseTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cFalseTask", cFalseTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cFalseTask", "cConditionBaseTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cFalseTask", cFalseTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cFalseTask", "cConditionBaseTask")
 ------------------------------------------------------------------------------------------------------
 function cFalseTask:__init()
 end

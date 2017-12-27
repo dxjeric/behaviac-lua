@@ -29,8 +29,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.parallelTask"
 ------------------------------------------------------------------------------------------------------
 class("cReferencedBehaviorTask", d_ms.d_singeChildTask.cSingeChildTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cReferencedBehaviorTask", cReferencedBehaviorTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cReferencedBehaviorTask", "cSingeChildTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cReferencedBehaviorTask", cReferencedBehaviorTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cReferencedBehaviorTask", "cSingeChildTask")
 ------------------------------------------------------------------------------------------------------
 function cReferencedBehaviorTask:__init()
     self.m_nextStateId  = -1

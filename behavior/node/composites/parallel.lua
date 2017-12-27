@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.parallel"
 ------------------------------------------------------------------------------------------------------
 class("cParallel", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cParallel", cParallel)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cParallel", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cParallel", cParallel)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cParallel", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- options when a parallel node is considered to be failed.
 -- FAIL_ON_ONE: the node fails as soon as one of its children fails.

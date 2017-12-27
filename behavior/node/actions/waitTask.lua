@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.waitTask"
 ------------------------------------------------------------------------------------------------------
 class("cWaitTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitTask", cWaitTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitTask", cWaitTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cWaitTask:__init()
     self.m_start    = 0

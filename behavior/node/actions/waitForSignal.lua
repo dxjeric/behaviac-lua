@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.waitForSignal"
 ------------------------------------------------------------------------------------------------------
 class("cWaitForSignal", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitForSignal", cWaitForSignal)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitForSignal", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitForSignal", cWaitForSignal)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitForSignal", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Always return Running until the predicates of WaitforSignal node become true,
 -- or executing child node and return execution result.

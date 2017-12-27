@@ -26,8 +26,8 @@ local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorNode", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNode", cDecoratorNode)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNode", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNode", cDecoratorNode)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNode", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorNode:__init()
     self.m_bDecorateWhenChildEnds = false

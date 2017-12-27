@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.selectorLoop"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorLoop", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorLoop", cSelectorLoop)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorLoop", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorLoop", cSelectorLoop)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorLoop", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Behavives similarly to SelectorTask, i.e. executing chidren until the first successful one.
 -- however, in the following ticks, it constantly monitors the higher priority nodes.if any

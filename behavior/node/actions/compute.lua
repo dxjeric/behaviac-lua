@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.compute"
 ------------------------------------------------------------------------------------------------------
 class("cCompute", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cCompute", cCompute)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompute", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cCompute", cCompute)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompute", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Compute the result of Operand1 and Operand2 and assign it to the Left Operand.
 -- Compute node can perform Add, Sub, Mul and Div operations. a left and right Operand

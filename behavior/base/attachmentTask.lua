@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local class 		= class
 local table         = table
 local print         = print
 local error         = error
@@ -27,8 +28,8 @@ local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cAttachmentTask")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAttachmentTask", cAttachmentTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAttachmentTask", "cBehaviorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAttachmentTask", cAttachmentTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAttachmentTask", "cBehaviorTask")
 ------------------------------------------------------------------------------------------------------
 function cAttachmentTask:__init()
 

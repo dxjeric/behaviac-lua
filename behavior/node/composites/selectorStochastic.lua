@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.selectorStochastic"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorStochastic", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorStochastic", cSelectorStochastic)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorStochastic", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorStochastic", cSelectorStochastic)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorStochastic", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- the Selector runs the children from the first sequentially until the child which returns success.
 -- for SelectorStochastic, the children are not sequentially selected, instead it is selected stochasticly.

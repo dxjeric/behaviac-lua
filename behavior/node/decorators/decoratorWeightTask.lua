@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorWeightTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorWeightTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorWeightTask", cDecoratorWeightTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorWeightTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorWeightTask", cDecoratorWeightTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorWeightTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorWeightTask:__init()
 end

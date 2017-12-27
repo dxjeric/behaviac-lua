@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.wait"
 ------------------------------------------------------------------------------------------------------
 class("cWait", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWait", cWait)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWait", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWait", cWait)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWait", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Wait for the specified milliseconds. always return Running until time over.
 function cWait:__init()

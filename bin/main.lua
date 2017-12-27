@@ -3,7 +3,6 @@ require "ms"
 printValue("test", d_ms.d_commonFun.loadXml("./player.xml"))
 
 function main_entrance(con, id, data, len, ses, cid, time)
-
     return 1
 end
 

@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorFrames"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorFrames", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorFrames", cDecoratorFrames)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorFrames", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorFrames", cDecoratorFrames)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorFrames", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorFrames:__init()
     self.m_frames = false
@@ -56,7 +56,7 @@ function cDecoratorFrames:getFrames(obj)
         if frames == 0xFFFFFFFF then
             return -1
         else
-            return bits.and(frames, 0x0000FFFF)
+            return bits.bitAnd(frames, 0x0000FFFF)
         end
     end
 

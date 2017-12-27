@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.parallel"
 ------------------------------------------------------------------------------------------------------
 class("cReferencedBehavior", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cReferencedBehavior", cReferencedBehavior)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cReferencedBehavior", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cReferencedBehavior", cReferencedBehavior)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cReferencedBehavior", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 function cReferencedBehavior:__init()
     self.m_referencedBehaviorPath = false

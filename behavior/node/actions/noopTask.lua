@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.noopTask"
 ------------------------------------------------------------------------------------------------------
 class("cNoopTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cNoopTask", cNoopTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cNoopTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cNoopTask", cNoopTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cNoopTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cNoopTask:__init()
 end

@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorSuccessUntilTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorSuccessUntilTask", d_ms.d_decoratorCountTask.cDecoratorCountTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorSuccessUntilTask", cDecoratorSuccessUntilTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorSuccessUntilTask", "cDecoratorCountTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorSuccessUntilTask", cDecoratorSuccessUntilTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorSuccessUntilTask", "cDecoratorCountTask")
 ------------------------------------------------------------------------------------------------------
 -- Returns BT_SUCCESS for the specified number of iterations, then returns BT_FAILURE after that
 function cDecoratorSuccessUntilTask:__init()

@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.conditions.andTask"
 ------------------------------------------------------------------------------------------------------
 class("cAndTask", d_ms.d_sequenceTask.cSequenceTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAndTask", cAndTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAndTask", "cSequenceTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAndTask", cAndTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAndTask", "cSequenceTask")
 ------------------------------------------------------------------------------------------------------
 function cAndTask:__init()
 end

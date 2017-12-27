@@ -26,8 +26,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.action"
 ------------------------------------------------------------------------------------------------------
 class("cAction", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAction", cAction)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAction", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAction", cAction)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAction", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Action node is the bridge between behavior tree and agent member function.
 -- a member function can be assigned to an action node. function will be

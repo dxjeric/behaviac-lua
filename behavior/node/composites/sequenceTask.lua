@@ -28,8 +28,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.sequenceTask"
 ------------------------------------------------------------------------------------------------------
 class("cSequenceTask", d_ms.d_compositeTask.cCompositeTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSequenceTask", cSequenceTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequenceTask", "cCompositeTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSequenceTask", cSequenceTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequenceTask", "cCompositeTask")
 ------------------------------------------------------------------------------------------------------
 function cSequenceTask:__init()
 end

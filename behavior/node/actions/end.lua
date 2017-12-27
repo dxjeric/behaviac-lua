@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.end"
 ------------------------------------------------------------------------------------------------------
 class("cEnd", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cEnd", cEnd)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEnd", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cEnd", cEnd)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEnd", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- The behavior tree return success or failure.
 function cEnd:__init()

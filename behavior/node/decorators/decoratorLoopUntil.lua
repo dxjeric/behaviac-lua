@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorLoopUntil"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorLoopUntil", d_ms.d_decoratorCount.cDecoratorCount)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLoopUntil", cDecoratorLoopUntil)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLoopUntil", "cDecoratorCount")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLoopUntil", cDecoratorLoopUntil)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLoopUntil", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
 -- DecoratorLoopUntil can be set two conditions, loop count 'C' and a return value 'R'.
 -- if current update count less equal than 'C' and child return value not equal to 'R',

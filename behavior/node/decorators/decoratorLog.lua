@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorLog"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorLog", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLog", cDecoratorLog)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLog", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLog", cDecoratorLog)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLog", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 -- Output message specified when it updates.
 function cDecoratorLog:__init()

@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.computeTask"
 ------------------------------------------------------------------------------------------------------
 class("cComputeTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cComputeTask", cComputeTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cComputeTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cComputeTask", cComputeTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cComputeTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cComputeTask:__init()
 end

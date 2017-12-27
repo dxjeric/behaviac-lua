@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.decorators.decoratorAlwaysRunning"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorAlwaysRunning", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysRunning", cDecoratorAlwaysRunning)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysRunning", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysRunning", cDecoratorAlwaysRunning)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysRunning", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 -- No matter what child return. DecoratorAlwaysRunning always return Running. it can only has one child node.
 function cDecoratorAlwaysRunning:__init()

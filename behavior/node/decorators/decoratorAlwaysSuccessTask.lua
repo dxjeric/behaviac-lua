@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorAlwaysSuccessTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorAlwaysRunningTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", cDecoratorAlwaysRunningTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", cDecoratorAlwaysRunningTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysRunningTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorAlwaysRunningTask:__init()
 

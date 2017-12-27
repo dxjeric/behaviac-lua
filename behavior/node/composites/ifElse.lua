@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.ifElse"
 ------------------------------------------------------------------------------------------------------
 class("cIfElse", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cIfElse", cIfElse)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cIfElse", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cIfElse", cIfElse)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cIfElse", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- this node has three children: 'condition' branch, 'if' branch, 'else' branch. first, it executes
 -- conditon, until it returns success or failure. if it returns success, it then executes 'if' branch,

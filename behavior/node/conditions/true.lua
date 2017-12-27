@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.conditions.true"
 ------------------------------------------------------------------------------------------------------
 class("cTrue", d_ms.d_conditionBase.cConditionBase)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cTrue", cTrue)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cTrue", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cTrue", cTrue)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cTrue", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 -- True is a leaf node that always return Success.
 function cTrue:__init()

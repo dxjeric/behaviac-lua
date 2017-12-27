@@ -25,8 +25,8 @@ local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
 module "behavior.node.conditions.conditionBase"
 ------------------------------------------------------------------------------------------------------
 class("cConditionBase", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cConditionBase", cConditionBase)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cConditionBase", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cConditionBase", cConditionBase)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cConditionBase", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 function cConditionBase:__init()
 end

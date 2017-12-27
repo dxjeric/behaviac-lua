@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.endTask"
 ------------------------------------------------------------------------------------------------------
 class("cEndTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cEndTask", cEndTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEndTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cEndTask", cEndTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEndTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cEndTask:__init()
 end

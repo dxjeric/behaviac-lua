@@ -28,8 +28,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.selectorProbabilityTask"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorProbabilityTask", d_ms.d_compositeTask.cCompositeTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorProbabilityTask", cSelectorProbabilityTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorProbabilityTask", "cCompositeTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorProbabilityTask", cSelectorProbabilityTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorProbabilityTask", "cCompositeTask")
 ------------------------------------------------------------------------------------------------------
 -- For example, if there were two children with a weight of one, each would have a 50% chance of being executed.
 -- If another child with a weight of eight were added, the previous children would have a 10% chance of being executed, and the new child would have an 80% chance of being executed.

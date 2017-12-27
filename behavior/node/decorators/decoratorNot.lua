@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorNot"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorNot", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNot", cDecoratorNot)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNot", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorNot", cDecoratorNot)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorNot", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 -- Not Node inverts the return value of child. But keeping the Running value unchanged.
 function cDecoratorNot:__init()

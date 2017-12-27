@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorFailureUntil"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorFailureUntil", d_ms.d_decoratorCount.cDecoratorCount)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorFailureUntil", cDecoratorFailureUntil)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorFailureUntil", "cDecoratorCount")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorFailureUntil", cDecoratorFailureUntil)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorFailureUntil", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
 -- UntilFailureUntil node always return Failure until it reaches a specified number of count.
 -- when reach time exceed the count specified return Success. If the specified number of count

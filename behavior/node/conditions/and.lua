@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.conditions.and"
 ------------------------------------------------------------------------------------------------------
 class("cAnd", d_ms.d_conditionBase.cConditionBase)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAnd", cAnd)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAnd", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAnd", cAnd)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAnd", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 -- Boolean arithmetical operation &&
 function cAnd:__init()

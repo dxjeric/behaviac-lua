@@ -13,6 +13,7 @@ local pairs         = pairs
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
+local string        = string
 local getfenv       = getfenv
 local tostring      = tostring
 local setmetatable  = setmetatable
@@ -89,6 +90,12 @@ constBaseKeyStrDef = {
     kStrDescriptorRefs  = "DescriptorRefs",
 }
 --------------------------------------------------------------------------------------------------------------
+propertyValueType = {
+    default = 0,    -- 默认
+    const   = 1,    -- const
+    static  = 2,    -- static
+}
+--------------------------------------------------------------------------------------------------------------
 nodeFactory = {}
 --------------------------------------------------------------------------------------------------------------
 function registNodeCreateFun(nodeName, fun)
@@ -138,13 +145,6 @@ function _G.ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
 
     BEHAVIAC_DYNAMIC_TYPES[className] = classDeclare
 end
--- 同C++ 
--- 在调用BEHAVIAC_DECLARE_DYNAMIC_TYPE这个之前必须先调用 ADD_BEHAVIAC_DYNAMIC_TYPE
-function _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE(nodeClassName, fatherClassName)
-    FATHER_CLASS_INFO[nodeClassName] = fatherClassName
-    BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(nodeClassName)
-    BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
-end
 
 function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
     assert(BEHAVIAC_DYNAMIC_TYPES[className], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", className))
@@ -166,7 +166,7 @@ function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fat
     BEHAVIAC_DYNAMIC_TYPES[nodeClassName][checkFunName] = function() return true end
     local rootFatherName = fatherClassName
     local fName = fatherClassName
-    while fName then
+    while fName do
         fName = FATHER_CLASS_INFO[fName]
         if fName then
             rootFatherName = fName
@@ -213,6 +213,15 @@ function _G.BEHAVIAC_ASSERT(check, msgFormat, ...)
         assert(false)
     end
 end
+
+-- 同C++ 
+-- 在调用BEHAVIAC_DECLARE_DYNAMIC_TYPE这个之前必须先调用 ADD_BEHAVIAC_DYNAMIC_TYPE
+function _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE(nodeClassName, fatherClassName)
+    FATHER_CLASS_INFO[nodeClassName] = fatherClassName
+    _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(nodeClassName)
+    _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
+end
+
 --------------------------------------------------------------------------------------------------------------
 BehaviorParseFactory = {}
 constCharByteDoubleQuote    = string.byte('\"')
@@ -226,15 +235,37 @@ function paramMt:run(obj)
 end
 
 function paramMt:getIValueFrom(obj, method)
+    local fp = method:getValue(obj)
+    if self.valueIsFunction then
+        if self.params then
+            return self.value(obj, fp, unpack(self.params))
+        else
+            return self.value(obj, fp)
+        end
+    else
+        assert("paramMt:getIValueFrom error msg: value is not function")
+        return self.value
+    end
 end
 
 function paramMt:getIValue(obj)
+    return tonumber(self:getValue())
 end
 
 function paramMt:setValueCast(obj, opr, cast)
+    d_ms.d_log.error("paramMt:setValueCast 不知道做什么")
 end
 
 function paramMt:getValue(obj)
+    if self.valueIsFunction then
+        if self.params then
+            return self.value(obj, unpack(self.params))
+        else
+            return self.value(obj)
+        end
+    else
+        return self.value
+    end
 end
 
 function paramMt:getClassTypeNumberId()
@@ -258,10 +289,6 @@ function paramMt:getValueByRetrunType(obj, bVector, returnType)
 
 end
 
-local function splitParams(str)
-    return d_ms.d_str.split(str, ',')
-end
-
 local function splitTokens(str)
     local ret = {}
     if string.byte(str, 1, 1) == constCharByteDoubleQuote then
@@ -282,88 +309,90 @@ local function splitTokens(str)
     return p
 end
 
-local function TParseProperty(str)
-    if stringUtils.isNullOrEmpty(str) then
-        return nil
-    end
-    -- struct
-    local isStructOrConst = (constCharByteLeftBraces == string.byte(str, 1, 1))
-    if not isStructOrConst then
-        local p = splitTokens(str)
-        -- const
-        isStructOrConst = (#p == 1)
-    end
-
-    if isStructOrConst then
-        return BehaviorParseFactory.getConst(str)
-    end
-
-    return BehaviorParseFactory.parseProperty(str)
-end
-
-function BehaviorParseFactory.getConst(str)
-
-end
-
-
 function BehaviorParseFactory.parseMethod(methodInfo)
-    local intanceName, className, methodName, paramStr = string.gmatch(methodInfo, "(%w+)%.(%w+)::(%w+)%((.+)%)")()
+    if stringUtils.isNullOrEmpty(methodInfo) then
+        return nil, false
+    end
+
+    -- self:funtionName(params)
+    -- _G:fff.fff()
+    local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+):(.+)%((.+)%)")()
     assert(intanceName and className and methodName and paramStr, "BehaviorParseFactory.parseMethod")
     local data = {
+        isFunction     = true,
         intanceName    = intanceName,
-        className      = className,
         methodName     = methodName,
-        params         = splitParams(paramStr),
+        params         = d_ms.d_str.split(paramStr, ','),
     }
-    return setmetatable(data, paramMt)
+
+    if intanceName == "self" then
+        data.value = function(obj, ...)
+            assert(obj.methodName, methodName .. " is not obj's member function")
+            return obj.methodName(obj, ...)
+        end
+        data.valueIsFunction = true
+    elseif intanceName == "_G" then
+        data.value = load("return " .. methodName)()
+        data.valueIsFunction = true
+    end
+    return setmetatable(data, paramMt), methodName
 end
 
 function BehaviorParseFactory.parseProperty(propertyStr)
     if stringUtils.isNullOrEmpty(propertyStr) then
         return nil
     end
-    local data = {}
+    local data = {isFunction = false}
     local properties = splitTokens(propertyStr)
 
+    -- const number/table/string 0/{x=1,y=1,z=1}/"111"
     if properties[1] == "const" then
         BEHAVIAC_ASSERT(#properties == 3, "BehaviorParseFactory.parseProperty #properties == 3")
-        data.value = getProperty(properties[2], properties[3])
+        data.type  = propertyValueType.const
+        data.value = getProperty(properties[2], properties[3]) 
+        data.valueIsFunction = false
     else
         local propStr       = ""
         local typeName      = ""
         local indexPropStr  = ""
         if properties[1] == "static" then
-            BEHAVIAC_ASSERT(#properties == 3 or #properties == 4, "BehaviorParseFactory.parseProperty #properties == 3 or #properties == 4")
+            -- static number/table/str Self.m_s_float_type_0
+            -- static number/table/str _G.xxx.yyy
+            BEHAVIAC_ASSERT(#properties == 3, "BehaviorParseFactory.parseProperty #properties == 3")
             typeName = properties[2]
             propStr  = properties[3]
-            if #properties == 4 then
-                indexPropStr = properties[4]
-            end
+            data.type  = propertyValueType.static
         else
-            BEHAVIAC_ASSERT(#properties == 2 or #properties == 3, "BehaviorParseFactory.parseProperty #properties == 2 or #properties == 3")
+            -- number/table/str Self.m_s_float_type_0
+            -- number/table/str _G.xxx.yyy
+            BEHAVIAC_ASSERT(#properties == 2, "BehaviorParseFactory.parseProperty #properties == 2")
             typeName = properties[1]
             propStr  = properties[2]
-
-            if #properties == 3 then
-                indexPropStr = properties[3]
-            end 
+            data.type  = propertyValueType.default
         end
 
-        local arrayItem   = ""
-        local indexMember = false
-
-        if string.len(indexPropStr) > 0 then
-            arrayItem = "[]"
-            indexMember = TParseProperty(indexPropStr)
+        local values = d_ms.d_str.split(propStr, '%.')
+        if values[1] == "self" then
+            assert(#values == 2, "BehaviorParseFactory.parseProperty self.xx ")
+            data.value = function(obj)
+                local key = values[2]
+                return obj[key]
+            end
+            data.valueIsFunction = true
+        elseif values[1] == "_G" then
+            local fs = string.sub(propStr, 3)
+            data.value = load("return " .. fs)
+            data.valueIsFunction = true
         end
-        local intanceName, className, methodName, paramStr = string.gmatch(propStr, "(%w+)%.(%w+)::(%w+)%((.+)%)")()
+
+        return setmetatable(data, paramMt)
     end
 
-    return setmetatable(data, paramMt)
+    return nil
 end
 
 function BehaviorParseFactory.parseMethodOutMethodName(methodInfo)
-    return methon, methonName
+    return BehaviorParseFactory.parseMethod(methodInfo)
 end
 
 function BehaviorParseFactory.parseOperatorType(operatorTypeStr)
@@ -501,6 +530,8 @@ basicTypesFun.UInt64    = tonumber
 basicTypesFun.ulong     = tonumber
 basicTypesFun.ullong    = tonumber
 basicTypesFun.Single    = tonumber
+basicTypesFun.number    = tonumber
+basicTypesFun.table     = function(str) return load("return " .. str)() end
 
 basicTypesFun.string            = function(str) return str end
 basicTypesFun.String            = function(str) return str end

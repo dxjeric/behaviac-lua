@@ -29,8 +29,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.noopTask"
 ------------------------------------------------------------------------------------------------------
 class("cCompositeStochasticTask", d_ms.d_compositeTask.cCompositeTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeStochasticTask", cCompositeStochasticTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompositeStochasticTask", "cCompositeTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeStochasticTask", cCompositeStochasticTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompositeStochasticTask", "cCompositeTask")
 ------------------------------------------------------------------------------------------------------
 function cCompositeStochasticTask:__init()
     self.m_set = {}

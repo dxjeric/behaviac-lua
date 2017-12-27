@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.assignment"
 ------------------------------------------------------------------------------------------------------
 class("cAssignment", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAssignment", cAssignment)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAssignment", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAssignment", cAssignment)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAssignment", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Assign a right value to left par or agent property. a right value can be a par or agent property.
 function cAssignment:__init()

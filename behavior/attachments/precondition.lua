@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.attachments.precondition"
 ------------------------------------------------------------------------------------------------------
 class("cPrecondition", d_ms.d_attachAction.cAttachAction)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cPrecondition", cPrecondition)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cPrecondition", "cAttachAction")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cPrecondition", cPrecondition)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cPrecondition", "cAttachAction")
 ------------------------------------------------------------------------------------------------------
 class("cPreconditionConfig", d_ms.d_attachAction.cActionConfig)
 

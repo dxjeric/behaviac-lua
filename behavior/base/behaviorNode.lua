@@ -27,7 +27,7 @@ local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local stringUtils           = d_ms.d_behaviorCommon.stringUtils
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorNode")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorNode", cBehaviorNode)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorNode", cBehaviorNode)
 ------------------------------------------------------------------------------------------------------
 function cBehaviorNode:__init()
     self.m_node

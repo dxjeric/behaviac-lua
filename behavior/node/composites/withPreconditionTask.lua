@@ -28,8 +28,8 @@ local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 module "behavior.node.actions.selectorStochasticTask"
 ------------------------------------------------------------------------------------------------------
 class("cWithPreconditionTask", d_ms.d_sequenceTask.cSequenceTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWithPreconditionTask", cWithPreconditionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWithPreconditionTask", "cSequenceTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWithPreconditionTask", cWithPreconditionTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWithPreconditionTask", "cSequenceTask")
 ------------------------------------------------------------------------------------------------------
 function cWithPreconditionTask:__init()
 

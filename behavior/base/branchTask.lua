@@ -27,8 +27,8 @@ local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cBranchTask")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cBranchTask", cBranchTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBranchTask", "cBehaviorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBranchTask", cBranchTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBranchTask", "cBehaviorTask")
 ------------------------------------------------------------------------------------------------------
 function cBranchTask:__init()
     -- bookmark the current ticking node, it is different from m_activeChildIndex

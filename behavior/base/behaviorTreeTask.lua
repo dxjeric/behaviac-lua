@@ -28,8 +28,8 @@ local EBTStatus                 = d_ms.d_behaviorCommon.EBTStatus
 local constInvalidChildIndex    = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorTreeTask", d_ms.d_singeChildTask.cSingeChildTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTreeTask", cBehaviorTreeTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBehaviorTreeTask", "cSingeChildTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorTreeTask", cBehaviorTreeTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cBehaviorTreeTask", "cSingeChildTask")
 ------------------------------------------------------------------------------------------------------
 function cBehaviorTreeTask:__init()
     self.m_lastTreeTask = false     -- REDO: 默认值

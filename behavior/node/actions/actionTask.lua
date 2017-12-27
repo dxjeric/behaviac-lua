@@ -25,8 +25,8 @@ local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
 module "behavior.node.actions.actionTask"
 ------------------------------------------------------------------------------------------------------
 class("cActionTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cActionTask", cActionTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cActionTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cActionTask:__init()
 end

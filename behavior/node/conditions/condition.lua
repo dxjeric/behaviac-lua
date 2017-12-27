@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.conditions.condition"
 ------------------------------------------------------------------------------------------------------
 class("cCondition", d_ms.d_conditionBase.cConditionBase)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cCondition", cCondition)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCondition", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cCondition", cCondition)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCondition", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 function cCondition:__init()
     self.m_opl      = false

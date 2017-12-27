@@ -28,8 +28,8 @@ local EBTStatus                 = d_ms.d_behaviorCommon.EBTStatus
 local constInvalidChildIndex    = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorTask", d_ms.d_singeChildTask.cSingeChildTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTask", cDecoratorTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTask", "cSingeChildTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTask", cDecoratorTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTask", "cSingeChildTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorTask:__init()
     self.m_bDecorateWhenChildEnds = false

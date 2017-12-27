@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorCountLimitTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorCountLimitTask", d_ms.d_decoratorCountTask.cDecoratorCountTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountLimitTask", cDecoratorCountLimitTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountLimitTask", "cDecoratorCountTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountLimitTask", cDecoratorCountLimitTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountLimitTask", "cDecoratorCountTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorCountLimitTask:__init()
     self.m_bInited = false

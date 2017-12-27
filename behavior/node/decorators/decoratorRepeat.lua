@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorRepeat"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorRepeat", d_ms.d_decoratorCount.cDecoratorCount)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorRepeat", cDecoratorRepeat)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorRepeat", "cDecoratorCount")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorRepeat", cDecoratorRepeat)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorRepeat", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorRepeat:__init()
 end

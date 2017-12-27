@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.sequence"
 ------------------------------------------------------------------------------------------------------
 class("cSequence", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSequence", cSequence)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequence", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSequence", cSequence)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequence", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Sequences tick each of their children one at a time from top to bottom. If a child returns Failure,
 -- so does the Sequence. If it returns Success, the Sequence will move on to the next child in line

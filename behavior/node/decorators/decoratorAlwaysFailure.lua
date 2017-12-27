@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.decorators.decoratorAlwaysFailure"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorAlwaysFailure", d_ms.d_decoratorNode.cDecoratorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailure", cDecoratorAlwaysFailure)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailure", "cDecoratorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorAlwaysFailure", cDecoratorAlwaysFailure)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorAlwaysFailure", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
 -- No matter what child return. DecoratorAlwaysFailure always return Failure. it can only has one child node.
 function cDecoratorAlwaysFailure:__init()

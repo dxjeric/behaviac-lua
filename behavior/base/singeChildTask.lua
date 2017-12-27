@@ -28,8 +28,8 @@ local EBTStatus                 = d_ms.d_behaviorCommon.EBTStatus
 local constInvalidChildIndex    = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
 class("cSingeChildTask", d_ms.d_branchTask.cBranchTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSingeChildTask", cSingeChildTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSingeChildTask", "cBranchTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSingeChildTask", cSingeChildTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSingeChildTask", "cBranchTask")
 ------------------------------------------------------------------------------------------------------
 function cSingeChildTask:__init()
     self.m_root = false     -- BehaviorTask

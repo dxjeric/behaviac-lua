@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorFramesTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorFramesTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorFramesTask", cDecoratorFramesTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorFramesTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorFramesTask", cDecoratorFramesTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorFramesTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorFramesTask:__init()
     self.m_start    = 0

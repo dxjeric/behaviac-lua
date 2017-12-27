@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.waitForSignalTask"
 ------------------------------------------------------------------------------------------------------
 class("cWaitForSignalTask", d_ms.d_leafTask.cLeafTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitForSignalTask", cWaitForSignalTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitForSignalTask", "cLeafTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitForSignalTask", cWaitForSignalTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitForSignalTask", "cLeafTask")
 ------------------------------------------------------------------------------------------------------
 function cWaitForSignalTask:__init()
     self.m_bTriggered = false

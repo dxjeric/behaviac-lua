@@ -27,8 +27,8 @@ local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cEventTask", d_ms.d_attachmentTask.cAttachmentTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cEventTask", cEventTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEventTask", "cAttachmentTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cEventTask", cEventTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEventTask", "cAttachmentTask")
 ------------------------------------------------------------------------------------------------------
 function cEventTask:__init()
 end

@@ -29,8 +29,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.attachments.effector"
 ------------------------------------------------------------------------------------------------------
 class("cEffector", d_ms.d_attachAction.cAttachAction)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cEffector", cEffector)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEffector", "cAttachAction")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cEffector", cEffector)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cEffector", "cAttachAction")
 ------------------------------------------------------------------------------------------------------
 class("cEffectorConfig", d_ms.d_attachAction.cActionConfig)
 

@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorCountTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorCountTask", d_ms.d_decoratorTask.cDecoratorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountTask", cDecoratorCountTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountTask", "cDecoratorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountTask", cDecoratorCountTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountTask", "cDecoratorTask")
 ------------------------------------------------------------------------------------------------------
 function cDecoratorCountTask:__init()
     self.m_n = 0

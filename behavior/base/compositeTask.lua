@@ -27,8 +27,8 @@ local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cCompositeTask", d_ms.d_branchTask.cBranchTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeTask", cCompositeTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompositeTask", "cBranchTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cCompositeTask", cCompositeTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cCompositeTask", "cBranchTask")
 ------------------------------------------------------------------------------------------------------
 -- 无效值
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex

@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.attachments.attachAction"
 ------------------------------------------------------------------------------------------------------
 class("cAttachAction", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAttachAction", cAttachAction)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAttachAction", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAttachAction", cAttachAction)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAttachAction", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 class("cActionConfig")
 function cActionConfig:__init()

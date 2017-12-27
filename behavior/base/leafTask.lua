@@ -27,8 +27,8 @@ local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cLeafTask")
-ADD_BEHAVIAC_DYNAMIC_TYPE("cLeafTask", cLeafTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cLeafTask", "cBehaviorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cLeafTask", cLeafTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cLeafTask", "cBehaviorTask")
 ------------------------------------------------------------------------------------------------------
 function cLeafTask:__init()
     

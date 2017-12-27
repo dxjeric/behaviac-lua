@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorCountLimit"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorCountLimit", d_ms.d_decoratorCount.cDecoratorCount)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountLimit", cDecoratorCountLimit)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountLimit", "cDecoratorCount")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountLimit", cDecoratorCountLimit)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountLimit", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
 -- DecoratorCountLimit can be set a integer Count limit value. DecoratorCountLimit node tick its child until
 -- inner count less equal than count limit value. Whether node increase inner count depend on

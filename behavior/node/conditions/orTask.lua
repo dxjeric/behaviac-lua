@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.conditions.orTask"
 ------------------------------------------------------------------------------------------------------
 class("cOrTask", d_ms.d_selectorTask.cSelectorTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cOrTask", cOrTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cOrTask", "cSelectorTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cOrTask", cOrTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cOrTask", "cSelectorTask")
 ------------------------------------------------------------------------------------------------------
 function cOrTask:__init()
 end

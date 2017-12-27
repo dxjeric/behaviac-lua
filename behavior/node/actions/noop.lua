@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.noop"
 ------------------------------------------------------------------------------------------------------
 class("cNoop", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cNoop", cNoop)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cNoop", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cNoop", cNoop)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cNoop", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Nothing to do, just return success.
 function cNoop:__init()

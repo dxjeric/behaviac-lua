@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.attachments.event"
 ------------------------------------------------------------------------------------------------------
 class("cEvent", d_ms.d_conditionBase.cConditionBase)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cAction", cAction)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAction", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cAction", cAction)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cAction", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 function cEvent:__init()
     self.m_event            = false

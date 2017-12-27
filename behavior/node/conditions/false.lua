@@ -26,8 +26,8 @@ local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
 module "behavior.node.conditions.true"
 ------------------------------------------------------------------------------------------------------
 class("False", d_ms.d_conditionBase.cConditionBase)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cFalse", cFalse)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cFalse", "cConditionBase")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cFalse", cFalse)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cFalse", "cConditionBase")
 ------------------------------------------------------------------------------------------------------
 -- false is a leaf node that always return Failure.
 function cFalse:__init()

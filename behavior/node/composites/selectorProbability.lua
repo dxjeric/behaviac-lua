@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.composites.selectorProbability"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorProbability", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorProbability", cSelectorProbability)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorProbability", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorProbability", cSelectorProbability)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorProbability", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Choose a child to execute based on the probability have set. then return the child execute result.
 function cSelectorProbability:__init()

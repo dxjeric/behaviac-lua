@@ -28,8 +28,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.actions.waitFrames"
 ------------------------------------------------------------------------------------------------------
 class("cWaitFrames", d_ms.d_behaviorNode.cBehaviorNode)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitFrames", cWaitFrames)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitFrames", "cBehaviorNode")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWaitFrames", cWaitFrames)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWaitFrames", "cBehaviorNode")
 ------------------------------------------------------------------------------------------------------
 -- Wait for the specified frames. always return Running until exceeds count.
 function cWaitFrames:__init()
@@ -62,7 +62,7 @@ function cWaitFrames:getFrames(obj)
         if frames == 0xFFFFFFFF then
             return -1
         else
-            return bits.and(frames, 0x0000FFFF)
+            return bits.bitAnd(frames, 0x0000FFFF)
         end
     end
     return 0

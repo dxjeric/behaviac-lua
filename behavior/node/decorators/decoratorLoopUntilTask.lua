@@ -27,8 +27,8 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 module "behavior.node.decorators.decoratorLoopUntilTask"
 ------------------------------------------------------------------------------------------------------
 class("cDecoratorLoopUntilTask", d_ms.d_decoratorCountTask.cDecoratorCountTask)
-ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLoopUntilTask", cDecoratorLoopUntilTask)
-BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLoopUntilTask", "cDecoratorCountTask")
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorLoopUntilTask", cDecoratorLoopUntilTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorLoopUntilTask", "cDecoratorCountTask")
 ------------------------------------------------------------------------------------------------------
 -- Returns BT_RUNNING until the child returns BT_SUCCESS. if the child returns BT_FAILURE, it still returns BT_RUNNING
 -- however, if m_until is false, the checking condition is inverted.
