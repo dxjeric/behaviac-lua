@@ -66,7 +66,7 @@ function cSingeChildTask:init(behaviorNode)
     if behaviorNode:getChildrenCount() == 1 then
         local childNode = behaviorNode:getChild(1)
         local childTask = childNode:createAndInitTask()
-        self.addChild(childTask)
+        self:addChild(childTask)
     else
         d_ms.d_log.error("cSingeChildTask:init do nothing")
     end

@@ -155,7 +155,5 @@ function cBehaviorTree:isManagingChildrenAsSubTrees()
 end
 
 function cBehaviorTree:createTask()
-    -- REDO: 做了cBehaviorTreeTask
-    -- return d_ms.d_behaviorTreeTask.cBehaviorTreeTask.new()
-    d_ms.d_log.error("cBehaviorTree:createTask 需要添加")
+    return d_ms.d_behaviorTreeTask.cBehaviorTreeTask.new()
 end

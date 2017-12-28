@@ -33,6 +33,7 @@ function redoGetDoubleValueSinceStartup()
 end
 
 function redoGetFrameSinceStartup()
+    return os.time()
 end
 
 function table.copy(t)

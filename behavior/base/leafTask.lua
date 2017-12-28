@@ -27,7 +27,7 @@ local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
-class("cLeafTask")
+class("cLeafTask", d_ms.d_behaviorTask.cBehaviorTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cLeafTask", cLeafTask)
 _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cLeafTask", "cBehaviorTask")
 ------------------------------------------------------------------------------------------------------

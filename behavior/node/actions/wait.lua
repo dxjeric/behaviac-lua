@@ -83,5 +83,5 @@ function cWait:getIntTime(obj)
 end
 
 function cWait:createTask()
-    return d_ms.d_noopTask.cWaitTask.new()
+    return d_ms.d_waitTask.cWaitTask.new()
 end

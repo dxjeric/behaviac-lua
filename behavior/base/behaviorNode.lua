@@ -293,6 +293,7 @@ end
 
 function cBehaviorNode:createAndInitTask()
     local task = self:createTask()
+    print("cBehaviorNode:createAndInitTask", task.__name)
     task:init(self)
     return task
 end
