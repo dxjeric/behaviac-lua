@@ -14,8 +14,10 @@ local pairs         = pairs
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
+local string        = string
 local getfenv       = getfenv
 local tostring      = tostring
+local tonumber      = tonumber
 local setmetatable  = setmetatable
 local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
@@ -60,30 +62,31 @@ function cBehaviorTree:isFSM()
 end
 
 function cBehaviorTree:behaviorLoadXml(xmlPath)
-    local xmlNodes = loadXml(xmlPath)
+    local xmlNodes = d_ms.d_commonFun.loadXml(xmlPath)
     if not xmlNodes then
         d_ms.d_log.error("behaviorLoadXml %s is not xml file", xmlPath)
         return
     end
-
+   -- d_ms.p("xmlNodes", xmlNodes)
+    print("constBaseKeyStrDef.kStrBehavior", constBaseKeyStrDef.kStrBehavior)
     local childNodes = xmlNodes:getChildeByName(constBaseKeyStrDef.kStrBehavior)
     if not childNodes then
         d_ms.d_log.error("behaviorLoadXml %s is not behavior tree xml", xmlPath)
         return
     end
 
-    self:setName(xmlNodes:getAttrValue(constBaseKeyStrDef.kStrName))
-    local agentType = xmlNodes:getAttrValue(constBaseKeyStrDef.kStrAgentType)
-    local version = tonumber(xmlNodes:getAttrValue(constBaseKeyStrDef.kStrVersion)) or 0
+    self:setName(childNodes:getAttrValue(constBaseKeyStrDef.kStrName))
+    local agentType = childNodes:getAttrValue(constBaseKeyStrDef.kStrAgentType)
+    local version = tonumber(childNodes:getAttrValue(constBaseKeyStrDef.kStrVersion)) or 0
 
-    if not isLinux() then
-        assert(version == constSupportedVersion, "Behavior Tree error version " .. version)
+    if not _G.isLinux() then
+        assert(version == d_ms.d_behaviorCommon.constSupportedVersion, "Behavior Tree error version " .. version)
     end
 
-    self:setClassNameString("BehaviorTree");
-    self:setId(-1);
+    self:setClassNameString("BehaviorTree")
+    self:setId(0xffffffff)
 
-    if xmlNodes:getAttrValue("fsm") == "true" then
+    if childNodes:getAttrValue("fsm") == "true" then
         self.m_bIsFSM = true
     end
 
@@ -132,7 +135,7 @@ function cBehaviorTree:unInstantiatePars(vars)
 end
 
 function cBehaviorTree:loadByProperties(version, agentType, properties)
-    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(version, agentType, properties)
+    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self.version, agentType, properties)
 
     if #properties > 0 then
         for _, prop in pairs(properties) do

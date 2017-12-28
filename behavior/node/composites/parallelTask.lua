@@ -39,7 +39,7 @@ function cParallelTask:__init()
 end
 
 function cParallelTask:onEnter(obj)
-    BEHAVIAC_ASSERT(self.m_activeChildIndex == constInvalidChildIndex)
+    _G.BEHAVIAC_ASSERT(self.m_activeChildIndex == constInvalidChildIndex)
     return true
 end
 

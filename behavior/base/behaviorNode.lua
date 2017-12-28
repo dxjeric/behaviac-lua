@@ -11,11 +11,13 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
 local getfenv       = getfenv
 local tostring      = tostring
+local tonumber      = tonumber
 local setmetatable  = setmetatable
 local getmetatable  = getmetatable
 ------------------------------------------------------------------------------------------------------
@@ -71,7 +73,7 @@ end
 
 
 function cBehaviorNode:setAgentType(agentType)
-    if isLinux() then
+    if _G.isLinux() then
         return
     end
     self.m_agentType = agentType
@@ -118,12 +120,13 @@ end
 function cBehaviorNode:loadNode(agentType, xmlNode, version)
     assert(xmlNode:getNodeName() == constBaseKeyStrDef.kStrNodeName)
 
-    local nodeClassName = xmlNode:getNodeAttr(constBaseKeyStrDef.kStrClass)
+    local nodeClassName = xmlNode:getAttrValue(constBaseKeyStrDef.kStrClass)
+    print("nodeClassName", nodeClassName)
     if nodeClassName then
         local newNode = self:create(nodeClassName)
         if newNode then
             newNode:setClassNameString(nodeClassName)
-            local idStr = xmlNode:getNodeAttr(constBaseKeyStrDef.kStrId)
+            local idStr = xmlNode:getAttrValue(constBaseKeyStrDef.kStrId)
             assert(idStr, string.format("node = %s no id", agentType))
             self:setId(tonumber(idStr))
             newNode:loadPropertiesParsAttachmentsChildren(true, version, agentType, xmlNode)
@@ -138,7 +141,7 @@ end
 -- return return true if successfully loaded
 function cBehaviorNode:loadPropertyPars(outProperties, xmlNode, version, agentType)
     if xmlNode:getNodeName() == constBaseKeyStrDef.kStrProperty then
-        local name, value = oneData:getFirstAttr()
+        local name, value = xmlNode:getFirstAttr()
         table.insert(outProperties, {name = name, value = value})
         return true
     elseif xmlNode:getNodeName() == constBaseKeyStrDef.kStrPars then
@@ -166,7 +169,7 @@ function cBehaviorNode:loadPropertiesParsAttachmentsChildren(isNode, version, ag
     end
 
     local properties = {}
-    for _, oneChild in ipais(childs) do
+    for _, oneChild in ipairs(childs) do
         if not self:loadPropertyPars(properties, oneChild, version, agentType) then
             local nodeName = oneChild:getNodeName()
             if isNode then
@@ -200,7 +203,7 @@ end
 
 -- return boolean
 function cBehaviorNode:loadAttachment(version, agentType, hasEvents, xmlNode)
-    local attachClassName = xmlNode:getNodeAttr(constBaseKeyStrDef.kStrClass)
+    local attachClassName = xmlNode:getAttrValue(constBaseKeyStrDef.kStrClass)
     if not attachClassName then
         self:loadAttachmentTransitionEffectors(version, agentType, xmlNode);
         return true
@@ -209,13 +212,13 @@ function cBehaviorNode:loadAttachment(version, agentType, hasEvents, xmlNode)
     local attachmentNode = self:create(attachClassName)
     if attachmentNode then
         attachmentNode:setClassNameString(attachClassName)
-        local id = xmlNode:getNodeAttr(constBaseKeyStrDef.kStrId)
+        local id = xmlNode:getAttrValue(constBaseKeyStrDef.kStrId)
         attachmentNode:setId(tonumber(id))
         
         local bIsPrecondition   = false
         local bIsEffector       = false
         local bIsTransition     = false
-        local flagStr = xmlNode:getNodeAttr(constBaseKeyStrDef.kStrFlag)
+        local flagStr = xmlNode:getAttrValue(constBaseKeyStrDef.kStrFlag)
         if flagStr == constBaseKeyStrDef.precondition then
             bIsPrecondition = true
         elseif flagStr == constBaseKeyStrDef.kStrEffector then
@@ -238,8 +241,7 @@ end
 -- 同load(int version, const char* agentType, const properties_t& properties)
 function cBehaviorNode:loadByProperties(version, agentType, properties)
     local nodeType = self:getClassTypeName()
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", nodeType)
     -- REDO: 增加 默认BehaviorNodeLoaded 这个放在behavior tree的管理中
 end
 

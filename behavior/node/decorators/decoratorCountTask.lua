@@ -37,12 +37,12 @@ end
 
 function cDecoratorCountTask:copyTo(target)
     d_ms.d_decoratorTask.cDecoratorTask.copyTo(self, target)
-    BEHAVIAC_ASSERT(target:isDecoratorCountTask(), "cDecoratorCountTask:copyTo target:isDecoratorCountTask")
+    _G.BEHAVIAC_ASSERT(target:isDecoratorCountTask(), "cDecoratorCountTask:copyTo target:isDecoratorCountTask")
     target.m_n = self.m_n
 end
 
 function cDecoratorCountTask:getCount(obj)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorCount(), "cDecoratorCountTask:getCount self:getNode():isDecoratorCount")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorCount(), "cDecoratorCountTask:getCount self:getNode():isDecoratorCount")
 
     if self:getNode() then
         return self:getNode():getCount()

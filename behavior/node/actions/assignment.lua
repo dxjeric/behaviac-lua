@@ -63,7 +63,7 @@ function cAssignment:loadByProperties(version, agentType, properties)
                 self.m_opr = BehaviorParseFactory.parseMethod(propertie.value)
             end
         else
-            -- BEHAVIAC_ASSERT(0 == "unrecognised property %s", p.name);
+            -- _G.BEHAVIAC_ASSERT(0 == "unrecognised property %s", p.name);
         end
     end
 end

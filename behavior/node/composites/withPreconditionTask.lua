@@ -37,26 +37,26 @@ function cWithPreconditionTask:__init()
 end
 
 function cWithPreconditionTask:preconditionNode()
-    BEHAVIAC_ASSERT(#self.m_children == 2, "cWithPreconditionTask:preconditionNode #self.m_children == 2")
+    _G.BEHAVIAC_ASSERT(#self.m_children == 2, "cWithPreconditionTask:preconditionNode #self.m_children == 2")
     return self.m_children[1]
 end
 
 function cWithPreconditionTask:actionNode()
-    BEHAVIAC_ASSERT(#self.m_children == 2, "cWithPreconditionTask:actionNode #self.m_children == 2")
+    _G.BEHAVIAC_ASSERT(#self.m_children == 2, "cWithPreconditionTask:actionNode #self.m_children == 2")
     return self.m_children[2]
 end
 
 function cWithPreconditionTask:onEnter(obj)
     local pParent = self:getParent()
     -- when as child of SelctorLoop, it is not ticked normally
-    BEHAVIAC_ASSERT(pParent and pParent:isSelectorLoopTask(), "cWithPreconditionTask:onEnter pParent:isSelectorLoopTask")
+    _G.BEHAVIAC_ASSERT(pParent and pParent:isSelectorLoopTask(), "cWithPreconditionTask:onEnter pParent:isSelectorLoopTask")
     return true
 end
 
 function cWithPreconditionTask:onExit(obj, status)
     local pParent = self:getParent()
     -- when as child of SelctorLoop, it is not ticked normally
-    BEHAVIAC_ASSERT(pParent and pParent:isSelectorLoopTask(), "cWithPreconditionTask:onExit pParent:isSelectorLoopTask")
+    _G.BEHAVIAC_ASSERT(pParent and pParent:isSelectorLoopTask(), "cWithPreconditionTask:onExit pParent:isSelectorLoopTask")
 end
 
 function cWithPreconditionTask:updateCurrent(obj, childStatus)
@@ -64,10 +64,10 @@ function cWithPreconditionTask:updateCurrent(obj, childStatus)
 end
 
 function cWithPreconditionTask:update(obj, childStatus)
-    -- REDO: 因为BEHAVIAC_ASSERT(false) 这个不应该被调用
+    -- REDO: 因为_G.BEHAVIAC_ASSERT(false) 这个不应该被调用
     local pParent = self.getParent()
-    BEHAVIAC_ASSERT(pParent and pParent:isSelectorLoopTask(), "cWithPreconditionTask:update pParent:isSelectorLoopTask")
-    BEHAVIAC_ASSERT(#self.m_children == 2, "cWithPreconditionTask:update #self.m_children == 2")
-    BEHAVIAC_ASSERT(false)
+    _G.BEHAVIAC_ASSERT(pParent and pParent:isSelectorLoopTask(), "cWithPreconditionTask:update pParent:isSelectorLoopTask")
+    _G.BEHAVIAC_ASSERT(#self.m_children == 2, "cWithPreconditionTask:update #self.m_children == 2")
+    _G.BEHAVIAC_ASSERT(false)
     return EBTStatus.BT_RUNNING
 end

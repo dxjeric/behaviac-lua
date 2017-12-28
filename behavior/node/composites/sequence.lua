@@ -46,7 +46,7 @@ function cSequence:SequenceUpdate(obj, childStatus, outActiveChildIndex, childre
     local childSize = #children
 
     while true do
-        BEHAVIAC_ASSERT(activeChildIndex <= childSize, "cSequence:SequenceUpdate activeChildIndex <= childSize")
+        _G.BEHAVIAC_ASSERT(activeChildIndex <= childSize, "cSequence:SequenceUpdate activeChildIndex <= childSize")
         if s == EBTStatus.BT_RUNNING then
             local pBehavior = children[activeChildIndex]
             if self:checkIfInterrupted(obj) then

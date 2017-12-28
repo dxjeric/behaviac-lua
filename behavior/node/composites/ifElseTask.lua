@@ -41,7 +41,7 @@ function cIfElseTask:onEnter(obj)
         return true
     end
 
-    BEHAVIAC_ASSERT(false, "IfElseTask has to have three children: condition, if, else")
+    _G.BEHAVIAC_ASSERT(false, "IfElseTask has to have three children: condition, if, else")
     return false
 end
 
@@ -49,8 +49,8 @@ function cIfElseTask:onExit(obj, status)
 end
 
 function cIfElseTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(childStatus ~= EBTStatus.BT_INVALID, "cIfElseTask:update childStatus ~= EBTStatus.BT_INVALID")
-    BEHAVIAC_ASSERT(#self.m_children == 3, "cIfElseTask:update #self.m_children == 3")
+    _G.BEHAVIAC_ASSERT(childStatus ~= EBTStatus.BT_INVALID, "cIfElseTask:update childStatus ~= EBTStatus.BT_INVALID")
+    _G.BEHAVIAC_ASSERT(#self.m_children == 3, "cIfElseTask:update #self.m_children == 3")
 
     local conditionResult = EBTStatus.BT_INVALID
 

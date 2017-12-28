@@ -58,7 +58,7 @@ function cEventTask:getEventName()
 end
 
 function cEventTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isEvent(), "cEventTask:update self:getNode():isEvent()")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isEvent(), "cEventTask:update self:getNode():isEvent()")
     local pEventNode = self:getNode()
     if pEventNode.m_referencedBehaviorPath ~= "" then
         if obj then

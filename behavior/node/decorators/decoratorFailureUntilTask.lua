@@ -69,7 +69,7 @@ function cDecoratorFailureUntilTask:decorate(status)
         return EBTStatus.BT_FAILURE
     end
 
-    BEHAVIAC_ASSERT(self.m_n == 0, "cDecoratorFailureUntilTask:decorate self.m_n == 0")
+    _G.BEHAVIAC_ASSERT(self.m_n == 0, "cDecoratorFailureUntilTask:decorate self.m_n == 0")
 
     return EBTStatus.BT_SUCCESS
 end    

@@ -51,7 +51,7 @@ function cEffectorConfig:load(properties)
             elseif p.value == "Both" then
                 self.m_phase = ENodePhase.E_BOTH
             else
-                BEHAVIAC_ASSERT(false)
+                _G.BEHAVIAC_ASSERT(false)
             end
             break
         end

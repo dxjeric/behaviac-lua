@@ -37,7 +37,7 @@ end
 
 function cSelectorStochasticTask:update()
     local bFirst = true
-    BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cSelectorStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
+    _G.BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cSelectorStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
 
     -- Keep going until a child behavior says its running.
     while true do

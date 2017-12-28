@@ -51,7 +51,7 @@ function cSelectorProbability:loadByProperties(version, agentType, properties)
                 self.m_method = BehaviorParseFactory.parseMethod(p.value)
             end
         else
-            -- BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);
+            -- _G.BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);
         end
     end
 end
@@ -65,7 +65,7 @@ function cSelectorProbability:isValid(obj, task)
 end
 
 function cSelectorProbability:addChild(pBehavior)
-    BEHAVIAC_ASSERT(pBehavior:isDecoratorWeight(), "cSelectorProbability:addChild pBehavior:isDecoratorWeight")
+    _G.BEHAVIAC_ASSERT(pBehavior:isDecoratorWeight(), "cSelectorProbability:addChild pBehavior:isDecoratorWeight")
 
     d_ms.d_behaviorNode.cBehaviorNode.addChild(self, pBehavior)
 end

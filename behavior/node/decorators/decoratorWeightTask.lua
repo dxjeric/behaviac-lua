@@ -35,7 +35,7 @@ function cDecoratorWeightTask:__init()
 end
 
 function cDecoratorWeightTask:getWeight(obj)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorWeight(), "cDecoratorWeightTask:getWeight self:getNode():isDecoratorWeight")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorWeight(), "cDecoratorWeightTask:getWeight self:getNode():isDecoratorWeight")
     return self:getNode():getWeight(obj)
 end
 

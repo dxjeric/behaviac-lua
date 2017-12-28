@@ -42,20 +42,20 @@ function cSelectorProbabilityTask:__init()
 end
 
 function cSelectorProbabilityTask:onEnter(obj)
-    BEHAVIAC_ASSERT(#self.m_children > 0, "cSelectorProbabilityTask:onEnter #self.m_children > 0")
+    _G.BEHAVIAC_ASSERT(#self.m_children > 0, "cSelectorProbabilityTask:onEnter #self.m_children > 0")
     self.m_activeChildIndex = constInvalidChildIndex
 
     self.m_weightingMap = {}
     self.m_totalSum     = 0
 
     for _, task in ipairs(self.m_children) do
-        BEHAVIAC_ASSERT(task:isDecoratorWeightTask(), "cSelectorProbabilityTask:onEnter task:isDecoratorWeightTask")
+        _G.BEHAVIAC_ASSERT(task:isDecoratorWeightTask(), "cSelectorProbabilityTask:onEnter task:isDecoratorWeightTask")
         local weight = task:getWeight(obj)
         table.insert(self.m_weightingMap, weight)
         self.m_totalSum = weight
     end
 
-    BEHAVIAC_ASSERT(#self.m_weightingMap == #self.m_children, "cSelectorProbabilityTask:onEnter #self.m_weightingMap == self.m_children")
+    _G.BEHAVIAC_ASSERT(#self.m_weightingMap == #self.m_children, "cSelectorProbabilityTask:onEnter #self.m_weightingMap == self.m_children")
     return true
 end
 
@@ -64,7 +64,7 @@ function cSelectorProbabilityTask:onExit(obj, status)
 end
 
 function cSelectorProbabilityTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isSelectorProbability(), "cSelectorProbabilityTask:update self:getNode():isSelectorProbability")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isSelectorProbability(), "cSelectorProbabilityTask:update self:getNode():isSelectorProbability")
 
     if childStatus ~= EBTStatus.BT_RUNNING then
         return childStatus
@@ -77,7 +77,7 @@ function cSelectorProbabilityTask:update(obj, childStatus)
         return pNode:exec(obj)
     end
 
-    BEHAVIAC_ASSERT(#self.m_weightingMap == #self.m_children, "cSelectorProbabilityTask:update #self.m_weightingMap == #self.m_children")
+    _G.BEHAVIAC_ASSERT(#self.m_weightingMap == #self.m_children, "cSelectorProbabilityTask:update #self.m_weightingMap == #self.m_children")
     -- generate a number between 0 and the sum of the weights
     local chosen = self.m_totalSum * d_ms.d_behaviorTreeMgr.getRandomValue(pSelectorProbabilityNode.m_method, obj)
     local sum = 0

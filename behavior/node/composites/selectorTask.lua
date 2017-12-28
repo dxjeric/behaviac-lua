@@ -36,7 +36,7 @@ function cSelectorTask:__init()
 end
 
 function cSelectorTask:onEnter(obj)
-    BEHAVIAC_ASSERT(#self.m_children > 0, "cSelectorTask:onEnter #self.m_children > 0")
+    _G.BEHAVIAC_ASSERT(#self.m_children > 0, "cSelectorTask:onEnter #self.m_children > 0")
     self.m_activeChildIndex = 1
     return true
 end
@@ -45,7 +45,7 @@ function cSelectorTask:onExit(obj, status)
 end
 
 function cSelectorTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSelectorTask:update self.m_activeChildIndex <= #self.m_children")
+    _G.BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSelectorTask:update self.m_activeChildIndex <= #self.m_children")
     local status, activeChildIndex = self:selectorUpdate(obj, childStatus, self.m_activeChildIndex, self.m_children)
     self.m_activeChildIndex = activeChildIndex
     return status

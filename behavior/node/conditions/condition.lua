@@ -63,7 +63,7 @@ function cCondition:loadByProperties(version, agentType, properties)
                 self.m_opr = BehaviorParseFactory.parseMethod(p.value)
             end
         else
-            BEHAVIAC_ASSERT(false, "unrecognised property %s", p.name)
+            _G.BEHAVIAC_ASSERT(false, "unrecognised property %s", p.name)
         end
     end
 end

@@ -37,6 +37,7 @@ class("cPreconditionConfig", d_ms.d_attachAction.cActionConfig)
 function cPreconditionConfig:__init()
     self.m_phase = EPreconditionPhase.E_ENTER
     self.m_bAnd  = false
+    self.__name  =  "cPreconditionConfig"
 end
 
 function cPreconditionConfig:release()
@@ -44,8 +45,9 @@ function cPreconditionConfig:release()
 end
 
 function cPreconditionConfig:load(properties)
-    local loaded = d_ms.d_attachAction.cAttachAction.load(self, properties)
-
+    print("cPreconditionConfig:load")
+    local loaded = d_ms.d_attachAction.cActionConfig.load(self, properties)
+    print("cPreconditionConfig:load ------------------------------------------------------------------")
     for _, p in ipairs(properties) do
         if p.name == "BinaryOperator" then
             if p.value == "Or" then
@@ -53,7 +55,7 @@ function cPreconditionConfig:load(properties)
             elseif p.value == "And" then
                 self.m_bAnd = true
             else
-                BEHAVIAC_ASSERT(false, "cPreconditionConfig:load BinaryOperator")
+                _G.BEHAVIAC_ASSERT(false, "cPreconditionConfig:load BinaryOperator")
             end
         elseif p.name == "Phase" then
             if p.value == "Enter" then
@@ -63,11 +65,13 @@ function cPreconditionConfig:load(properties)
             elseif p.value == "Both" then
                 self.m_phase = EPreconditionPhase.E_BOTH
             else
-                BEHAVIAC_ASSERT(false, "cPreconditionConfig:load Phase")
+                _G.BEHAVIAC_ASSERT(false, "cPreconditionConfig:load Phase")
             end
             break
         end
     end
+
+    print("cPreconditionConfig:load ------------------------------------------------------------------")
 end
 ------------------------------------------------------------------------------------------------------
 function cPrecondition:__init()

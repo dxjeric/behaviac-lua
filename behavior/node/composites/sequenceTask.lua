@@ -41,7 +41,7 @@ function cSequenceTask:onEnter(obj)
 end
 
 function cSequenceTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSequenceTask:update self.m_activeChildIndex <= #self.m_children")
+    _G.BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSequenceTask:update self.m_activeChildIndex <= #self.m_children")
 
     local s, activeChildIndex = self.m_node:sequenceUpdate(obj, childStatus, self.m_activeChildIndex, self.m_children)
     self.m_activeChildIndex = activeChildIndex

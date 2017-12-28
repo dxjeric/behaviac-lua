@@ -35,7 +35,7 @@ function cDecoratorNode:__init()
 end
 
 function cDecoratorNode:loadByProperties(version, agentType, properties)
-    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(version, agentType, properties)
+    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
 
     for _, oneProperty in ipairs(properties) do
         if oneProperty.name == "DecorateWhenChildEnds" then

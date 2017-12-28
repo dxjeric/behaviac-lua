@@ -41,7 +41,7 @@ end
 function cWaitTask:copyTo(target)
     d_ms.d_leafTask.cLeafTask.copyTo(target)
 
-    BEHAVIAC_ASSERT(target:isWaitTask(), "cWaitTask:copyTo target:isWaitTask")
+    _G.BEHAVIAC_ASSERT(target:isWaitTask(), "cWaitTask:copyTo target:isWaitTask")
     target.m_start      = self.m_start
     target.m_time       = self.m_time
     target.m_intStart   = self.m_intStart

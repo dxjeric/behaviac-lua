@@ -39,13 +39,13 @@ end
 function cWaitFramesTask:copyTo(target)
     d_ms.d_leafTask.cLeafTask.copyTo(self, target)
 
-    BEHAVIAC_ASSERT(target:isWaitFramesTask(), "cWaitFramesTask:copyTo target:isWaitFramesTask()")
+    _G.BEHAVIAC_ASSERT(target:isWaitFramesTask(), "cWaitFramesTask:copyTo target:isWaitFramesTask()")
     target.m_start  = self.m_start
     target.m_frames = self.m_frames
 end
 
 function cWaitFramesTask:getFrames(obj)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isWaitFrames(), "cWaitFramesTask:getFrames self:getNode():isWaitFrames()")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isWaitFrames(), "cWaitFramesTask:getFrames self:getNode():isWaitFrames()")
 
     local pWaitNode = self:getNode()
 

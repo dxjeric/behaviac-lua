@@ -69,6 +69,6 @@ function cEndTask:getStatus(obj)
     if pEndNode and pEndNode:isEnd() then
         status = pEndNode:getStatus(obj)
     end
-    BEHAVIAC_ASSERT(status == EBTStatus.BT_SUCCESS or status == EBTStatus.BT_FAILURE, "cEndTask:getStatus status must be BT_SUCCESS BT_FAILURE")
+    _G.BEHAVIAC_ASSERT(status == EBTStatus.BT_SUCCESS or status == EBTStatus.BT_FAILURE, "cEndTask:getStatus status must be BT_SUCCESS BT_FAILURE")
     return status
 end

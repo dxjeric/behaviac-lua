@@ -48,7 +48,7 @@ end
 
 function cDecoratorTimeTask:copyTo(target)
     d_ms.d_decoratorTask.cDecoratorTask.copyTo(self, target)
-    BEHAVIAC_ASSERT(target:isDecoratorTimeTask(), "cDecoratorTimeTask:copyTo target:isDecoratorTimeTask")
+    _G.BEHAVIAC_ASSERT(target:isDecoratorTimeTask(), "cDecoratorTimeTask:copyTo target:isDecoratorTimeTask")
     target.m_start      = self.m_start
     target.m_time       = self.m_time
     target.m_intStart   = self.m_intStart
@@ -97,11 +97,11 @@ function cDecoratorTimeTask:decorate(status)
 end
 
 function cDecoratorTimeTask:getTime(obj)
-    BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
+    _G.BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
     return self.getNode():getTime(obj)
 end
 
 function cDecoratorTimeTask:getIntTime(obj)
-    BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
+    _G.BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
     return self.getNode():getIntTime(obj)
 end

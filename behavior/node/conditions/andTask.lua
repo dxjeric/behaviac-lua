@@ -42,7 +42,7 @@ function cAndTask:update(obj, childStatus)
             return status
         end
 
-        BEHAVIAC_ASSERT(status == EBTStatus.BT_SUCCESS, "cAndTask:update status == EBTStatus.BT_SUCCESS")
+        _G.BEHAVIAC_ASSERT(status == EBTStatus.BT_SUCCESS, "cAndTask:update status == EBTStatus.BT_SUCCESS")
     end
 
     return EBTStatus.BT_SUCCESS

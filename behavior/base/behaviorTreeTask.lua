@@ -81,15 +81,15 @@ end
 
 -- return the path relative to the workspace path
 function cBehaviorTreeTask:getName()
-    BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:getName m_node is not exist")
-    BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:getName m_node:isBehaviorTree")
+    _G.BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:getName m_node is not exist")
+    _G.BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:getName m_node:isBehaviorTree")
 
     return self.m_node:getName()
 end
 
 function cBehaviorTreeTask:clear()
     if self.m_node then
-        BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:clear m_node:isBehaviorTree")
+        _G.BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:clear m_node:isBehaviorTree")
         -- self.m_node:unInstantiatePars(self.m_localVars)
         self.m_localVars = {}
     end
@@ -120,11 +120,11 @@ function cBehaviorTreeTask:endDo(obj, status)
 end
 
 function cBehaviorTreeTask:init(behaviorNode)
-    BEHAVIAC_ASSERT(behaviorNode, "cBehaviorTreeTask:init behaviorNode is nil")
+    _G.BEHAVIAC_ASSERT(behaviorNode, "cBehaviorTreeTask:init behaviorNode is nil")
 
     d_ms.d_singeChildTask.cSingeChildTask.init(self, behaviorNode)
     if self.m_node then
-        BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:init m_node:isBehaviorTree")
+        _G.BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:init m_node:isBehaviorTree")
         self.m_node:instantiatePars(self.m_localVars)
     end
 end
@@ -141,8 +141,8 @@ function cBehaviorTreeTask:onExit(obj, status)
 end
 
 function cBehaviorTreeTask:updateCurrent(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:updateCurrent self.m_node is nil")
-    BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:updateCurrent m_node:isBehaviorTree")
+    _G.BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:updateCurrent self.m_node is nil")
+    _G.BEHAVIAC_ASSERT(self.m_node:isBehaviorTree(), "cBehaviorTreeTask:updateCurrent m_node:isBehaviorTree")
 
     self.m_lastTreeTask = obj.m_excutingTreeTask
     obj.m_excutingTreeTask = self
@@ -159,8 +159,8 @@ function cBehaviorTreeTask:updateCurrent(obj, childStatus)
 end
 
 function cBehaviorTreeTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:update self.m_node is false")
-    BEHAVIAC_ASSERT(self.m_root, "cBehaviorTreeTask:update self.m_root is false")
+    _G.BEHAVIAC_ASSERT(self.m_node, "cBehaviorTreeTask:update self.m_node is false")
+    _G.BEHAVIAC_ASSERT(self.m_root, "cBehaviorTreeTask:update self.m_root is false")
 
     if childStatus ~= EBTStatus.BT_RUNNING then
         return childStatus
@@ -169,7 +169,7 @@ function cBehaviorTreeTask:update(obj, childStatus)
     local status = EBTStatus.BT_INVALID
     self.m_endStatus = EBTStatus.BT_INVALID
     status = d_ms.d_singeChildTask.cSingeChildTask.update(self, obj, childStatus)
-    BEHAVIAC_ASSERT(status ~= EBTStatus.BT_INVALID, "cBehaviorTreeTask:update status == EBTStatus.BT_INVALID")
+    _G.BEHAVIAC_ASSERT(status ~= EBTStatus.BT_INVALID, "cBehaviorTreeTask:update status == EBTStatus.BT_INVALID")
     
     -- When the End node takes effect, it always returns BT_RUNNING
     -- and m_endStatus should always be BT_SUCCESS or BT_FAILURE

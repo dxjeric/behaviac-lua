@@ -77,7 +77,7 @@ end
 
 function cCompositeTask:init(node)
     d_ms.d_branchTask.cBranchTask.init(self, node)
-    BEHAVIAC_ASSERT(node:getChildrenCount() > 0, "node:getChildrenCount() > 0")
+    _G.BEHAVIAC_ASSERT(node:getChildrenCount() > 0, "node:getChildrenCount() > 0")
 
     local childrenCount = node:getChildrenCount()
     for index = 1, childrenCount do
@@ -90,11 +90,11 @@ end
 function cCompositeTask:copyTo(targetTask)
     d_ms.d_branchTask.cBranchTask.copyTo(self, targetTask)
 
-    BEHAVIAC_ASSERT(targetTask:isCompositeTask(), "targetTask:isCompositeTask()")
+    _G.BEHAVIAC_ASSERT(targetTask:isCompositeTask(), "targetTask:isCompositeTask()")
     targetTask.m_activeChildIndex = self.m_activeChildIndex
 
-    BEHAVIAC_ASSERT(#self.m_children > 0, "self.m_children > 0")
-    BEHAVIAC_ASSERT(#self.m_children == #targetTask.m_children, "#self.m_children == #targetTask.m_children")
+    _G.BEHAVIAC_ASSERT(#self.m_children > 0, "self.m_children > 0")
+    _G.BEHAVIAC_ASSERT(#self.m_children == #targetTask.m_children, "#self.m_children == #targetTask.m_children")
 
     local count = #self.m_children
     for index = 1, count do
@@ -118,7 +118,7 @@ function cCompositeTask:addChild(behaviorTask)
 end
 
 function cCompositeTask:getTaskById(id)
-    BEHAVIAC_ASSERT(id ~= -1, "getTaskById id ~= -1")
+    _G.BEHAVIAC_ASSERT(id ~= -1, "getTaskById id ~= -1")
     
     local behaviorTask = d_ms.d_branchTask.cBranchTask.getTaskById(self, id)
     if behaviorTask then

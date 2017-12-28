@@ -40,7 +40,7 @@ end
 
 function cReferencedBehaviorTask:onEvent(obj, eventName, eventParams)
     if self.m_status == EBTStatus.BT_RUNNING and self.m_node:hasEvents() then
-        BEHAVIAC_ASSERT(self.m_subTree, "cReferencedBehaviorTask:onEvent self.m_subTree")
+        _G.BEHAVIAC_ASSERT(self.m_subTree, "cReferencedBehaviorTask:onEvent self.m_subTree")
 
         if not self.m_subTree:onEvent(pAgent, eventName, eventParams) then
             return false
@@ -51,7 +51,7 @@ function cReferencedBehaviorTask:onEvent(obj, eventName, eventParams)
 end
 
 function cReferencedBehaviorTask:onEnter(obj)
-    BEHAVIAC_ASSERT(self.m_node and self.m_node:isReferencedBehavior(), "cReferencedBehaviorTask:onEnter self.m_node:isReferencedBehavior")
+    _G.BEHAVIAC_ASSERT(self.m_node and self.m_node:isReferencedBehavior(), "cReferencedBehaviorTask:onEnter self.m_node:isReferencedBehavior")
     self.m_nextStateId = -1
     local szTreePath = self.m_node:getReferencedTree(obj)
     
@@ -80,7 +80,7 @@ function cReferencedBehaviorTask:checkPreconditions(obj, bIsAlive)
 end
 
 function cReferencedBehaviorTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isReferencedBehavior(), "cReferencedBehaviorTask:update self:getNode():isReferencedBehavior")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isReferencedBehavior(), "cReferencedBehaviorTask:update self:getNode():isReferencedBehavior")
     local result = self.m_subTree:exec(obj)
     local bTransitioned, nextStateId = State.updateTransitions(obj, self.m_node, self.m_node.m_transitions, self.m_nextStateId, result)
     self.m_nextStateId = nextStateId

@@ -43,7 +43,7 @@ function cCompositeStochastic:loadByProperties(version, agentType, properties)
         if p.name == "RandomGenerator" then
             self.m_method = BehaviorParseFactory.parseMethod(p.value)
         -- else
-            -- BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name)
+            -- _G.BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name)
         end
     end
 end

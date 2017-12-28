@@ -72,10 +72,10 @@ function cEvent:loadByProperties(version, agentType, properties)
             elseif p.value == "Return" then
                 self.m_triggerMode = triggerMode.TM_Return
             else
-                BEHAVIAC_ASSERT(false, "unrecognised trigger mode %s", p.value)
+                _G.BEHAVIAC_ASSERT(false, "unrecognised trigger mode %s", p.value)
             end
         else
-            -- BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);
+            -- _G.BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);
         end
     end
 end
@@ -98,7 +98,7 @@ function cEvent:switchTo(obj, eventParams)
             local tm = self:etTriggerMode()
             obj:bteventtree(self.m_referencedBehaviorPath, tm)
             local pCurrentTree = obj:btgetcurrent()     -- BehaviorTreeTask
-            BEHAVIAC_ASSERT(pCurrentTree, "cEvent:switchTo pCurrentTree is nil")
+            _G.BEHAVIAC_ASSERT(pCurrentTree, "cEvent:switchTo pCurrentTree is nil")
             pCurrentTree:addVariables(eventParams)
             obj:btexec()
         end

@@ -38,13 +38,13 @@ end
 function cSelectorLoopTask:copyTo(target)
     d_ms.d_compositeTask.cCompositeTask.copyTo(target)
 
-    BEHAVIAC_ASSERT(target:isSelectorLoopTask(), "cSelectorLoopTask:copyTo target:isSelectorLoopTask")
+    _G.BEHAVIAC_ASSERT(target:isSelectorLoopTask(), "cSelectorLoopTask:copyTo target:isSelectorLoopTask")
     target.m_activeChildIndex = self.m_activeChildIndex
 end
 
 function cSelectorLoopTask:addChild(pBehaviorTask)
     d_ms.d_compositeTask.cCompositeTask.addChild(self, pBehaviorTask)
-    BEHAVIAC_ASSERT(pBehaviorTask:isWithPreconditionTask(), "cSelectorLoopTask:addChild pBehaviorTask:isWithPreconditionTask")
+    _G.BEHAVIAC_ASSERT(pBehaviorTask:isWithPreconditionTask(), "cSelectorLoopTask:addChild pBehaviorTask:isWithPreconditionTask")
 end
 
 function cSelectorLoopTask:onEnter(obj)
@@ -60,14 +60,14 @@ function cSelectorLoopTask:update(obj, childStatus)
     local idx = 0
 
     if childStatus ~= EBTStatus.BT_RUNNING then
-        BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cSelectorLoopTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
+        _G.BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cSelectorLoopTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
         if childStatus == EBTStatus.BT_SUCCESS then
             return EBTStatus.BT_SUCCESS;
         elseif childStatus == EBTStatus.BT_FAILURE then
             -- the next for starts from (idx + 1), so that it starts from next one after this failed one
             idx = self.m_activeChildIndex
         else
-            BEHAVIAC_ASSERT(false)
+            _G.BEHAVIAC_ASSERT(false)
         end
     end
 
@@ -75,7 +75,7 @@ function cSelectorLoopTask:update(obj, childStatus)
     local index = -1
     for i = idx + 1, i < #self.m_children do
         local pSubTree = self.m_children[i]
-        BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")
+        _G.BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")
         local preBehaviorTask = pSubTree:preconditionNode()
         local status = preBehaviorTask:exec(obj)
         if status == EBTStatus.BT_SUCCESS then
@@ -90,7 +90,7 @@ function cSelectorLoopTask:update(obj, childStatus)
             local abortChild = self.m_activeChildIndex ~= index
             if not abortChild then
                 local pSelectorLoop = self:getNode():isSelectorLoop()
-                BEHAVIAC_ASSERT(pSelectorLoop, "cSelectorLoopTask:update pSelectorLoop")
+                _G.BEHAVIAC_ASSERT(pSelectorLoop, "cSelectorLoopTask:update pSelectorLoop")
 
                 if pSelectorLoop then
                     abortChild = pSelectorLoop.m_bResetChildren
@@ -99,7 +99,7 @@ function cSelectorLoopTask:update(obj, childStatus)
 
             if abortChild then
                 local pCurrentSubTree = self.m_children[self.m_activeChildIndex]
-                BEHAVIAC_ASSERT(pCurrentSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pCurrentSubTree:isWithPreconditionTask")
+                _G.BEHAVIAC_ASSERT(pCurrentSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pCurrentSubTree:isWithPreconditionTask")
                 pCurrentSubTree:abort(obj)
             end
         end
@@ -108,7 +108,7 @@ function cSelectorLoopTask:update(obj, childStatus)
         for i = index, i <= #self.m_children do
             -- WithPreconditionTask
             local pSubTree = self.m_children[i]
-            BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")
+            _G.BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")
 
             if i > index then
                 local pre = pSubTree:preconditionNode()
@@ -127,7 +127,7 @@ function cSelectorLoopTask:update(obj, childStatus)
                         pSubTree.m_status = s
                         if s ~= EBTStatus.BT_FAILURE then
                             -- THE ACTION failed, to try the next one
-                            BEHAVIAC_ASSERT(s == EBTStatus.BT_RUNNING or s == EBTStatus.BT_SUCCESS, "cSelectorLoopTask:update s == EBTStatus.BT_RUNNING or s == EBTStatus.BT_SUCCESS")
+                            _G.BEHAVIAC_ASSERT(s == EBTStatus.BT_RUNNING or s == EBTStatus.BT_SUCCESS, "cSelectorLoopTask:update s == EBTStatus.BT_RUNNING or s == EBTStatus.BT_SUCCESS")
                             return s
                         end
                     end

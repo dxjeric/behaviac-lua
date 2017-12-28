@@ -312,11 +312,17 @@ function transferXmlNode(nodeData, key)
         end
         ret.attrs[k] = v
     end
-
     return ret
 end
 
 function loadXml(xmlPath)
     local xmlSrouceData = xml.load(xmlPath)
-    return transferXmlNode(xmlSrouceData, xmlPath.."= root")
+    local root = setmetatable({nodeName = "root"}, {__index = mt})
+    local ret = transferXmlNode(xmlSrouceData, xmlPath.."= root")
+    root.data = {
+        [1]                 = ret,
+        [ret:getNodeName()] = ret
+    }
+    
+    return root
 end

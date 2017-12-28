@@ -42,8 +42,8 @@ function cComputeTask:onExit(obj, status)
 end
 
 function cComputeTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(childStatus == EBTStatus.BT_RUNNING, "cComputeTask:update childStatus == EBTStatus.BT_RUNNING")
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isCompute(), "cComputeTask:update self:getNode():isCompute()")
+    _G.BEHAVIAC_ASSERT(childStatus == EBTStatus.BT_RUNNING, "cComputeTask:update childStatus == EBTStatus.BT_RUNNING")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isCompute(), "cComputeTask:update self:getNode():isCompute()")
     local result = EBTStatus.BT_SUCCESS
     local pComputeNode = self:getNode()
 

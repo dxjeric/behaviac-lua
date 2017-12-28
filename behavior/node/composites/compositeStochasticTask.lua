@@ -40,12 +40,12 @@ end
 function cCompositeStochasticTask:copyTo(target)
     d_ms.d_compositeTask.cCompositeTask.copyTo(self, target)
 
-    BEHAVIAC_ASSERT(target:isCompositeStochasticTask(), "target:isCompositeStochasticTask")
+    _G.BEHAVIAC_ASSERT(target:isCompositeStochasticTask(), "target:isCompositeStochasticTask")
     target.m_set = table.copy(self.m_set)
 end
 
 function cCompositeStochasticTask:onEnter(obj)
-    BEHAVIAC_ASSERT(#self.m_children > 0, "cCompositeStochasticTask:onEnter #self.m_children > 0")
+    _G.BEHAVIAC_ASSERT(#self.m_children > 0, "cCompositeStochasticTask:onEnter #self.m_children > 0")
 
     self:randomChild(obj)
     self.m_activeChildIndex = 1
@@ -57,7 +57,7 @@ end
 
 function cCompositeStochasticTask:update(obj, childStatus)
     local bFirst = true
-    BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cCompositeStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
+    _G.BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cCompositeStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
 
     while true do
         local s = childStatus
@@ -86,7 +86,7 @@ function cCompositeStochasticTask:onExit(obj, status)
 end
 
 function cCompositeStochasticTask:randomChild(obj)
-    BEHAVIAC_ASSERT(not self:getNode() or self:getNode():isCompositeStochastic(), "cCompositeStochasticTask:randomChild not self:getNode() or self:getNode():isCompositeStochastic")
+    _G.BEHAVIAC_ASSERT(not self:getNode() or self:getNode():isCompositeStochastic(), "cCompositeStochasticTask:randomChild not self:getNode() or self:getNode():isCompositeStochastic")
     local pNode = self:getNode()
 
     if #self.m_set ~= #self.m_children then
@@ -105,10 +105,10 @@ function cCompositeStochasticTask:randomChild(obj)
             method = pNode.m_method
         end
         local index1 = math.ceil(n * d_ms.d_behaviorTreeMgr.getRandomValue(method, obj))
-        BEHAVIAC_ASSERT(index1 <= n)
+        _G.BEHAVIAC_ASSERT(index1 <= n)
 
         local index2 = math.ceil(n * d_ms.d_behaviorTreeMgr.getRandomValue(method, obj))
-        BEHAVIAC_ASSERT(index2 <= n)
+        _G.BEHAVIAC_ASSERT(index2 <= n)
 
         -- swap
         if index1 ~= index2 then

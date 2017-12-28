@@ -55,7 +55,7 @@ function cCompute:loadByProperties(version, agentType, properties)
         if property.name == "Opl" then
             self.m_opl = BehaviorParseFactory.parseProperty(property.value)
         elseif property.name == "Operator" then
-            BEHAVIAC_ASSERT((propertyvalue == "Add" or propertyvalue == "Sub" or propertyvalue == "Mul" or propertyvalue == "Div"), "cCompute:loadByProperties propertyvalue must be add sub mul div")
+            _G.BEHAVIAC_ASSERT((propertyvalue == "Add" or propertyvalue == "Sub" or propertyvalue == "Mul" or propertyvalue == "Div"), "cCompute:loadByProperties propertyvalue must be add sub mul div")
             self.m_operator = BehaviorParseFactory.parseOperatorType(property.value)
         elseif property.name == "Opr1" then
             local pParenthesis = string.find(property.value, '%(')

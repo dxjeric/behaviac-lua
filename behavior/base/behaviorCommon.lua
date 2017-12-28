@@ -14,12 +14,16 @@ local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
 local string        = string
+local require       = require
 local getfenv       = getfenv
 local tostring      = tostring
+local tonumber      = tonumber
 local setmetatable  = setmetatable
 local getmetatable  = getmetatable
 --------------------------------------------------------------------------------------------------------------
 module "behavior.base.behaviorCommon"
+--------------------------------------------------------------------------------------------------------------
+local d_ms = require "ms"
 --------------------------------------------------------------------------------------------------------------
 -- 执行返回
 EBTStatus = {
@@ -137,16 +141,17 @@ FATHER_CLASS_INFO = {}
 BEHAVIAC_DYNAMIC_TYPES = {}
 STATIC_BEHAVIAC_HierarchyLevels = setmetatable({}, {__index = function() return 0 end})
 
-function _G.ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
+function ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
     if BEHAVIAC_DYNAMIC_TYPES[className] and BEHAVIAC_DYNAMIC_TYPES[className] ~= classDeclare then
         assert(false, "ADD_BEHAVIAC_DYNAMIC_TYPE had add different TYPE " .. className)
         return
     end
-
+    classDeclare.__name = className
     BEHAVIAC_DYNAMIC_TYPES[className] = classDeclare
+    registNodeClass(string.sub(className, 2), classDeclare)
 end
 
-function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
+function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
     assert(BEHAVIAC_DYNAMIC_TYPES[className], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", className))
 
     BEHAVIAC_DYNAMIC_TYPES[className].sm_HierarchyLevel = 0
@@ -155,7 +160,7 @@ function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(className)
     end
 end
 
-function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
+function BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
     assert(BEHAVIAC_DYNAMIC_TYPES[nodeClassName], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", nodeClassName))
     assert(BEHAVIAC_DYNAMIC_TYPES[fatherClassName], string.format("BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES %s must be call ADD_BEHAVIAC_DYNAMIC_TYPE", fatherClassName))
 
@@ -207,7 +212,7 @@ function _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fat
     end
 end
 
-function _G.BEHAVIAC_ASSERT(check, msgFormat, ...)
+function BEHAVIAC_ASSERT(check, msgFormat, ...)
     if not check then
         d_ms.d_log.error("BEHAVIAC_ASSERT" .. msgFormat, ...)
         assert(false)
@@ -216,12 +221,17 @@ end
 
 -- 同C++ 
 -- 在调用BEHAVIAC_DECLARE_DYNAMIC_TYPE这个之前必须先调用 ADD_BEHAVIAC_DYNAMIC_TYPE
-function _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE(nodeClassName, fatherClassName)
+function BEHAVIAC_DECLARE_DYNAMIC_TYPE(nodeClassName, fatherClassName)
     FATHER_CLASS_INFO[nodeClassName] = fatherClassName
-    _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(nodeClassName)
-    _G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
+    BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER(nodeClassName)
+    BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES(nodeClassName, fatherClassName)
 end
 
+_G.BEHAVIAC_ASSERT                  = BEHAVIAC_ASSERT
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE        = ADD_BEHAVIAC_DYNAMIC_TYPE
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE    = BEHAVIAC_DECLARE_DYNAMIC_TYPE
+_G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER      = BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_TYPE_COMPOSER
+_G.BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES    = BEHAVIAC_INTERNAL_DECLARE_DYNAMIC_PUBLIC_METHODES
 --------------------------------------------------------------------------------------------------------------
 BehaviorParseFactory = {}
 constCharByteDoubleQuote    = string.byte('\"')
@@ -231,6 +241,12 @@ constCharByteLeftBraces     = string.byte('{')
 
 local paramMt = {}
 function paramMt:run(obj)
+    print("paramMt:run", self.methodName)
+    if self.isFunction then
+        if self.valueIsFunction then
+            data.value(obj, unpack(self.params))
+        end
+    end
 
 end
 
@@ -316,8 +332,10 @@ function BehaviorParseFactory.parseMethod(methodInfo)
 
     -- self:funtionName(params)
     -- _G:fff.fff()
-    local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+):(.+)%((.+)%)")()
-    assert(intanceName and className and methodName and paramStr, "BehaviorParseFactory.parseMethod")
+    -- local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+):(.+)%((.+)%)")()
+    -- REDO:  Self.CBTPlayer::MoveAhead(0)
+    local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+)%..+::(.+)%((.+)%)")()
+    assert(intanceName and methodName and paramStr, "BehaviorParseFactory.parseMethod " .. methodInfo)
     local data = {
         isFunction     = true,
         intanceName    = intanceName,

@@ -56,7 +56,7 @@ function cDecoratorTask:onEnter(obj)
 end
 
 function cDecoratorTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_node:isDecoratorNode(), "cDecoratorTask:update isDecoratorNode")
+    _G.BEHAVIAC_ASSERT(self.m_node:isDecoratorNode(), "cDecoratorTask:update isDecoratorNode")
 
     local dNode  = self.m_node
     local status = EBTStatus.BT_INVALID

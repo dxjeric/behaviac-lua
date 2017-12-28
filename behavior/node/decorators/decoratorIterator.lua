@@ -51,7 +51,7 @@ function cDecoratorIterator:loadByProperties(version, agentType, properties)
             if not pParenthesis then
                 self.m_Iterator = BehaviorParseFactory.parseProperty(p.value)
             else
-                BEHAVIAC_ASSERT(false, "cDecoratorIterator:loadByProperties Opl if function")
+                _G.BEHAVIAC_ASSERT(false, "cDecoratorIterator:loadByProperties Opl if function")
             end
         elseif p.name == "Opr" then
             local pParenthesis = string.find(p.value, '%(')
@@ -82,13 +82,13 @@ function cDecoratorIterator:iterateIt(obj, index, outCount)
             return true, outCount
         end
     else
-        BEHAVIAC_ASSERT(false, "cDecoratorIterator:iterateIt ")
+        _G.BEHAVIAC_ASSERT(false, "cDecoratorIterator:iterateIt ")
     end
 
     return false, outCount
 end
 
 function cDecoratorIterator:createTask()
-    BEHAVIAC_ASSERT(false, "cDecoratorIterator:createTask is empty")
+    _G.BEHAVIAC_ASSERT(false, "cDecoratorIterator:createTask is empty")
     return false
 end

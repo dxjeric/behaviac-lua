@@ -82,7 +82,7 @@ function cParallel:loadByProperties(version, agentType, properties)
             elseif p.value == "FAIL_ON_ALL" then
                 self.m_failPolicy = EFAILURE_POLICY.FAIL_ON_ALL
             else
-                BEHAVIAC_ASSERT(false, "cParallel:loadByProperties FailurePolicy error value = %s", p.value)
+                _G.BEHAVIAC_ASSERT(false, "cParallel:loadByProperties FailurePolicy error value = %s", p.value)
             end
         elseif p.name == "SuccessPolicy" then
             if p.value == "SUCCEED_ON_ONE" then
@@ -90,7 +90,7 @@ function cParallel:loadByProperties(version, agentType, properties)
             elseif p.value == "SUCCEED_ON_ALL" then
                 self.m_succeedPolicy = ESUCCESS_POLICY.SUCCEED_ON_ALL
             else
-                BEHAVIAC_ASSERT(false, "cParallel:loadByProperties SuccessPolicy error value = %s", p.value)
+                _G.BEHAVIAC_ASSERT(false, "cParallel:loadByProperties SuccessPolicy error value = %s", p.value)
             end
         elseif p.name == "ExitPolicy" then
             if p.value == "EXIT_NONE" then
@@ -98,7 +98,7 @@ function cParallel:loadByProperties(version, agentType, properties)
             elseif p.value == "EXIT_ABORT_RUNNINGSIBLINGS" then
                 self.m_exitPolicy = EEXIT_POLICY.EXIT_ABORT_RUNNINGSIBLINGS
             else
-                BEHAVIAC_ASSERT(false, "cParallel:loadByProperties ExitPolicy error value = %s", p.value)
+                _G.BEHAVIAC_ASSERT(false, "cParallel:loadByProperties ExitPolicy error value = %s", p.value)
             end
         elseif p.name == "ChildFinishPolicy" then
             if p.value == "CHILDFINISH_ONCE" then
@@ -106,10 +106,10 @@ function cParallel:loadByProperties(version, agentType, properties)
             elseif p.value == "CHILDFINISH_LOOP" then
                 self.m_childFinishPolicy = ECHILDFINISH_POLICY.CHILDFINISH_LOOP
             else
-                BEHAVIAC_ASSERT(false, "cParallel:loadByProperties ChildFinishPolicy error value = %s", p.value)
+                _G.BEHAVIAC_ASSERT(false, "cParallel:loadByProperties ChildFinishPolicy error value = %s", p.value)
             end
         else
-            -- BEHAVIAC_ASSERT(false)
+            -- _G.BEHAVIAC_ASSERT(false)
         end
     end
 end
@@ -143,7 +143,7 @@ function cParallel:parallelUpdate(obj, children)
             sawSuccess = true
             sawAllFails = false
         else
-            BEHAVIAC_ASSERT(treeStatus == EBTStatus.BT_FAILURE)
+            _G.BEHAVIAC_ASSERT(treeStatus == EBTStatus.BT_FAILURE)
             sawFail = true
             sawAllSuccess = false
         end

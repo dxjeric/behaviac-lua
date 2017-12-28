@@ -213,7 +213,7 @@ function cBranchTask:onEventCurrentNode()
     if self.m_currentTask then
         local s = self.m_currentTask:getStatus()
         if not (s == EBTStatus.BT_RUNNING and self.m_node:hasEvents()) then
-            d_ms.d_log.error("BEHAVIAC_ASSERT cBranchTask:onEventCurrentNode")
+            d_ms.d_log.error("_G.BEHAVIAC_ASSERT cBranchTask:onEventCurrentNode")
             return false
         end
 
@@ -223,7 +223,7 @@ function cBranchTask:onEventCurrentNode()
             parentBranch = self.m_currentTask:getParent()
             while parentBranch and parentBranch ~= self do
                 if parentBranch:getStatus() == EBTStatus.BT_RUNNING then
-                    d_ms.d_log.error("BEHAVIAC_ASSERT cBranchTask:onEventCurrentNode")
+                    d_ms.d_log.error("_G.BEHAVIAC_ASSERT cBranchTask:onEventCurrentNode")
                     return false
                 end
 

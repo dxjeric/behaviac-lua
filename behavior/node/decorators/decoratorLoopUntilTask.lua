@@ -55,7 +55,7 @@ function cDecoratorLoopUntilTask:decorate(status)
         return EBTStatus.BT_SUCCESS
     end
 
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorLoopUntil(), "cDecoratorLoopUntilTask:decorate self:getNode():isDecoratorLoopUntil")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorLoopUntil(), "cDecoratorLoopUntilTask:decorate self:getNode():isDecoratorLoopUntil")
     local pDecoratorLoopUntil = self:getNode()
     if pDecoratorLoopUntil.m_until then
         if status == EBTStatus.BT_SUCCESS then

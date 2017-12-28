@@ -42,7 +42,7 @@ function cConditionTask:onExit(obj, status)
 end
 
 function cConditionTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self:getNode():isCondition(), "cConditionTask:update self:getNode():isCondition")
+    _G.BEHAVIAC_ASSERT(self:getNode():isCondition(), "cConditionTask:update self:getNode():isCondition")
 
     local pConditionNode = self:getNode()
     if pConditionNode:evaluate(obj) then

@@ -67,7 +67,7 @@ function cReferencedBehavior:loadByProperties(version, agentType, properties)
                     if d_ms.d_behaviorTreeMgr.preloadBehaviors() then
                         -- it has a const tree path, so as to load the tree and check if that tree has events
                         local behaviorTree = d_ms.d_behaviorTreeMgr.loadBehaviorTree(szTreePath)
-                        BEHAVIAC_ASSERT(behaviorTree, "")
+                        _G.BEHAVIAC_ASSERT(behaviorTree, "")
                         if behaviorTree then
                             bHasEvents = behaviorTree:hasEvents()
                         end
@@ -76,10 +76,10 @@ function cReferencedBehavior:loadByProperties(version, agentType, properties)
                 end
             end
         elseif p.name == "Task" then
-            BEHAVIAC_ASSERT(not stringUtils.isNullOrEmpty(p.value))
+            _G.BEHAVIAC_ASSERT(not stringUtils.isNullOrEmpty(p.value))
             self.m_taskMethod = BehaviorParseFactory.parseMethod(p.value)
         else
-            -- BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name)
+            -- _G.BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name)
         end
     end
 end
@@ -103,7 +103,7 @@ function cReferencedBehavior:rootTaskNode(obj)
 end
 
 function cReferencedBehavior:getReferencedTree(obj)
-    BEHAVIAC_ASSERT(self.m_referencedBehaviorPath, "cReferencedBehavior:getReferencedTree m_referencedBehaviorPath")
+    _G.BEHAVIAC_ASSERT(self.m_referencedBehaviorPath, "cReferencedBehavior:getReferencedTree m_referencedBehaviorPath")
     if self.m_referencedBehaviorPath then
         local str = self.m_referencedBehaviorPath:getValueByRetrunType(obj, false, "const char*")
         return str
@@ -113,18 +113,18 @@ end
 
 function cReferencedBehavior:attach(pAttachment, bIsPrecondition, bIsEffector, bIsTransition)
     if bIsTransition then
-        BEHAVIAC_ASSERT(not bIsEffector and not bIsPrecondition, "cReferencedBehavior:attach not bIsEffector and not bIsPrecondition")
+        _G.BEHAVIAC_ASSERT(not bIsEffector and not bIsPrecondition, "cReferencedBehavior:attach not bIsEffector and not bIsPrecondition")
         
         if not self.m_transitions then
             self.m_transitions = {}
         end
 
-        BEHAVIAC_ASSERT(pAttachment:isTransition(), "cReferencedBehavior:attach pAttachment:isTransition")
+        _G.BEHAVIAC_ASSERT(pAttachment:isTransition(), "cReferencedBehavior:attach pAttachment:isTransition")
         table.insert(self.m_transitions, pAttachment)
         return
     end
 
-    BEHAVIAC_ASSERT(not bIsTransition, "cReferencedBehavior:attach bIsTransition")
+    _G.BEHAVIAC_ASSERT(not bIsTransition, "cReferencedBehavior:attach bIsTransition")
     d_ms.d_behaviorNode.cBehaviorNode.attach(self, pAttachment, bIsPrecondition, bIsEffector, bIsTransition)
 end
 

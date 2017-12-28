@@ -37,12 +37,12 @@ function cDecoratorFramesTask:__init()
 end
 
 function cDecoratorFramesTask:getFrames(obj)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorFrames(), "cDecoratorFramesTask:getFrames self:getNode() and self:getNode():isDecoratorFrames()")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorFrames(), "cDecoratorFramesTask:getFrames self:getNode() and self:getNode():isDecoratorFrames()")
     return self:getNode():getFrames(obj)
 end
 
 function cDecoratorFramesTask:copyTo(target)
-    BEHAVIAC_ASSERT(target:isDecoratorFramesTask(), "cDecoratorFramesTask:copyTo target:isDecoratorFramesTask")
+    _G.BEHAVIAC_ASSERT(target:isDecoratorFramesTask(), "cDecoratorFramesTask:copyTo target:isDecoratorFramesTask")
     d_ms.d_decoratorTask.cDecoratorTask.copyTo(self, target)
 
     target.m_start  = self.m_start

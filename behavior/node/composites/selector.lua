@@ -59,7 +59,7 @@ function cSelector:SelectorUpdate(obj, childStatus, outActiveChildIndex, childre
     end
 
     while true do
-        BEHAVIAC_ASSERT(outActiveChildIndex <= childSize, "cSelector:SelectorUpdate outActiveChildIndex %d < childSize %d", outActiveChildIndex, childSize)
+        _G.BEHAVIAC_ASSERT(outActiveChildIndex <= childSize, "cSelector:SelectorUpdate outActiveChildIndex %d < childSize %d", outActiveChildIndex, childSize)
         if s == EBTStatus.BT_RUNNING then
             local pBehavior = children[outActiveChildIndex]
 

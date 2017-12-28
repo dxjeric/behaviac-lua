@@ -11,6 +11,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -22,6 +23,7 @@ local getmetatable  = getmetatable
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
+local stringUtils           = d_ms.d_behaviorCommon.stringUtils
 local triggerMode           = d_ms.d_behaviorCommon.triggerMode
 local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
@@ -39,6 +41,7 @@ function cActionConfig:__init()
     self.m_opr2         = false
     self.m_operator     = EOperatorType.E_INVALID
     self.m_comparator   = false
+    self.__name         = "cActionConfig"
 end
 
 function cActionConfig:release()
@@ -81,7 +84,7 @@ function cActionConfig:load(properties)
                 end
             end
         else
-            -- BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);
+            -- _G.BEHAVIAC_ASSERT(0, "unrecognised property %s", p.name);
         end
     end
 
@@ -129,7 +132,8 @@ function cAttachAction:release()
 end
 
 function cAttachAction:loadByProperties(version, agentType, properties)
-    d_ms.behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
+    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
+    print("cAttachAction:loadByProperties", self.__name, "self.m_ActionConfig", self.m_ActionConfig.__name)
     self.m_ActionConfig:load(properties)
 end
 

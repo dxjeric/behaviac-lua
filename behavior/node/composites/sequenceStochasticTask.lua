@@ -36,7 +36,7 @@ function cSequenceStochasticTask:__init()
 end
 
 function cSequenceStochasticTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSequenceStochasticTask:update self.m_activeChildIndex <= #self.m_children")
+    _G.BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSequenceStochasticTask:update self.m_activeChildIndex <= #self.m_children")
     
     local bFirst = true
     local node = self.m_node

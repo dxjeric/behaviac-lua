@@ -37,7 +37,7 @@ end
 
 function cWaitForSignalTask:copyTo(target)
     d_ms.d_leafTask.cLeafTask.copyTo(target)
-    BEHAVIAC_ASSERT(target:isWaitforSignalTask(), "cWaitForSignalTask:copyTo target:isWaitforSignalTask")
+    _G.BEHAVIAC_ASSERT(target:isWaitforSignalTask(), "cWaitForSignalTask:copyTo target:isWaitforSignalTask")
     target.m_bTriggered = self.m_bTriggered
 end
 

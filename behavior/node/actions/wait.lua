@@ -11,6 +11,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -69,7 +70,7 @@ function cWait:getTime(obj)
         --     time = *(float*)this->m_time->GetValue(pAgent);
         -- }
         -- else {
-        --     BEHAVIAC_ASSERT(false);
+        --     _G.BEHAVIAC_ASSERT(false);
         -- }
         return self.m_time:getValue(obj)
     end

@@ -43,8 +43,8 @@ function cAssignmentTask:onExit(obj, status)
 end
 
 function cAssignmentTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(childStatus == EBTStatus.BT_RUNNING, "cAssignmentTask:update childStatus == EBTStatus.BT_RUNNING")
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAssignment(), "cAssignmentTask:update self:getNode():isAssignment()")
+    _G.BEHAVIAC_ASSERT(childStatus == EBTStatus.BT_RUNNING, "cAssignmentTask:update childStatus == EBTStatus.BT_RUNNING")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAssignment(), "cAssignmentTask:update self:getNode():isAssignment()")
 
     local pAssignmentNode = self:getNode()
     local result = EBTStatus.BT_SUCCESS

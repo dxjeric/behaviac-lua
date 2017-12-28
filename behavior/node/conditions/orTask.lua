@@ -42,7 +42,7 @@ function cOrTask:update(obj, childStatus)
             return status
         end
 
-        BEHAVIAC_ASSERT(status == EBTStatus.BT_FAILURE, "cOrTask:update status == EBTStatus.BT_FAILURE")
+        _G.BEHAVIAC_ASSERT(status == EBTStatus.BT_FAILURE, "cOrTask:update status == EBTStatus.BT_FAILURE")
     end
 
     return EBTStatus.BT_FAILURE

@@ -61,7 +61,7 @@ end
 
 function cSingeChildTask:init(behaviorNode)
     d_ms.d_branchTask.cBranchTask.init(self, behaviorNode)
-    BEHAVIAC_ASSERT(behaviorNode:getChildrenCount() <= 1, "cSingeChildTask:init behaviorNode:getChildrenCount() <= 1")
+    _G.BEHAVIAC_ASSERT(behaviorNode:getChildrenCount() <= 1, "cSingeChildTask:init behaviorNode:getChildrenCount() <= 1")
     
     if behaviorNode:getChildrenCount() == 1 then
         local childNode = behaviorNode:getChild(1)
@@ -75,16 +75,16 @@ end
 -- BehaviorTask
 function cSingeChildTask:copyTo(target)
     d_ms.d_branchTask.cBranchTask.copyTo(self, target)
-    BEHAVIAC_ASSERT(target:isSingeChildTask(), "cSingeChildTask:copyTo target:isSingeChildTask")
+    _G.BEHAVIAC_ASSERT(target:isSingeChildTask(), "cSingeChildTask:copyTo target:isSingeChildTask")
     
     if self.m_root then
         if target.m_root then
             local pNode = self.m_root:getNode()
-            BEHAVIAC_ASSERT(pNode:isBehaviorTree(), "cSingeChildTask:copyTo pNode:isBehaviorTree")
+            _G.BEHAVIAC_ASSERT(pNode:isBehaviorTree(), "cSingeChildTask:copyTo pNode:isBehaviorTree")
             target.m_root = pNode:createAndInitTask()
         end
 
-        BEHAVIAC_ASSERT(target.m_root, "cSingeChildTask:copyTo target.m_root")
+        _G.BEHAVIAC_ASSERT(target.m_root, "cSingeChildTask:copyTo target.m_root")
         self.m_root:copyTo(target.m_root)
     end
 end
@@ -112,7 +112,7 @@ function cSingeChildTask:addChild(pBehavior)
 end
 
 function cSingeChildTask:getTaskById(id)
-    BEHAVIAC_ASSERT(id ~= -1);
+    _G.BEHAVIAC_ASSERT(id ~= -1);
     
     local behaviorTask = d_ms.d_branchTask.cBranchTask.getTaskById(self, id)
     if behaviorTask then

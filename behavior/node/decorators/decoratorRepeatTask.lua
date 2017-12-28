@@ -43,14 +43,14 @@ function cDecoratorRepeatTask:load(IONode)
 end
 
 function cDecoratorRepeatTask:decorate(status)
-    BEHAVIAC_ASSERT(false, "cDecoratorRepeatTask:decorate")
+    _G.BEHAVIAC_ASSERT(false, "cDecoratorRepeatTask:decorate")
     return EBTStatus.BT_INVALID
 end
 
 function cDecoratorRepeatTask:update(obj, childStatus)
-    BEHAVIAC_ASSERT(self.m_node and self.m_node:isDecoratorNode(), "cDecoratorRepeatTask:update self.m_node:isDecoratorNode")
-    BEHAVIAC_ASSERT(self.m_n >= 0, "cDecoratorRepeatTask:update self.m_n >= 0")
-    BEHAVIAC_ASSERT(self.m_root,  "cDecoratorRepeatTask:update self.m_root")
+    _G.BEHAVIAC_ASSERT(self.m_node and self.m_node:isDecoratorNode(), "cDecoratorRepeatTask:update self.m_node:isDecoratorNode")
+    _G.BEHAVIAC_ASSERT(self.m_n >= 0, "cDecoratorRepeatTask:update self.m_n >= 0")
+    _G.BEHAVIAC_ASSERT(self.m_root,  "cDecoratorRepeatTask:update self.m_root")
 
     local status = EBTStatus.BT_INVALID
 

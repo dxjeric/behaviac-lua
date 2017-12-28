@@ -37,7 +37,7 @@ end
 
 function cDecoratorCountLimitTask:copyTo(target)
     d_ms.d_decoratorCountTask.cDecoratorCountTask.copyTo(self, target)
-    BEHAVIAC_ASSERT(target:isDecoratorCountLimitTask(), "cDecoratorCountLimitTask:copyTo target:isDecoratorCountLimitTask")
+    _G.BEHAVIAC_ASSERT(target:isDecoratorCountLimitTask(), "cDecoratorCountLimitTask:copyTo target:isDecoratorCountLimitTask")
 
     target.m_bInited = self.m_bInited
 end
@@ -68,7 +68,7 @@ function cDecoratorCountLimitTask:onEnter(obj)
     elseif self.m_n == -1 then
         return true
     end
-    BEHAVIAC_ASSERT(false, "cDecoratorCountLimitTask:onEnter false")
+    _G.BEHAVIAC_ASSERT(false, "cDecoratorCountLimitTask:onEnter false")
     return false
 end
 

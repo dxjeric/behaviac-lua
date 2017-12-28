@@ -44,7 +44,7 @@ function cDecoratorNot:isValid(obj, task)
 end
 
 function cDecoratorNot:evaluate(obj)
-    BEHAVIAC_ASSERT(#self.m_children == 1, "cDecoratorNot:evaluate #self.m_children == 1")
+    _G.BEHAVIAC_ASSERT(#self.m_children == 1, "cDecoratorNot:evaluate #self.m_children == 1")
     return not self.m_children[1]:evaluate(obj)
 end
 

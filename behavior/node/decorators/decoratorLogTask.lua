@@ -52,7 +52,7 @@ function cDecoratorLogTask:onenter(obj)
 end
 
 function cDecoratorLogTask:decorate(status)
-    BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorLog(), "cDecoratorLogTask:decorate self:getNode():isDecoratorLog")
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorLog(), "cDecoratorLogTask:decorate self:getNode():isDecoratorLog")
     BEHAVIAC_LOGINFO("DecoratorLogTask:%s\n", self:getNode().m_message)
     return status
 end

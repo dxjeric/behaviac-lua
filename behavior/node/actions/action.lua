@@ -47,7 +47,7 @@ end
 
 -- 加载action数据
 function cAction:loadByProperties(version, agentType, properties)
-    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(version, agentType, properties)
+    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
 
     for _, propertie in ipairs(properties) do
         if propertie.name == "Method" then
@@ -109,7 +109,7 @@ function cAction:executeByInputChildStatus(obj, childSatus)
                 d_ms.d_log.error("self.m_resultFunctor 这个是做什么的！")
                 result = self.m_method:getIValue(obj)
                 -- IValue* returnValue = this->m_method->GetIValue((Agent*)pAgent);
-                -- BEHAVIAC_ASSERT((TValue<EBTStatus>*)(returnValue), "method's return type is not EBTStatus");
+                -- _G.BEHAVIAC_ASSERT((TValue<EBTStatus>*)(returnValue), "method's return type is not EBTStatus");
                 -- result = ((TValue<EBTStatus>*)returnValue)->value;
             end
         end
