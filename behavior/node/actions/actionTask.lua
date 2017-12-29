@@ -41,4 +41,7 @@ end
 
 function cActionTask:update(obj, childStatus)
     _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isAction(), "cActionTask:update  self:getNode() and self:getNode():isAction()")
+
+    local pNode = self:getNode()
+    return pNode:execute(obj, childStatus)
 end

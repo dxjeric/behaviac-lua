@@ -147,6 +147,7 @@ function ADD_BEHAVIAC_DYNAMIC_TYPE(className, classDeclare)
         return
     end
     classDeclare.__name = className
+    classDeclare.getName = function(self) return self.__name or "no name" end
     BEHAVIAC_DYNAMIC_TYPES[className] = classDeclare
     registNodeClass(string.sub(className, 2), classDeclare)
 end
@@ -292,9 +293,6 @@ end
 function paramMt:compute(obj, opr1, opr2, operator)
 end
 
-function paramMt:getValue(obj)
-end
-
 function paramMt:compare(obj, right, comparisonType)
 end
 
@@ -353,7 +351,7 @@ function BehaviorParseFactory.parseMethod(methodInfo)
         data.value = load("return " .. methodName)()
         data.valueIsFunction = true
     end
-    return setmetatable(data, paramMt), methodName
+    return setmetatable(data, {__index = paramMt}), methodName
 end
 
 function BehaviorParseFactory.parseProperty(propertyStr)
@@ -369,6 +367,7 @@ function BehaviorParseFactory.parseProperty(propertyStr)
         data.type  = propertyValueType.const
         data.value = getProperty(properties[2], properties[3]) 
         data.valueIsFunction = false
+        return setmetatable(data, {__index = paramMt})
     else
         local propStr       = ""
         local typeName      = ""
@@ -403,7 +402,7 @@ function BehaviorParseFactory.parseProperty(propertyStr)
             data.valueIsFunction = true
         end
 
-        return setmetatable(data, paramMt)
+        return setmetatable(data, {__index = paramMt})
     end
 
     return nil

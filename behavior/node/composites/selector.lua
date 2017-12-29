@@ -49,7 +49,7 @@ function cSelector:isValid(obj, task)
     return d_ms.d_behaviorNode.cBehaviorNode.isValid(self, obj, task)
 end
 
-function cSelector:SelectorUpdate(obj, childStatus, outActiveChildIndex, children)
+function cSelector:selectorUpdate(obj, childStatus, outActiveChildIndex, children)
     local s = childStatus
     local childSize = #children
 
@@ -66,7 +66,6 @@ function cSelector:SelectorUpdate(obj, childStatus, outActiveChildIndex, childre
             if self:checkIfInterrupted(obj) then
                 return EBTStatus.BT_FAILURE, outActiveChildIndex
             end
-
             s = pBehavior:exec(obj)
         end
 

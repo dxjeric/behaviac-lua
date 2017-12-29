@@ -11,6 +11,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local string        = string
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -25,6 +26,7 @@ module "behavior.base.behaviorTask"
 ------------------------------------------------------------------------------------------------------
 local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local triggerMode           = d_ms.d_behaviorCommon.triggerMode
+local ENodePhase            = d_ms.d_behaviorCommon.ENodePhase
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorTask")
@@ -195,7 +197,7 @@ function cBehaviorTask:execByInputChildStatus(obj, childStatus)
             end
         end
 
-        if self.m_status == EBTStatus.BT_RUNNING then
+        if self.m_status ~= EBTStatus.BT_RUNNING then
             -- clear it
             self:onExitAction(obj, self.m_status)
             -- this node is possibly ticked by its parent or by the topBranch who records it as currrent node so, we can't here reset the topBranch's current nod
@@ -224,7 +226,7 @@ function cBehaviorTask:checkParentUpdatePreconditions(obj)
         table.insert(parents, self)        
         
         while parentBranch do
-            if #parents < kMaxParentsCount then
+            if #parents >= kMaxParentsCount then
                 d_ms.d_log.error("cBehaviorTask:checkParentUpdatePreconditions  weird tree!")
                 break
             end

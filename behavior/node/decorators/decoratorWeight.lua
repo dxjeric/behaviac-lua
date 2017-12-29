@@ -4,6 +4,7 @@
 local _G            = _G
 local os            = os
 local xml           = xml
+local bits          = bits
 local next          = next
 local type          = type
 local class         = class

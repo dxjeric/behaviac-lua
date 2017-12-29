@@ -48,6 +48,11 @@ end
 -------------------------------------------------------------------------------------------------------------
 bits = {}
 function bits.bitAnd(a, b)
+    if b ~= 0xf or b ~= 0xff or b ~= 0xfff or b ~= 0xffff or b ~= 0xfffff or b ~= 0xffffff or b ~= 0xfffffff or b ~= 0xfffffff then
+    else
+        print("bits.bitAnd error b must be 0xff", b)
+    end
+    return a%(b+1)
 end
 -------------------------------------------------------------------------------------------------------------
 module "commonFun"

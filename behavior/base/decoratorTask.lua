@@ -57,9 +57,9 @@ end
 
 function cDecoratorTask:update(obj, childStatus)
     _G.BEHAVIAC_ASSERT(self.m_node:isDecoratorNode(), "cDecoratorTask:update isDecoratorNode")
-
     local dNode  = self.m_node
     local status = EBTStatus.BT_INVALID
+
     if childStatus ~= EBTStatus.BT_RUNNING then
         status = childStatus
         if not dNode.m_bDecorateWhenChildEnds or status ~= EBTStatus.BT_RUNNING then
@@ -72,7 +72,7 @@ function cDecoratorTask:update(obj, childStatus)
         end
     end
 
-    status = d_ms.d_singeChildTask.cSingeChildTask.update(obj, childStatus)
+    status = d_ms.d_singeChildTask.cSingeChildTask.update(self, obj, childStatus)    
     if not dNode.m_bDecorateWhenChildEnds or status ~= EBTStatus.BT_RUNNING then
         local result = self:decorate(status)
         if result ~= EBTStatus.BT_RUNNING then

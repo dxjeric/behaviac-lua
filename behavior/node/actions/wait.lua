@@ -56,7 +56,8 @@ function cWait:loadByProperties(version, agentType, properties)
 end
 
 function cWait:getTime(obj)
-    local time = 0    
+    local time = 0
+    print("cWait:getTime", self.m_time)
     if self.m_time then
         -- REDO: 需要简化
         -- local typeNumberId = self.m_time:getClassTypeNumberId();
@@ -72,6 +73,7 @@ function cWait:getTime(obj)
         -- else {
         --     _G.BEHAVIAC_ASSERT(false);
         -- }
+        print("self.m_time:getValue(obj)", self.m_time:getValue(obj))
         return self.m_time:getValue(obj)
     end
 

@@ -136,7 +136,6 @@ end
 
 function cBehaviorTreeTask:onExit(obj, status)
     obj.m_excutingTreeTask = self.m_lastTreeTask
-    print("cBehaviorTreeTask:onExit", obj.m_objName, self:getName())
     d_ms.d_singeChildTask.cSingeChildTask.onExit(self, obj, status)
 end
 

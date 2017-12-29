@@ -125,7 +125,7 @@ function cBranchTask:execCurrentTask(obj, childStatus)
             -- back track the parents until the branch
             while parentBranch do
                 if parentBranch == self then
-                    status = parentBranch:udpate()
+                    status = parentBranch:update()
                 else
                     status = parentBranch:execByInputChildStatus(obj, status)
                 end

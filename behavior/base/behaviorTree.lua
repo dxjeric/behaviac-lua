@@ -120,7 +120,7 @@ end
 
 function cBehaviorTree:instantiatePars(vars)
     -- TODO: 这块是获取对应的数据吗
-    d_ms.d_log.error("cBehaviorTree:instantiatePars is empty")
+    -- d_ms.d_log.error("cBehaviorTree:instantiatePars is empty")
     if #self.m_localProps > 0 then
         for varName, var in pairs(self.m_localProps) do
             vars[varName]= var

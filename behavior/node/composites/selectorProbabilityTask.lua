@@ -52,7 +52,7 @@ function cSelectorProbabilityTask:onEnter(obj)
         _G.BEHAVIAC_ASSERT(task:isDecoratorWeightTask(), "cSelectorProbabilityTask:onEnter task:isDecoratorWeightTask")
         local weight = task:getWeight(obj)
         table.insert(self.m_weightingMap, weight)
-        self.m_totalSum = weight
+        self.m_totalSum = self.m_totalSum + weight
     end
 
     _G.BEHAVIAC_ASSERT(#self.m_weightingMap == #self.m_children, "cSelectorProbabilityTask:onEnter #self.m_weightingMap == self.m_children")
@@ -63,7 +63,7 @@ function cSelectorProbabilityTask:onExit(obj, status)
     self.m_activeChildIndex = constInvalidChildIndex
 end
 
-function cSelectorProbabilityTask:update(obj, childStatus)
+function cSelectorProbabilityTask:update(obj, childStatus)    
     _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isSelectorProbability(), "cSelectorProbabilityTask:update self:getNode():isSelectorProbability")
     if childStatus ~= EBTStatus.BT_RUNNING then
         return childStatus
@@ -93,8 +93,10 @@ function cSelectorProbabilityTask:update(obj, childStatus)
             else
                 self.m_activeChildIndex = constInvalidChildIndex
             end
+            -- print("cSelectorProbabilityTask:update 1", self.m_activeChildIndex, pChild.__name)
             return status
         end
     end
+    -- print("cSelectorProbabilityTask:update", self.m_activeChildIndex)
     return EBTStatus.BT_FAILURE
 end

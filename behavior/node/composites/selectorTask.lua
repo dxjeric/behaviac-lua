@@ -46,7 +46,7 @@ end
 
 function cSelectorTask:update(obj, childStatus)
     _G.BEHAVIAC_ASSERT(self.m_activeChildIndex <= #self.m_children, "cSelectorTask:update self.m_activeChildIndex <= #self.m_children")
-    local status, activeChildIndex = self:selectorUpdate(obj, childStatus, self.m_activeChildIndex, self.m_children)
+    local status, activeChildIndex = self.m_node:selectorUpdate(obj, childStatus, self.m_activeChildIndex, self.m_children)
     self.m_activeChildIndex = activeChildIndex
     return status
 end
