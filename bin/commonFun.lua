@@ -28,14 +28,15 @@ function isTest()
 end
 -------------------------------------------------------------------------------------------------------------
 -- REDO: 需要替换
+-- 时间
 function redoGetIntValueSinceStartup()
     return os.time()
 end
-
+-- 时间
 function redoGetDoubleValueSinceStartup()
     return os.clock()
 end
-
+-- 帧数
 function redoGetFrameSinceStartup()
     return os.time()
 end
