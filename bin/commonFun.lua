@@ -22,6 +22,10 @@ local xml   = xml
 function isLinux()
     return false
 end
+
+function isTest()
+    return true
+end
 -------------------------------------------------------------------------------------------------------------
 -- REDO: 需要替换
 function redoGetIntValueSinceStartup()
@@ -186,7 +190,21 @@ function _G.class(class_name, super, heavy)
                         derive_variable(object, new_class, ...)
                         local mt = getmetatable(object)
                         mt.__newindex = access_deny
-                        return object
+                        if _G.isTest() then
+                            local testMt = {
+                                __index     = object,
+                                __newindex  = function(t, k, v)
+                                    if k == "m_status" and not v then
+                                        assert(false, "status is nil")
+                                    else
+                                        object[k] = v
+                                    end
+                                end
+                            }
+                            return setmetatable({}, testMt)
+                        else
+                            return object
+                        end
                     end
 
     new_class.super = function(self) return self.__super end

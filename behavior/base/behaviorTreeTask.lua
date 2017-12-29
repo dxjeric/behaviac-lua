@@ -130,7 +130,7 @@ function cBehaviorTreeTask:init(behaviorNode)
 end
 
 function cBehaviorTreeTask:onEnter(obj)
-    print("cBehaviorTreeTask:onEnter", obj.m_objName, self:getName())
+    -- print("cBehaviorTreeTask:onEnter", obj.m_objName, self:getName())
     return true
 end
 

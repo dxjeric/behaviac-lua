@@ -121,7 +121,7 @@ function cBehaviorNode:loadNode(agentType, xmlNode, version)
     assert(xmlNode:getNodeName() == constBaseKeyStrDef.kStrNodeName)
 
     local nodeClassName = xmlNode:getAttrValue(constBaseKeyStrDef.kStrClass)
-    print("nodeClassName", nodeClassName)
+    -- print("nodeClassName", nodeClassName)
     if nodeClassName then
         local newNode = self:create(nodeClassName)
         if newNode then
@@ -293,7 +293,7 @@ end
 
 function cBehaviorNode:createAndInitTask()
     local task = self:createTask()
-    print("cBehaviorNode:createAndInitTask", task.__name)
+    -- print("cBehaviorNode:createAndInitTask", task.__name)
     task:init(self)
     return task
 end

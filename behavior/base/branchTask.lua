@@ -49,6 +49,7 @@ function cBranchTask:setCurrentTask(behaviorTask)
         -- the leaf is set as the tree's current task instead of its parent
         if not self.m_currentTask then
             self.m_currentTask = behaviorTask
+            -- print("behaviorTask", behaviorTask.__name)
             behaviorTask:setHasManagingParent(true)
         end
     else
@@ -177,7 +178,6 @@ function cBranchTask:updateCurrent(obj, childStatus)
     local status = EBTStatus.BT_INVALID
     if self.m_currentTask then
         status = self:execCurrentTask(obj, childStatus)
-
     else
         status = self:update(obj, childStatus)
     end

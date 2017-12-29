@@ -107,7 +107,7 @@ function cBehaviorTask:getParent()
     return self.m_parent
 end
 
-function cBehaviorTask:SetHasManagingParent(bHasManagingParent)
+function cBehaviorTask:setHasManagingParent(bHasManagingParent)
     self.m_bHasManagingParent = bHasManagingParent
 end
 
@@ -171,7 +171,7 @@ function cBehaviorTask:getClassNameString()
 end
 ------------------------------------------------------------------------------------------------------
 function cBehaviorTask:exec(obj)
-    self:execByInputChildStatus(obj, EBTStatus.BT_RUNNING)
+    return self:execByInputChildStatus(obj, EBTStatus.BT_RUNNING)
 end
 
 -- 同 EBTStatus exec(Agent* pAgent, EBTStatus childStatus)
@@ -208,7 +208,7 @@ function cBehaviorTask:execByInputChildStatus(obj, childStatus)
     else
         self.m_status = EBTStatus.BT_FAILURE
     end
-    
+
     return self.m_status
 end
 

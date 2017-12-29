@@ -67,8 +67,7 @@ function cBehaviorTree:behaviorLoadXml(xmlPath)
         d_ms.d_log.error("behaviorLoadXml %s is not xml file", xmlPath)
         return
     end
-   -- d_ms.p("xmlNodes", xmlNodes)
-    print("constBaseKeyStrDef.kStrBehavior", constBaseKeyStrDef.kStrBehavior)
+    -- d_ms.p("xmlNodes", xmlNodes)
     local childNodes = xmlNodes:getChildeByName(constBaseKeyStrDef.kStrBehavior)
     if not childNodes then
         d_ms.d_log.error("behaviorLoadXml %s is not behavior tree xml", xmlPath)

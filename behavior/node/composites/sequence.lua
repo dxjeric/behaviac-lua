@@ -41,16 +41,15 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSequence", "cBehaviorNode")
 function cSequence:__init()
 end
 
-function cSequence:SequenceUpdate(obj, childStatus, outActiveChildIndex, children)
+function cSequence:sequenceUpdate(obj, childStatus, outActiveChildIndex, children)
     local s = childStatus
     local childSize = #children
-
     while true do
-        _G.BEHAVIAC_ASSERT(activeChildIndex <= childSize, "cSequence:SequenceUpdate activeChildIndex <= childSize")
+        _G.BEHAVIAC_ASSERT(outActiveChildIndex <= childSize, "cSequence:SequenceUpdate activeChildIndex <= childSize")
         if s == EBTStatus.BT_RUNNING then
-            local pBehavior = children[activeChildIndex]
+            local pBehavior = children[outActiveChildIndex]
             if self:checkIfInterrupted(obj) then
-                return EBTStatus.BT_FAILURE, activeChildIndex
+                return EBTStatus.BT_FAILURE, outActiveChildIndex
             end
 
             s = pBehavior:exec(obj)
@@ -58,19 +57,19 @@ function cSequence:SequenceUpdate(obj, childStatus, outActiveChildIndex, childre
 
         --  If the child fails, or keeps running, do the same.
         if s ~= EBTStatus.BT_SUCCESS then
-            return s, activeChildIndex
+            return s, outActiveChildIndex
         end
 
         --  Hit the end of the array, job done!
-        activeChildIndex = activeChildIndex + 1
-        if activeChildIndex > childSize then
-            return EBTStatus.BT_SUCCESS, activeChildIndex
+        outActiveChildIndex = outActiveChildIndex + 1
+        if outActiveChildIndex > childSize then
+            return EBTStatus.BT_SUCCESS, outActiveChildIndex
         end
 
         s = EBTStatus.BT_RUNNING
     end
 
-    return s, activeChildIndex
+    return s, outActiveChildIndex
 end
 
 function cSequence:checkIfInterrupted(obj)

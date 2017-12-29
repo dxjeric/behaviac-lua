@@ -17,6 +17,7 @@ function cPlayer:__init()
     self.m_currentBT = task
     self.m_behaviorTreeTasks = {task}   -- {BehaviorTreeTask, BehaviorTreeTask}
     self.m_btStack = {}
+    self.m_excutingTreeTask = false
 end
 -- m_btStack = {BehaviorTreeStackItem_t, BehaviorTreeStackItem_t}
 -- BehaviorTreeStackItem_t {
@@ -133,6 +134,10 @@ end
 
 
 local player = cPlayer.new()
+for i= 1, 100 do
+player:btexec()
+end
+
 function main_entrance(con, id, data, len, ses, cid, time)
     return 1
 end

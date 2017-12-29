@@ -65,7 +65,6 @@ end
 
 function cSelectorProbabilityTask:update(obj, childStatus)
     _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isSelectorProbability(), "cSelectorProbabilityTask:update self:getNode():isSelectorProbability")
-
     if childStatus ~= EBTStatus.BT_RUNNING then
         return childStatus
     end
@@ -89,7 +88,6 @@ function cSelectorProbabilityTask:update(obj, childStatus)
         if w > 0 and sum >= chosen then
             local pChild = self.m_children[i]
             local status = pChild:exec(obj)
-
             if status == EBTStatus.BT_RUNNING then
                 self.m_activeChildIndex = i
             else

@@ -45,9 +45,8 @@ function cPreconditionConfig:release()
 end
 
 function cPreconditionConfig:load(properties)
-    print("cPreconditionConfig:load")
+    -- print("cPreconditionConfig:load")
     local loaded = d_ms.d_attachAction.cActionConfig.load(self, properties)
-    print("cPreconditionConfig:load ------------------------------------------------------------------")
     for _, p in ipairs(properties) do
         if p.name == "BinaryOperator" then
             if p.value == "Or" then
@@ -70,8 +69,6 @@ function cPreconditionConfig:load(properties)
             break
         end
     end
-
-    print("cPreconditionConfig:load ------------------------------------------------------------------")
 end
 ------------------------------------------------------------------------------------------------------
 function cPrecondition:__init()

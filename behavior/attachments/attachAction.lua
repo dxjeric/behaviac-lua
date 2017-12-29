@@ -133,7 +133,6 @@ end
 
 function cAttachAction:loadByProperties(version, agentType, properties)
     d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
-    print("cAttachAction:loadByProperties", self.__name, "self.m_ActionConfig", self.m_ActionConfig.__name)
     self.m_ActionConfig:load(properties)
 end
 
