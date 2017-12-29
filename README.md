@@ -17,7 +17,7 @@
 ### LuaXML.lua 和 LuaXML_lib.dll
 	处理lua处理xml文件的底层接口 
 
-### behavior相关代码
+### behavior相关代码([C++ 源码](https://github.com/Tencent/behaviac.git))
 	和c++版同目录级别，基础类(behaviortree.h, behaviortree_task.h)按照类名分文件
 
 ## 测试代码
