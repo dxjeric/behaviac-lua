@@ -28,6 +28,7 @@ module "behavior.base.behaviorNode"
 local constBaseKeyStrDef    = d_ms.d_behaviorCommon.constBaseKeyStrDef
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local stringUtils           = d_ms.d_behaviorCommon.stringUtils
+local EPreconditionPhase    = d_ms.d_behaviorCommon.EPreconditionPhase
 ------------------------------------------------------------------------------------------------------
 class("cBehaviorNode")
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cBehaviorNode", cBehaviorNode)
@@ -219,7 +220,7 @@ function cBehaviorNode:loadAttachment(version, agentType, hasEvents, xmlNode)
         local bIsEffector       = false
         local bIsTransition     = false
         local flagStr = xmlNode:getAttrValue(constBaseKeyStrDef.kStrFlag)
-        if flagStr == constBaseKeyStrDef.precondition then
+        if flagStr == constBaseKeyStrDef.kStrPrecondition then
             bIsPrecondition = true
         elseif flagStr == constBaseKeyStrDef.kStrEffector then
             bIsEffector = true
@@ -255,7 +256,7 @@ end
 -- 
 function cBehaviorNode:attach(attachmentNode, isPrecondition, isEffector, isTransition)
     assert(isTransition == false, "isTransition must be false") -- TODO: 为什么？
-    
+
     if isPrecondition then
         assert(not isEffector)
         assert(attachmentNode)  -- TODO: 检测是否是附件
@@ -399,7 +400,7 @@ function cBehaviorNode:combineResults(firstValidPrecond, lastCombineValue, preco
         firstValidPrecond = false
         lastCombineValue = taskBoolean
     else
-        local andOp = precond:IsAnd()
+        local andOp = precond:isAnd()
         if andOp then
             lastCombineValue = lastCombineValue and taskBoolean
         else

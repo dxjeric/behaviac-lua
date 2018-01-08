@@ -118,7 +118,7 @@ function cBehaviorTask:getCurrentTask()
 end
 
 function cBehaviorTask:setCurrentTask(taskNode)
-    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:setCurrentTask")
+    -- d_ms.d_log.error("derived class must be rewrite cBehaviorTask:setCurrentTask")
 end
 
 function cBehaviorTask:getRootTask()
@@ -188,8 +188,12 @@ function cBehaviorTask:execByInputChildStatus(obj, childStatus)
 
     if bEnterResult then
         local bValid = self:checkParentUpdatePreconditions(obj)
-        if bValid then            
-            self.m_status = self:updateCurrent(obj, childStatus)
+        if bValid then
+            local status = self:updateCurrent(obj, childStatus)
+            if not status then
+                print('>>>>>>>>>>>updateCurrent', self.__name, self.m_status)
+            end
+            self.m_status = status
         else
             self.m_status = EBTStatus.BT_FAILURE
             if self:getCurrentTask() then
@@ -263,17 +267,17 @@ function cBehaviorTask:updateCurrent(obj, childStatus)
 end
 
 function cBehaviorTask:onReset(obj)
-    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onReset")
+    -- d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onReset")
 end
 
 -- return boolean
 function cBehaviorTask:onEnter(obj)
-    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onEnter")
+    -- d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onEnter")
     return true
 end
 
 function cBehaviorTask:onExit(obj, status)
-    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onExit")
+    -- d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onExit")
 end
 
 -- Get the Root of branch task
@@ -410,7 +414,7 @@ function checkEventHandler()
 end
 
 function cBehaviorTask:traverse(childFirst, handler, pAgent, userData)
-    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:traverse")    
+    -- d_ms.d_log.error("derived class must be rewrite cBehaviorTask:traverse")    
 end
 ------------------------------------------------------------------------------------------------------
 -- return false if the event handling needs to be stopped an event can be configured to stop being checked if triggered

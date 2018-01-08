@@ -11,6 +11,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local ipairs        = ipairs
 local string        = string
 local assert        = assert
 local ipairs        = ipairs
@@ -46,10 +47,10 @@ end
 
 -- handle the Assignment property
 function cAssignment:loadByProperties(version, agentType, properties)
-    d_ms.d_behaviorNode.cBehaviorNode.load(self, version, agentType, properties)
+    d_ms.d_behaviorNode.cBehaviorNode.loadByProperties(self, version, agentType, properties)
     local propertyName
 
-    for _, propertie in iparis(properties) do
+    for _, propertie in ipairs(properties) do
         if propertie.name == "CastRight" then
             self.m_bCast = (propertie.value == "true")
         elseif propertie.name == "Opl" then

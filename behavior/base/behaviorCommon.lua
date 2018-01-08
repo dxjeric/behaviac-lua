@@ -246,7 +246,7 @@ function paramMt:run(obj)
     -- print("paramMt:run", self.methodName, self.isFunction, self.valueIsFunction)
     if self.isFunction then
         if self.valueIsFunction then
-            self.value(obj, unpack(self.params))
+            self.value(obj, BehaviorParseFactory.unpackParams(obj, self.params))
         end
     end
 end
@@ -255,7 +255,7 @@ function paramMt:getIValueFrom(obj, method)
     local fp = method:getValue(obj)
     if self.valueIsFunction then
         if self.params then
-            return self.value(obj, fp, unpack(self.params))
+            return self.value(obj, fp, BehaviorParseFactory.unpackParams(obj, self.params))
         else
             return self.value(obj, fp)
         end
@@ -270,13 +270,22 @@ function paramMt:getIValue(obj)
 end
 
 function paramMt:setValueCast(obj, opr, cast)
-    d_ms.d_log.error("paramMt:setValueCast 不知道做什么")
+    -- cast这边没有实际作用，在getValue中可以处理
+    if cast then
+        local r = opr:getValue(obj)
+        self.setValue(obj, r)
+        -- print('>>>>>setValueCast', obj, opr, cast, r, type(r))
+    else
+        local r = opr:getValue(obj)
+        self.setValue(obj, r)
+        -- print('>>>>>setValueCast ', obj, opr, cast, r, type(r))
+    end
 end
 
 function paramMt:getValue(obj)
     if self.valueIsFunction then
         if self.params then
-            return self.value(obj, unpack(self.params))
+            return self.value(obj, BehaviorParseFactory.unpackParams(obj, self.params))
         else
             return self.value(obj)
         end
@@ -291,13 +300,19 @@ end
 
 -- Compute(pAgent, pComputeNode->m_opr1, pComputeNode->m_opr2, pComputeNode->m_operator);
 function paramMt:compute(obj, opr1, opr2, operator)
+    local r1 = opr1:getValue(obj)
+    local r2 = opr2:getValue(obj)
+    local result = BehaviorParseFactory.compute(r1, r2, operator)
+    self.setValue(obj, result)
+    -- print(">> paramMt:compute", obj, opr1, opr2, operator, r1, r2, type(r1), type(r2), result, self:getValue(obj))
 end
 
-function paramMt:compare(obj, right, comparisonType)
+function paramMt:compare(obj, opr, comparisonType)
     local l = self:getValue(obj)
-    local r = right:getValue(obj)
-    print(">> paramMt:compare", obj, right, comparisonType, l, r)
-    return true
+    local r = opr:getValue(obj)
+    local result = BehaviorParseFactory.compare(l, r, comparisonType)
+    -- print(">> paramMt:compare", obj, opr, comparisonType, l, r, type(l), type(r), result)
+    return result
 end
 
 function paramMt:setTaskParams(obj, treeTask)
@@ -327,6 +342,14 @@ local function splitTokens(str)
     return p
 end
 
+function BehaviorParseFactory.unpackParams(obj, params)
+    local retParam = {}
+    for i,paramFun in ipairs(params) do
+        retParam[i] = paramFun(obj)
+    end
+    return unpack(retParam)
+end
+
 function BehaviorParseFactory.parseMethod(methodInfo)
     if stringUtils.isNullOrEmpty(methodInfo) then
         return nil, false
@@ -338,11 +361,12 @@ function BehaviorParseFactory.parseMethod(methodInfo)
     -- REDO:  Self.CBTPlayer::MoveAhead(0)
     local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+)%..+::(.+)%((.*)%)")()
     assert(intanceName and methodName and paramStr, "BehaviorParseFactory.parseMethod " .. methodInfo)
+    -- print('>>>>>>>>parseMethod', intanceName, methodName, paramStr)
     local data = {
         isFunction     = true,
         intanceName    = intanceName,
         methodName     = methodName,
-        params         = d_ms.d_str.split(paramStr, ','),
+        params         = BehaviorParseFactory.parseForParams(paramStr),
     }
 
     if string.lower(intanceName) == "self" then
@@ -358,6 +382,28 @@ function BehaviorParseFactory.parseMethod(methodInfo)
         BEHAVIAC_ASSERT(false, "BehaviorParseFactory.parseMethod %s intanceName error", methodInfo)
     end
     return setmetatable(data, {__index = paramMt}), methodName
+end
+
+-- 解析参数列表
+function BehaviorParseFactory.parseForParams(paramStr)
+    local retParams = {}
+
+    local paramStrList = d_ms.d_str.split(paramStr, ',')
+    for i,param in ipairs(paramStrList) do
+        -- 只是单个数字直接返回
+        if #splitTokens(param) == 1 then
+            retParams[i] = function()
+                return param
+            end
+        else
+            -- 不是单个数字时解释参数，根据obj获取的值
+            local property = BehaviorParseFactory.parseProperty(param)
+            retParams[i] = function(obj)
+                return property.value(obj)
+            end
+        end
+    end
+    return retParams
 end
 
 function BehaviorParseFactory.parseProperty(propertyStr)
@@ -399,6 +445,9 @@ function BehaviorParseFactory.parseProperty(propertyStr)
             assert(propertyName, "BehaviorParseFactory.parseProperty self.xx ")
             data.value = function(obj)
                 return obj[propertyName]
+            end
+            data.setValue = function(obj, value)
+                obj[propertyName] = value
             end
             data.valueIsFunction = true
         elseif values[1] == "_G" then
@@ -447,6 +496,48 @@ function BehaviorParseFactory.parseOperatorType(operatorTypeStr)
     BEHAVIAC_ASSERT(false)
     return EOperatorType.E_INVALID
 end
+
+function BehaviorParseFactory.compare(left, right, comparisonType)
+    if comparisonType == EOperatorType.E_EQUAL then
+        return left == right
+    elseif comparisonType == EOperatorType.E_NOTEQUAL then
+        return left ~= right
+    elseif comparisonType == EOperatorType.E_GREATER then
+        return left > right
+    elseif comparisonType == EOperatorType.E_GREATEREQUAL then
+        return left >= right
+    elseif comparisonType == EOperatorType.E_LESS then
+        return left < right
+    elseif comparisonType == EOperatorType.E_LESSEQUAL then
+        return left <= right
+    end
+    _G.BEHAVIAC_ASSERT(false)
+    return false
+end
+
+function BehaviorParseFactory.compute(left, right, computeType)
+    -- TODO left, right类型检查
+    if type(left) ~= 'number' or type(right) ~= 'number' then
+        _G.BEHAVIAC_ASSERT(false)
+    else
+        if computeType == EOperatorType.E_ADD then
+            return left + right
+        elseif computeType == EOperatorType.E_SUB then
+            return left - right
+        elseif computeType == EOperatorType.E_MUL then
+            return left * right
+        elseif computeType == EOperatorType.E_DIV then
+            if right == 0 then
+                print('error!!! BehaviorParseFactory.compute Divide right is zero.')
+                return left
+            end
+            return left / right
+        end
+    end
+    _G.BEHAVIAC_ASSERT(false)
+    return left
+end
+
 --------------------------------------------------------------------------------------------------------------
 State = {}
 function State.updateTransitions(obj, behaviorNode, transitions, nextStateId, status)

@@ -52,4 +52,5 @@ function cComputeTask:update(obj, childStatus)
     else
         result = pComputeNode:updateImpl(obj, childStatus)
     end
+    return result
 end

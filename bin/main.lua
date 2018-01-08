@@ -4,7 +4,7 @@ local d_ms = require "ms"
 
 local bt = d_ms.d_behaviorTree.cBehaviorTree.new()
 
-bt:behaviorLoadXml("Loop.xml")
+bt:behaviorLoadXml("actionTest.xml")
 
 
 class("cPlayer")
@@ -25,6 +25,8 @@ function cPlayer:__init()
     --------------------------------------------------------------------------------------
 
     self.MoveSpeed = 3
+    self.CastRight = 0
+    self.TestInt = 0
 end
 -- m_btStack = {BehaviorTreeStackItem_t, BehaviorTreeStackItem_t}
 -- BehaviorTreeStackItem_t {
@@ -37,8 +39,10 @@ function cPlayer:GetCurTime()
     return os.time()
 end
 
-function cPlayer:MoveAhead(speed)
+function cPlayer:MoveAhead(speed, speed2)
     print("cPlayer:MoveAhead speed = " .. speed)
+    print("cPlayer:MoveAhead speed2 = " .. speed2)
+    -- error('false')
     if tonumber(speed) == 3 then
         return true
     else
@@ -100,6 +104,11 @@ end
 function cPlayer:Select2(str)
     print("cPlayer:Select2", str)
 end
+
+function cPlayer:TestRetInt()
+    return 2
+end
+
 --------------------------------------------------------------------------------------
 -- obj需要包含的接口
 function cPlayer:btexec()
@@ -121,7 +130,7 @@ function cPlayer:_setCurrentTreeTask(value)
 end
 
 function cPlayer:btexec_()
-    if self.m_currentBT ~= NULL then
+    if self.m_currentBT ~= nil then
         local pCurrent = self.m_currentBT
         local s = self.m_currentBT:exec(self)
 
@@ -252,8 +261,8 @@ function cPlayer:isActive()
 end
 
 local player = cPlayer.new()
-for i= 1, 11 do
-    print('start', '----------------------------------------------', i)
+for i= 1,1 do
+    print('-----------------------start-----------------------', i)
     player:btexec()
     print('end', '----------------------------------------------', i)
 end
