@@ -6,6 +6,7 @@ local os            = os
 local xml           = xml
 local next          = next
 local type          = type
+local dump          = dump
 local class         = class
 local table         = table
 local print         = print
@@ -25,7 +26,7 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.conditions.conditionBaseTask"
+module "behavior.node.conditions.conditionTask"
 ------------------------------------------------------------------------------------------------------
 class("cConditionTask", d_ms.d_conditionBaseTask.cConditionBaseTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cConditionTask", cConditionTask)

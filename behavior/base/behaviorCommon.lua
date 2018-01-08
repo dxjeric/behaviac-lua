@@ -10,6 +10,7 @@ local table         = table
 local print         = print
 local error         = error
 local pairs         = pairs
+local unpack        = unpack
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
@@ -215,7 +216,7 @@ end
 
 function BEHAVIAC_ASSERT(check, msgFormat, ...)
     if not check then
-        d_ms.d_log.error("BEHAVIAC_ASSERT" .. msgFormat, ...)
+        d_ms.d_log.error("BEHAVIAC_ASSERT " .. msgFormat, ...)
         assert(false)
     end
 end
@@ -242,13 +243,12 @@ constCharByteLeftBraces     = string.byte('{')
 
 local paramMt = {}
 function paramMt:run(obj)
-    print("paramMt:run", self.methodName)
+    -- print("paramMt:run", self.methodName, self.isFunction, self.valueIsFunction)
     if self.isFunction then
         if self.valueIsFunction then
-            data.value(obj, unpack(self.params))
+            self.value(obj, unpack(self.params))
         end
     end
-
 end
 
 function paramMt:getIValueFrom(obj, method)
@@ -266,7 +266,7 @@ function paramMt:getIValueFrom(obj, method)
 end
 
 function paramMt:getIValue(obj)
-    return tonumber(self:getValue())
+    return tonumber(self:getValue(obj))
 end
 
 function paramMt:setValueCast(obj, opr, cast)
@@ -294,6 +294,10 @@ function paramMt:compute(obj, opr1, opr2, operator)
 end
 
 function paramMt:compare(obj, right, comparisonType)
+    local l = self:getValue(obj)
+    local r = right:getValue(obj)
+    print(">> paramMt:compare", obj, right, comparisonType, l, r)
+    return true
 end
 
 function paramMt:setTaskParams(obj, treeTask)
@@ -315,8 +319,8 @@ local function splitTokens(str)
     local len = #p
 
     if string.byte(p[len], -1, -1) == constCharByteRightBracket then
-        local b = string.find(p[len], '\[')
-        assert(b, "splitTokens string.find(p[len], '\[')")
+        local b = string.find(p[len], '%[')
+        assert(b, "splitTokens string.find(p[len], '%[')")
         p[len] = string.sub(v, 1, b-1)
         p[len+1] = string.sub(v, b+1, -1)
     end
@@ -332,7 +336,7 @@ function BehaviorParseFactory.parseMethod(methodInfo)
     -- _G:fff.fff()
     -- local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+):(.+)%((.+)%)")()
     -- REDO:  Self.CBTPlayer::MoveAhead(0)
-    local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+)%..+::(.+)%((.+)%)")()
+    local intanceName, methodName, paramStr = string.gmatch(methodInfo, "(.+)%..+::(.+)%((.*)%)")()
     assert(intanceName and methodName and paramStr, "BehaviorParseFactory.parseMethod " .. methodInfo)
     local data = {
         isFunction     = true,
@@ -341,15 +345,17 @@ function BehaviorParseFactory.parseMethod(methodInfo)
         params         = d_ms.d_str.split(paramStr, ','),
     }
 
-    if intanceName == "self" then
+    if string.lower(intanceName) == "self" then
         data.value = function(obj, ...)
-            assert(obj.methodName, methodName .. " is not obj's member function")
-            return obj.methodName(obj, ...)
+            assert(obj[methodName], methodName .. " is not obj's member function")
+            return obj[methodName](obj, ...)
         end
         data.valueIsFunction = true
     elseif intanceName == "_G" then
         data.value = load("return " .. methodName)()
         data.valueIsFunction = true
+    else
+        BEHAVIAC_ASSERT(false, "BehaviorParseFactory.parseMethod %s intanceName error", methodInfo)
     end
     return setmetatable(data, {__index = paramMt}), methodName
 end
@@ -387,13 +393,12 @@ function BehaviorParseFactory.parseProperty(propertyStr)
             propStr  = properties[2]
             data.type  = propertyValueType.default
         end
-
-        local values = d_ms.d_str.split(propStr, '%.')
-        if values[1] == "self" then
-            assert(#values == 2, "BehaviorParseFactory.parseProperty self.xx ")
+        
+        local intanceName, propertyName = string.gmatch(propStr, "(.+)%..+::(.+)")()
+        if string.lower(intanceName) == "self" then
+            assert(propertyName, "BehaviorParseFactory.parseProperty self.xx ")
             data.value = function(obj)
-                local key = values[2]
-                return obj[key]
+                return obj[propertyName]
             end
             data.valueIsFunction = true
         elseif values[1] == "_G" then

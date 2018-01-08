@@ -107,7 +107,7 @@ function cBranchTask:execCurrentTask(obj, childStatus)
 
         -- this->m_currentTask could be cleared in ::tick, to remember it        
         local status = self.m_currentTask:execByInputChildStatus(obj, childStatus)
-
+        
         -- give the handling back to parents
         if status ~= EBTStatus.BT_RUNNING then
             if not (status == EBTStatus.BT_SUCCESS or status == EBTStatus.BT_FAILURE) then
@@ -125,7 +125,7 @@ function cBranchTask:execCurrentTask(obj, childStatus)
             -- back track the parents until the branch
             while parentBranch do
                 if parentBranch == self then
-                    status = parentBranch:update()
+                    status = parentBranch:update(obj, status)
                 else
                     status = parentBranch:execByInputChildStatus(obj, status)
                 end
@@ -145,6 +145,8 @@ function cBranchTask:execCurrentTask(obj, childStatus)
                 parentBranch = parentBranch:getParent()
             end
         end
+
+        return status
     end
 
     return EBTStatus.BT_FAILURE

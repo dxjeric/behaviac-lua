@@ -14,6 +14,7 @@ local pairs         = pairs
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
+local string        = string
 local getfenv       = getfenv
 local tostring      = tostring
 local setmetatable  = setmetatable
@@ -23,6 +24,7 @@ local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
 local EBTStatus     = d_ms.d_behaviorCommon.EBTStatus
 local EOperatorType = d_ms.d_behaviorCommon.EOperatorType
+local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
 module "behavior.node.conditions.condition"
 ------------------------------------------------------------------------------------------------------
@@ -49,14 +51,14 @@ function cCondition:loadByProperties(version, agentType, properties)
         if p.name == "Operator" then
             self.m_operator = BehaviorParseFactory.parseOperatorType(p.value)
         elseif p.name == "Opl" then
-            local pParenthesis = strchr(p.value, '%(')
+            local pParenthesis = string.find(p.value, '%(')
             if not pParenthesis then
                 self.m_opl = BehaviorParseFactory.parseProperty(p.value)
             else
                 self.m_opl = BehaviorParseFactory.parseMethod(p.value)
             end
         elseif p.name == "Opr" then
-            local pParenthesis = strchr(p.value, '%(')
+            local pParenthesis = string.find(p.value, '%(')
             if not pParenthesis then
                 self.m_opr = BehaviorParseFactory.parseProperty(p.value)
             else

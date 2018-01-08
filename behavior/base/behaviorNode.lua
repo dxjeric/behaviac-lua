@@ -390,7 +390,7 @@ end
 ------------------------------------------------------------------------------------------------------
 -- 更新
 -- 返回执行结果 EBTStatus
-function cBehaviorNode:updataImpl(obj, childStatus)
+function cBehaviorNode:updateImpl(obj, childStatus)
     return EBTStatus.BT_FAILURE
 end
 ------------------------------------------------------------------------------------------------------

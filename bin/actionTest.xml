@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: actionTest.xml-->
+<behavior name="actionTest" agenttype="FirstAgent" version="5">
+  <node class="Sequence" id="1">
+    <node class="Action" id="2">
+      <property Method="Self.FirstAgent::MoveAhead(1)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+    <node class="Action" id="0">
+      <property Method="Self.FirstAgent::TestState()" />
+      <property ResultOption="BT_INVALID" />
+    </node>
+  </node>
+</behavior>

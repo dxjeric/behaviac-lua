@@ -40,7 +40,6 @@ function cDecoratorLoopTask:decorate(status)
         if self.m_n == 0 then
             return EBTStatus.BT_SUCCESS
         end
-
         return EBTStatus.BT_RUNNING
     end
 
@@ -52,7 +51,7 @@ function cDecoratorLoopTask:decorate(status)
     return EBTStatus.BT_SUCCESS
 end
 
-function cDecoratorLoopTask:update(obj, childStatus)
+function cDecoratorLoopTask:update(obj, childStatus)    
     _G.BEHAVIAC_ASSERT(self.m_node and self.m_node:isDecoratorLoop(), "cDecoratorLoopTask:update self.m_node:isDecoratorLoop")
     if self.m_node.m_bDoneWithinFrame then
         _G.BEHAVIAC_ASSERT(self.m_n >= 0, "cDecoratorLoopTask:update self.m_n")
@@ -60,7 +59,7 @@ function cDecoratorLoopTask:update(obj, childStatus)
 
         local status = EBTStatus.BT_INVALID
         for i = 1, self.m_n do
-            status = self.m_root:exec(obj, childStatus)
+            status = self.m_root:execByInputChildStatus(obj, childStatus)
             if self.m_node.m_bDecorateWhenChildEnds then
                 while status == EBTStatus.BT_RUNNING do
                     status = d_ms.d_decoratorCountTask.cDecoratorCountTask.update(self, obj, childStatus)
@@ -74,6 +73,6 @@ function cDecoratorLoopTask:update(obj, childStatus)
 
         return EBTStatus.BT_SUCCESS
     end
-
+    
     return d_ms.d_decoratorCountTask.cDecoratorCountTask.update(self, obj, childStatus)
 end

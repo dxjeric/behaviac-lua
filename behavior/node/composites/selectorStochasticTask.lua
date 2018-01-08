@@ -26,7 +26,7 @@ local EBTStatus              = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory   = d_ms.d_behaviorCommon.BehaviorParseFactory
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.selectorStochasticTask"
+module "behavior.node.composites.selectorStochasticTask"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorStochasticTask", d_ms.d_compositeStochasticTask.cCompositeStochasticTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorStochasticTask", cSelectorStochasticTask)
@@ -35,7 +35,7 @@ _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cSelectorStochasticTask", "cCompositeStochasti
 function cSelectorStochasticTask:__init()
 end
 
-function cSelectorStochasticTask:update()
+function cSelectorStochasticTask:update(obj, childStatus)
     local bFirst = true
     _G.BEHAVIAC_ASSERT(self.m_activeChildIndex ~= constInvalidChildIndex, "cSelectorStochasticTask:update self.m_activeChildIndex ~= constInvalidChildIndex")
 

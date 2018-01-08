@@ -26,7 +26,7 @@ local EBTStatus              = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory   = d_ms.d_behaviorCommon.BehaviorParseFactory
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.parallelTask"
+module "behavior.node.composites.parallelTask"
 ------------------------------------------------------------------------------------------------------
 class("cParallelTask", d_ms.d_compositeTask.cCompositeTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cParallelTask", cParallelTask)

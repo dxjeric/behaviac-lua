@@ -89,17 +89,12 @@ function cCompositeStochasticTask:randomChild(obj)
     _G.BEHAVIAC_ASSERT(not self:getNode() or self:getNode():isCompositeStochastic(), "cCompositeStochasticTask:randomChild not self:getNode() or self:getNode():isCompositeStochastic")
     local pNode = self:getNode()
 
-    if #self.m_set ~= #self.m_children then
-        -- self.m_set.resize(this->m_children.size());
-        -- do nothing
-    end
-
-    local n = #self.m_set
+    local n = #self.m_children
     for i = 1, n do
         self.m_set[i] = i
     end
 
-    for i = 0, n do
+    for i = 1, n do
         local method = false
         if pNode then
             method = pNode.m_method
@@ -109,7 +104,6 @@ function cCompositeStochasticTask:randomChild(obj)
 
         local index2 = math.ceil(n * d_ms.d_behaviorTreeMgr.getRandomValue(method, obj))
         _G.BEHAVIAC_ASSERT(index2 <= n)
-
         -- swap
         if index1 ~= index2 then
             local old = self.m_set[index1]

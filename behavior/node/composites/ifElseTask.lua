@@ -26,7 +26,7 @@ local EBTStatus              = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory   = d_ms.d_behaviorCommon.BehaviorParseFactory
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.ifElseTask"
+module "behavior.node.composites.ifElseTask"
 ------------------------------------------------------------------------------------------------------
 class("cIfElseTask", d_ms.d_compositeTask.cCompositeTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cIfElseTask", cIfElseTask)

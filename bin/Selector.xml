@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: Selector.xml-->
+<behavior name="Selector" agenttype="Monster" version="5">
+  <node class="SelectorStochastic" id="6">
+    <node class="Action" id="1">
+      <property Method="Self.Monster::Select1(&quot;select&quot;)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+    <node class="Action" id="2">
+      <property Method="Self.Monster::Select2(&quot;select 2&quot;)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+  </node>
+</behavior>

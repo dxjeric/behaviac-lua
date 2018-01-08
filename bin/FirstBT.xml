@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: FirstBT.xml-->
+<behavior name="FirstBT" agenttype="FirstAgent" version="5">
+  <node class="Sequence" id="1">
+    <node class="Action" id="6">
+      <property Method="Self.FirstAgent::MoveAhead(0)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+    <node class="Action" id="3">
+      <property Method="Self.FirstAgent::TestState()" />
+      <property ResultOption="BT_INVALID" />
+    </node>
+    <node class="Action" id="2">
+      <property Method="Self.FirstAgent::MoveBack(2)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+  </node>
+</behavior>

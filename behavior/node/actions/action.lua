@@ -78,7 +78,7 @@ function cAction:execute(obj)
     if self.m_method then
         self.m_method:run(obj)
     else
-        result = self.updateImpl(obj, EBTStatus.BT_RUNNING)
+        result = self:updateImpl(obj, EBTStatus.BT_RUNNING)
     end
 
     return result
@@ -99,14 +99,14 @@ function cAction:executeByInputChildStatus(obj, childSatus)
             if self.m_resultFunctor then
                 -- REDO: 这块还不是只结果从 m_method中获得 还需要查看 例子去做
                 -- ?? result = self.m_method(obj)
-                d_ms.d_log.error("self.m_resultFunctor 这个是做什么的！")
+                -- d_ms.d_log.error("self.m_resultFunctor 这个是做什么的！")
                 result = self.m_resultFunctor:getIValueFrom(obj, self.m_method)
                 -- IValue* returnValue = this->m_resultFunctor->GetIValueFrom((Agent*)pAgent, this->m_method);
                 -- result = ((TValue<EBTStatus>*)returnValue)->value;
             else
                 -- REDO: 这块还不是只结果从 m_method中获得
                 -- ?? result = self.m_method(obj)
-                d_ms.d_log.error("self.m_resultFunctor 这个是做什么的！")
+                -- d_ms.d_log.error("self.m_resultFunctor 这个是做什么的！")
                 result = self.m_method:getIValue(obj)
                 -- IValue* returnValue = this->m_method->GetIValue((Agent*)pAgent);
                 -- _G.BEHAVIAC_ASSERT((TValue<EBTStatus>*)(returnValue), "method's return type is not EBTStatus");

@@ -43,7 +43,6 @@ end
 
 function cDecoratorCountTask:getCount(obj)
     _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorCount(), "cDecoratorCountTask:getCount self:getNode():isDecoratorCount")
-
     if self:getNode() then
         return self:getNode():getCount()
     else

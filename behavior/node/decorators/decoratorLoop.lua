@@ -40,12 +40,11 @@ end
 
 function cDecoratorLoop:loadByProperties(version, agentType, properties)
     d_ms.d_decoratorCount.cDecoratorCount.loadByProperties(self, version, agentType, properties)
-
     for _, p in ipairs(properties) do
         if p.name == "DoneWithinFrame" then
             self.m_bDoneWithinFrame = (p.value == "true")
         end
-    end
+    end   
 end
 
 function cDecoratorLoop:isValid(obj, task)

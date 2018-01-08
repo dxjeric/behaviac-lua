@@ -188,7 +188,7 @@ function cBehaviorTask:execByInputChildStatus(obj, childStatus)
 
     if bEnterResult then
         local bValid = self:checkParentUpdatePreconditions(obj)
-        if bValid then
+        if bValid then            
             self.m_status = self:updateCurrent(obj, childStatus)
         else
             self.m_status = EBTStatus.BT_FAILURE
@@ -210,7 +210,7 @@ function cBehaviorTask:execByInputChildStatus(obj, childStatus)
     else
         self.m_status = EBTStatus.BT_FAILURE
     end
-
+    
     return self.m_status
 end
 
@@ -410,7 +410,7 @@ function checkEventHandler()
 end
 
 function cBehaviorTask:traverse(childFirst, handler, pAgent, userData)
-    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:onExit")    
+    d_ms.d_log.error("derived class must be rewrite cBehaviorTask:traverse")    
 end
 ------------------------------------------------------------------------------------------------------
 -- return false if the event handling needs to be stopped an event can be configured to stop being checked if triggered

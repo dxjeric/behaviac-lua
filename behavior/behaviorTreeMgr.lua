@@ -14,6 +14,7 @@ local pairs         = pairs
 local assert        = assert
 local ipairs        = ipairs
 local rawget        = rawget
+local string        = string
 local getfenv       = getfenv
 local tostring      = tostring
 local setmetatable  = setmetatable
@@ -27,9 +28,25 @@ local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
 module "behavior.behaviorTreeMgr"
 ------------------------------------------------------------------------------------------------------
+constBehaviacRootPath = "./"
+if string.sub(constBehaviacRootPath, -1) ~= '/' then
+    constBehaviacRootPath = constBehaviacRootPath .. '/'
+end
+------------------------------------------------------------------------------------------------------
 local behaviorTrees = {}
 function loadBehaviorTree(path)
-    return tree
+    if string.sub(path, -3) == "xml" then
+        path = string.sub(path, 1, -5)
+    end
+    if behaviorTrees[path] then
+        return behaviorTrees[path]
+    end
+
+    local bt = d_ms.d_behaviorTree.cBehaviorTree.new()
+    local loadPath = string.format("%s%s.xml", constBehaviacRootPath, path)
+    bt:behaviorLoadXml(loadPath)
+    behaviorTrees[path] = bt
+    return bt
 end
 
 function destroyBehaviorTreeTask(behaviorTreeTask, obj)
@@ -37,7 +54,8 @@ function destroyBehaviorTreeTask(behaviorTreeTask, obj)
 end
 
 function createBehaviorTreeTask(path)
-        
+    local bt = loadBehaviorTree(path)
+    return bt:createAndInitTask()
 end
 ------------------------------------------------------------------------------------------------------
 -- REDO: 这个后续可以修改

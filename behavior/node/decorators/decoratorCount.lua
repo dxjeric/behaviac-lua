@@ -4,6 +4,7 @@
 local _G            = _G
 local os            = os
 local xml           = xml
+local bits          = bits
 local next          = next
 local type          = type
 local class         = class
@@ -36,7 +37,7 @@ function cDecoratorCount:__init()
 end
 
 function cDecoratorCount:getCount(obj)
-    if self.m_cunt then
+    if self.m_count then
         local count = self.m_count:getValue(obj)
         if count == 0xFFFFFFFF then
             return -1
