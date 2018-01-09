@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: ifelseTest.xml-->
+<behavior name="ifelseTest" agenttype="FirstAgent" version="5">
+  <node class="IfElse" id="3">
+    <node class="Condition" id="4">
+      <property Operator="Equal" />
+      <property Opl="Self.FirstAgent::MoveAhead(0)" />
+      <property Opr="const bool true" />
+    </node>
+    <node class="Action" id="2">
+      <property Method="Self.FirstAgent::MoveAhead(1)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+    <node class="Action" id="0">
+      <property Method="Self.FirstAgent::MoveBack(2)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+  </node>
+</behavior>

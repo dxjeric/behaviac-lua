@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: computeTest.xml-->
+<behavior name="computeTest" agenttype="FirstAgent" version="5">
+  <node class="Parallel" id="0">
+    <property ChildFinishPolicy="CHILDFINISH_LOOP" />
+    <property ExitPolicy="EXIT_ABORT_RUNNINGSIBLINGS" />
+    <property FailurePolicy="FAIL_ON_ONE" />
+    <property SuccessPolicy="SUCCEED_ON_ALL" />
+    <node class="Sequence" id="1">
+      <node class="Assignment" id="9">
+        <property CastRight="false" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Compute" id="2">
+        <property Operator="Add" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr1="float Self.FirstAgent::MoveSpeed" />
+        <property Opr2="const float 1" />
+      </node>
+      <node class="Condition" id="3">
+        <property Operator="Greater" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Action" id="4">
+        <property Method="Self.FirstAgent::MoveAhead(0,float Self.FirstAgent::MoveSpeed)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="5">
+      <node class="Assignment" id="10">
+        <property CastRight="false" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Compute" id="6">
+        <property Operator="Sub" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr1="float Self.FirstAgent::MoveSpeed" />
+        <property Opr2="const float 1" />
+      </node>
+      <node class="Condition" id="7">
+        <property Operator="Less" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Action" id="21">
+        <property Method="Self.FirstAgent::MoveAhead(1,float Self.FirstAgent::MoveSpeed)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="11">
+      <node class="Assignment" id="12">
+        <property CastRight="false" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Compute" id="13">
+        <property Operator="Mul" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr1="float Self.FirstAgent::MoveSpeed" />
+        <property Opr2="const float 2" />
+      </node>
+      <node class="Condition" id="14">
+        <property Operator="Greater" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 5" />
+      </node>
+      <node class="Action" id="8">
+        <property Method="Self.FirstAgent::MoveAhead(2,float Self.FirstAgent::MoveSpeed)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="16">
+      <node class="Assignment" id="17">
+        <property CastRight="false" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Compute" id="18">
+        <property Operator="Div" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr1="float Self.FirstAgent::MoveSpeed" />
+        <property Opr2="const float 2" />
+      </node>
+      <node class="Condition" id="19">
+        <property Operator="Less" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 2" />
+      </node>
+      <node class="Action" id="22">
+        <property Method="Self.FirstAgent::MoveAhead(3,float Self.FirstAgent::MoveSpeed)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+  </node>
+</behavior>

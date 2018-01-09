@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: castTest.xml-->
+<behavior name="castTest" agenttype="FirstAgent" version="5">
+  <node class="Parallel" id="0">
+    <property ChildFinishPolicy="CHILDFINISH_LOOP" />
+    <property ExitPolicy="EXIT_ABORT_RUNNINGSIBLINGS" />
+    <property FailurePolicy="FAIL_ON_ONE" />
+    <property SuccessPolicy="SUCCEED_ON_ALL" />
+    <node class="Sequence" id="1">
+      <node class="Assignment" id="2">
+        <property CastRight="false" />
+        <property Opl="int Self.FirstAgent::TestInt" />
+        <property Opr="const int 1" />
+      </node>
+      <node class="Action" id="3">
+        <property Method="Self.FirstAgent::MoveAhead(int Self.FirstAgent::TestInt)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="7">
+      <node class="Assignment" id="8">
+        <property CastRight="false" />
+        <property Opl="int Self.FirstAgent::TestInt" />
+        <property Opr="Self.FirstAgent::TestRetInt()" />
+      </node>
+      <node class="Action" id="9">
+        <property Method="Self.FirstAgent::MoveAhead(int Self.FirstAgent::TestInt)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="4">
+      <node class="Assignment" id="5">
+        <property CastRight="true" />
+        <property Opl="int Self.FirstAgent::TestInt" />
+        <property Opr="float Self.FirstAgent::MoveSpeed" />
+      </node>
+      <node class="Action" id="6">
+        <property Method="Self.FirstAgent::MoveAhead(int Self.FirstAgent::TestInt)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+  </node>
+</behavior>

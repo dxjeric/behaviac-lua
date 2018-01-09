@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: compareTest.xml-->
+<behavior name="compareTest" agenttype="FirstAgent" version="5">
+  <node class="Parallel" id="2">
+    <property ChildFinishPolicy="CHILDFINISH_LOOP" />
+    <property ExitPolicy="EXIT_ABORT_RUNNINGSIBLINGS" />
+    <property FailurePolicy="FAIL_ON_ALL" />
+    <property SuccessPolicy="SUCCEED_ON_ALL" />
+    <node class="Sequence" id="0">
+      <node class="Condition" id="3">
+        <property Operator="Equal" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Action" id="1">
+        <property Method="Self.FirstAgent::MoveAhead(0)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="4">
+      <node class="Condition" id="5">
+        <property Operator="NotEqual" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 1" />
+      </node>
+      <node class="Action" id="6">
+        <property Method="Self.FirstAgent::MoveAhead(1)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="7">
+      <node class="Condition" id="8">
+        <property Operator="Greater" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 1" />
+      </node>
+      <node class="Action" id="9">
+        <property Method="Self.FirstAgent::MoveAhead(2)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="10">
+      <node class="Condition" id="11">
+        <property Operator="GreaterEqual" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Action" id="12">
+        <property Method="Self.FirstAgent::MoveAhead(3)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="13">
+      <node class="Condition" id="14">
+        <property Operator="Less" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 4" />
+      </node>
+      <node class="Action" id="15">
+        <property Method="Self.FirstAgent::MoveAhead(4)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Sequence" id="16">
+      <node class="Condition" id="17">
+        <property Operator="LessEqual" />
+        <property Opl="float Self.FirstAgent::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Action" id="18">
+        <property Method="Self.FirstAgent::MoveAhead(5)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+  </node>
+</behavior>
