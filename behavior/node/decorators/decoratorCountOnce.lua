@@ -1,9 +1,10 @@
 ------------------------------------------------------------------------------------------------------
--- 行为树 动作节点
+-- 行为树 条件节点基础类
 ------------------------------------------------------------------------------------------------------
 local _G            = _G
 local os            = os
 local xml           = xml
+local bits          = bits
 local next          = next
 local type          = type
 local class         = class
@@ -22,30 +23,31 @@ local getmetatable  = getmetatable
 local d_ms = require "ms"
 ------------------------------------------------------------------------------------------------------
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
-local stringUtils           = d_ms.d_behaviorCommon.stringUtils
 local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.composites.withPrecondition"
+module "behavior.node.decorators.decoratorCountOnce"
 ------------------------------------------------------------------------------------------------------
-class("cWithPrecondition", d_ms.d_behaviorNode.cBehaviorNode)
-_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWithPrecondition", cWithPrecondition)
-_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cWithPrecondition", "cBehaviorNode")
+class("cDecoratorCountOnce", d_ms.d_decoratorCount.cDecoratorCount)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountOnce", cDecoratorCountOnce)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountOnce", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
--- WithPrecondition is the precondition of SelectorLoop child. must be used in conjunction with SelectorLoop.
--- WithPrecondition can return SUCCESS or FAILURE. child would execute when it returns SUCCESS, or not.
-function cWithPrecondition:__init()
-
+-- 执行的次数只会被执行一轮，执行过后将不再被执行
+function cDecoratorCountOnce:__init()
 end
 
-function cWithPrecondition:isValid(obj, task)
-    if not task:getNode() or not task:getNode():isWithPrecondition() then
+function cDecoratorCountOnce:checkIfReInit(obj)
+    return self:evaluteCustomCondition(obj)
+end
+
+function cDecoratorCountOnce:isValid(obj, task)
+    if not task:getNode() or not task:getNode():isDecoratorCountOnce() then
         return false
     end
 
-    return d_ms.d_behaviorNode.cBehaviorNode.isValid(self, obj, task)
+    return d_ms.d_decoratorCount.cDecoratorCount.isValid(self, obj, task)
 end
 
-function cWithPrecondition:createTask()
-    return d_ms.d_withPreconditionTask.cWithPreconditionTask.new()
+function cDecoratorCountOnce:createTask()
+    return d_ms.d_decoratorCountOnceTask.cDecoratorCountOnceTask.new()
 end

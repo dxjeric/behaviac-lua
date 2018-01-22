@@ -26,7 +26,7 @@ local EBTStatus              = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory   = d_ms.d_behaviorCommon.BehaviorParseFactory
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.selectorStochasticTask"
+module "behavior.node.composites.withPreconditionTask"
 ------------------------------------------------------------------------------------------------------
 class("cWithPreconditionTask", d_ms.d_sequenceTask.cSequenceTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cWithPreconditionTask", cWithPreconditionTask)

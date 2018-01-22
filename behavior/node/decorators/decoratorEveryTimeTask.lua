@@ -25,83 +25,78 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorTimeTask"
+module "behavior.node.decorators.decoratorEveryTimeTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorTimeTask", d_ms.d_decoratorTask.cDecoratorTask)
-_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTimeTask", cDecoratorTimeTask)
-_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTimeTask", "cDecoratorTask")
+class("cDecoratorEveryTimeTask", d_ms.d_decoratorTimeTask.cDecoratorTimeTask)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorEveryTimeTask", cDecoratorEveryTimeTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorEveryTimeTask", "cDecoratorTimeTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorTimeTask:__init()
+function cDecoratorEveryTimeTask:__init()
     self.m_start    = 0
     self.m_time     = 0
     self.m_intStart = 0
     self.m_intTime  = 0
+    self.m_bInited  = false
 end
 
-function cDecoratorTimeTask:save(IONode)
-    d_ms.d_log.error("cDecoratorTimeTask:save")
+function cDecoratorEveryTimeTask:save(IONode)
+    d_ms.d_log.error("cDecoratorEveryTimeTask:save")
 end
 
-function cDecoratorTimeTask:load(IONode)
-    d_ms.d_log.error("cDecoratorTimeTask:load")
+function cDecoratorEveryTimeTask:load(IONode)
+    d_ms.d_log.error("cDecoratorEveryTimeTask:load")
 end
 
-function cDecoratorTimeTask:copyTo(target)
-    d_ms.d_decoratorTask.cDecoratorTask.copyTo(self, target)
-    _G.BEHAVIAC_ASSERT(target:isDecoratorTimeTask(), "cDecoratorTimeTask:copyTo target:isDecoratorTimeTask")
+function cDecoratorEveryTimeTask:copyTo(target)
+    d_ms.d_decoratorTimeTask.cDecoratorTimeTask.copyTo(self, target)
+    _G.BEHAVIAC_ASSERT(target:isDecoratorEveryTimeTask(), "cDecoratorEveryTimeTask:copyTo target:isDecoratorEveryTimeTask")
     target.m_start      = self.m_start
     target.m_time       = self.m_time
     target.m_intStart   = self.m_intStart
     target.m_intTime    = self.m_intTime
 end
 
-function cDecoratorTimeTask:onEnter(obj)
-    d_ms.d_decoratorTask.cDecoratorTask.onEnter(self, obj)
-
-    local bUseIntValue = d_ms.d_behaviorTreeMgr.getUseIntValue()
-    if bUseIntValue then
-        self.m_intStart = _G.redoGetIntValueSinceStartup()
-        self.m_intTime = self:getIntTime(obj)
-
-        if self.m_intTime <= 0 then
-            return false
-        end
-    else
-        self.m_start = _G.redoGetDoubleValueSinceStartup()
-        self.m_time = self:getTime(obj)
-
-        if self.m_time <= 0 then
-            return false
-        end
-    end
-    return true
-end
-
-function cDecoratorTimeTask:decorate(status)
-    local bUseIntValue = d_ms.d_behaviorTreeMgr.getUseIntValue()
-    
+function cDecoratorEveryTimeTask:checkTime(obj)
+    local bUseIntValue = d_ms.d_behaviorTreeMgr.getUseIntValue()    
     if bUseIntValue then
         local time = _G.redoGetIntValueSinceStartup()
         if time - self.m_intStart >= self.m_intTime then
-            return EBTStatus.BT_SUCCESS
+            self.m_intStart = time
+            return true
         end
     else
         local time = _G.redoGetDoubleValueSinceStartup()
-
         if time - self.m_start >= self.m_time then
-            return EBTStatus.BT_SUCCESS
+            self.m_start = time
+            return true
         end
     end
-
-    return EBTStatus.BT_RUNNING
+    return false
 end
 
-function cDecoratorTimeTask:getTime(obj)
-    _G.BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
+function cDecoratorEveryTimeTask:decorate(status)
+    return status
+end
+
+function cDecoratorEveryTimeTask:onEnter(obj)
+    if self.m_bInited then
+        return self:checkTime(obj)
+    end
+
+    if d_ms.d_decoratorTimeTask.cDecoratorTimeTask.onEnter(self, obj) then
+        self.m_bInited = true
+        return self:checkTime(obj)
+    else
+        return false
+    end
+end
+
+function cDecoratorEveryTimeTask:getTime(obj)
+    _G.BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorEveryTime(), "cDecoratorEveryTimeTask:getTime self:getNode():isDecoratorEveryTime")
     return self.getNode():getTime(obj)
 end
 
-function cDecoratorTimeTask:getIntTime(obj)
-    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
+function cDecoratorEveryTimeTask:getIntTime(obj)
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorEveryTime(), "cDecoratorEveryTimeTask:getTime self:getNode():isDecoratorEveryTime")
     return self:getNode():getIntTime(obj)
 end

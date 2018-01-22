@@ -1,11 +1,12 @@
 package.path = package.path .. ";./?.lua;../?.lua;./lua/?.lua"
 local d_ms = require "ms"
--- d_ms.p("test", d_ms.d_commonFun.loadXml("./player.xml"))
+--------------------------------------------------------------------------------------
 
-local bt = d_ms.d_behaviorTree.cBehaviorTree.new()
-
-bt:behaviorLoadXml("actionTest.xml")
-
+local bt = d_ms.d_behaviorTreeMgr.loadBehaviorTree("test")
+local loopCount = 10
+local runTime   = 100
+local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
+--------------------------------------------------------------------------------------
 
 class("cPlayer")
 
@@ -24,7 +25,7 @@ function cPlayer:__init()
     self.m_behaviorTreeTasks    = {task}   -- {BehaviorTreeTask, BehaviorTreeTask}
     --------------------------------------------------------------------------------------
 
-    self.MoveSpeed = 3
+    self.MoveSpeed = 4
     self.CastRight = 0
     self.TestInt = 0
 end
@@ -39,19 +40,14 @@ function cPlayer:GetCurTime()
     return os.time()
 end
 
-function cPlayer:MoveAhead(speed, speed2)
+function cPlayer:MoveAhead(speed)
     print("cPlayer:MoveAhead speed = " .. speed)
-    print("cPlayer:MoveAhead speed2 = " .. speed2)
-    -- error('false')
-    if tonumber(speed) == 3 then
-        return true
-    else
-        return false
-    end
+    self.MoveSpeed = 4
 end
 
 function cPlayer:MoveBack(speed)
     print("cPlayer:MoveBack speed = " .. speed)
+    self.MoveSpeed = 3
     return true
 end
 
@@ -98,7 +94,8 @@ function cPlayer:Select1(str)
     -- if a == 2 then
     --     assert(false)
     -- end
-    print("cPlayer:Select1", str)
+    print("cPlayer:Select1", str, os.time())
+    return d_ms.d_behaviorCommon.EBTStatus.BT_SUCCESS
 end
 
 function cPlayer:Select2(str)
@@ -185,11 +182,6 @@ end
 
 -- 这个可以优化下
 function cPlayer:_btsetcurrent(relativePath, triggerMode, bByEvent)
-    local bt = d_ms.d_behaviorTreeMgr.createBehaviorTreeTask(path)
-    if not bt then
-        d_ms.d_log.error("cPlayer:_btsetcurrent %s bt is not exist", tostring(path))
-        return
-    end
 
     if self.m_currentBT then
         if triggerMode == d_ms.d_behaviorCommon.triggerMode.TM_Return then
@@ -229,8 +221,11 @@ function cPlayer:_btsetcurrent(relativePath, triggerMode, bByEvent)
     end
 
     if pTask == false or bRecursive then
-        pTask = d_ms.d_behaviorTreeMgr.loadBehaviorTree(relativePath)
-        BEHAVIAC_ASSERT(not pTask)
+        pTask = d_ms.d_behaviorTreeMgr.createBehaviorTreeTask(path)
+        if not pTask then
+            d_ms.d_log.error("cPlayer:_btSetCurrent %s bt is not exist", tostring(path))
+            return
+        end
         table.insert(self.m_behaviorTreeTasks, pTask)
     end
 
@@ -243,12 +238,12 @@ function cPlayer:btsetcurrent(relativePath)
     self:_btsetcurrent(relativePath, d_ms.d_behaviorCommon.triggerMode.TM_Transfer, false)
 end
 
-function cPlayer:bbtreferencetree(relativePath)
+function cPlayer:btReferenceTree(relativePath)
     self.m_referencetree = true
     self:_btsetcurrent(relativePath, d_ms.d_behaviorCommon.TM_Return, false);
 end
 
-function cPlayer:bbteventtree(relativePath, triggerMode)
+function cPlayer:btEventTree(relativePath, triggerMode)
     self:_btsetcurrent(relativePath, triggerMode, true)
 end
 
@@ -256,17 +251,126 @@ function cPlayer:btgetcurrent()
     return self.m_currentBT
 end
 --------------------------------------------------------------------------------------
+function cPlayer:attackTarget(skillID)
+    print("cPlayer:attackTarget", skillID)
+    return EBTStatus.BT_SUCCESS
+end
+function cPlayer:getBeAttackedCount()
+    print("cPlayer:getBeAttackedCount")
+    return 1
+end
+function cPlayer:getBeAttackedTime()
+    print("cPlayer:getBeAttackedTime")
+    return 100
+end
+-- int
+function cPlayer:getCurrentHpPercent()
+    print("cPlayer:getCurrentHpPercent")
+    return math.random(10000)/10000
+end
+-- behaviac::EBTStatus
+function cPlayer:moveToPos(posX, posY, posZ)
+    local t = math.random(100)
+    print("cPlayer:moveToPos", posX, posY, posZ, t)
+    if t < 30 then
+        return EBTStatus.BT_SUCCESS
+    elseif t < 80 then
+        return EBTStatus.BT_RUNNING
+    else
+        return EBTStatus.BT_FAILURE
+    end 
+end
+function cPlayer:moveToTarget(isRandom, distanceX, distanceY)
+    local t = math.random(100)
+    if t < 30 then
+        print("cPlayer:moveToTarget", isRandom, distanceX, distanceY, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    elseif t < 80 then
+        print("cPlayer:moveToTarget", isRandom, distanceX, distanceY, "EBTStatus.BT_RUNNING")
+        return EBTStatus.BT_RUNNING
+    else
+        print("cPlayer:moveToTarget", isRandom, distanceX, distanceY, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    end 
+end
+function cPlayer:randomSearchTargetsFromHateList(targetCount)
+    local t = math.random(100)
+    if math.random(100) < 50 then
+        print("cPlayer:randomSearchTargetsFromHateList", targetCount, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    else
+        print("cPlayer:randomSearchTargetsFromHateList", targetCount, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    end
+end
+function cPlayer:searchTargetFromHateList(distance, isFirst)
+    local t = math.random(100)
+    if math.random(100) < 50 then
+        print("cPlayer:searchTargetFromHateList", distance, isFirst, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    else
+        print("cPlayer:searchTargetFromHateList", distance, isFirst, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    end
+end
+function cPlayer:randomSearchTargetsByDistance(distance, targetType, targetCount, isFriend)
+    local t = math.random(100)
+    if math.random(100) < 50 then
+        print("cPlayer:searchTargetFromHateList", distance, targetType, targetCount, isFriend, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    else
+        print("cPlayer:searchTargetFromHateList", distance, targetType, targetCount, isFriend, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    end
+end
+function cPlayer:searchTargetByDistance(distance, targetType, isNearest, isFriend)
+    local t = math.random(100)
+    if math.random(100) < 50 then
+        print("cPlayer:searchTargetByDistance", distance, targetType, isNearest, isFriend, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    else
+        print("cPlayer:searchTargetByDistance", distance, targetType, isNearest, isFriend, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    end
+end
+function cPlayer:searchTargetByHpInterval(distance, targetType, isMax, isFriend)
+    local t = math.random(100)
+    if math.random(100) < 50 then
+        print("cPlayer:searchTargetByHpInterval", distance, targetType, isMax, isFriend, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    else
+        print("cPlayer:searchTargetByHpInterval", distance, targetType, isMax, isFriend, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    end
+end
+function cPlayer:searchTargetsByHpInterval(distance, targetType, maxPercent, minPercent, targetCount, isFriend)
+    local t = math.random(100)
+    if math.random(100) < 50 then
+        print("cPlayer:searchTargetsByHpInterval", distance, targetType, maxPercent, minPercent, targetCount, isFriend, "EBTStatus.BT_FAILURE")
+        return EBTStatus.BT_FAILURE
+    else
+        print("cPlayer:searchTargetsByHpInterval", distance, targetType, maxPercent, minPercent, targetCount, isFriend, "EBTStatus.BT_SUCCESS")
+        return EBTStatus.BT_SUCCESS
+    end
+end
+--------------------------------------------------------------------------------------
 function cPlayer:isActive()
     return self.m_bActive
 end
 
+math.randomseed(os.time())
 local player = cPlayer.new()
-for i= 1,1 do
-    print('-----------------------start-----------------------', i)
+
+local beginTime = os.time()
+while os.time() - beginTime <= runTime do
     player:btexec()
-    print('end', '----------------------------------------------', i)
 end
 
+-- for i= 1, 50 do
+--     print('-----------------------start-----------------------', i)
+--     player:btExec()
+--     print('end', '----------------------------------------------', i)
+-- end
 function main_entrance(con, id, data, len, ses, cid, time)
     return 1
 end

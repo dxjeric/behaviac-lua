@@ -241,8 +241,8 @@ end
 -- 属性加载
 -- 同load(int version, const char* agentType, const properties_t& properties)
 function cBehaviorNode:loadByProperties(version, agentType, properties)
-    local nodeType = self:getClassTypeName()
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", nodeType)
+    -- local nodeType = self:getClassTypeName()
+    -- print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", nodeType)
     -- REDO: 增加 默认BehaviorNodeLoaded 这个放在behavior tree的管理中
 end
 

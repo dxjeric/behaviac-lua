@@ -100,6 +100,8 @@ d_decoratorCount                = require "behavior.node.decorators.decoratorCou
 d_decoratorCountTask            = require "behavior.node.decorators.decoratorCountTask"
 d_decoratorCountLimit           = require "behavior.node.decorators.decoratorCountLimit"
 d_decoratorCountLimitTask       = require "behavior.node.decorators.decoratorCountLimitTask"
+d_decoratorCountOnce            = require "behavior.node.decorators.decoratorCountOnce"
+d_decoratorCountOnceTask        = require "behavior.node.decorators.decoratorCountOnceTask"
 d_decoratorFailureUntil         = require "behavior.node.decorators.decoratorFailureUntil"
 d_decoratorFailureUntilTask     = require "behavior.node.decorators.decoratorFailureUntilTask"
 d_decoratorFrames               = require "behavior.node.decorators.decoratorFrames"
@@ -119,6 +121,8 @@ d_decoratorSuccessUntil         = require "behavior.node.decorators.decoratorSuc
 d_decoratorSuccessUntilTask     = require "behavior.node.decorators.decoratorSuccessUntilTask"
 d_decoratorTime                 = require "behavior.node.decorators.decoratorTime"
 d_decoratorTimeTask             = require "behavior.node.decorators.decoratorTimeTask"
+d_decoratorEveryTime            = require "behavior.node.decorators.decoratorEveryTime"
+d_decoratorEveryTimeTask        = require "behavior.node.decorators.decoratorEveryTimeTask"
 d_decoratorWeight               = require "behavior.node.decorators.decoratorWeight"
 d_decoratorWeightTask           = require "behavior.node.decorators.decoratorWeightTask"
 

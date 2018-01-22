@@ -58,13 +58,13 @@ end
 
 function cWaitTask:onEnter(obj)
     if d_ms.d_behaviorTreeMgr.getUseIntValue() then
-        self.m_intStart = redoGetIntValueSinceStartup()
+        self.m_intStart = _G.redoGetIntValueSinceStartup()
         self.m_intTime  = self:getIntTime(obj)
         if self.m_intTime <= 0 then
             return false
         end
     else
-        self.m_start = GetDoubleValueSinceStartup()
+        self.m_start = _G.redoGetDoubleValueSinceStartup()
         self.m_time  = self:getTime(obj)
         if self.m_time <= 0 then
             return false
@@ -78,11 +78,11 @@ end
 
 function cWaitTask:update(obj, childStatus)
     if d_ms.d_behaviorTreeMgr.getUseIntValue() then
-        if redoGetIntValueSinceStartup() - self.m_intStart >= self.m_intTime then
+        if _G.redoGetIntValueSinceStartup() - self.m_intStart >= self.m_intTime then
             return EBTStatus.BT_SUCCESS
         end
     else
-        if GetDoubleValueSinceStartup() - self.m_start >= self.m_time then
+        if _G.redoGetDoubleValueSinceStartup() - self.m_start >= self.m_time then
             return EBTStatus.BT_SUCCESS
         end
     end

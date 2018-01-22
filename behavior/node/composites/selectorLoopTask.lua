@@ -26,7 +26,7 @@ local EBTStatus              = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory   = d_ms.d_behaviorCommon.BehaviorParseFactory
 local constInvalidChildIndex = d_ms.d_behaviorCommon.constInvalidChildIndex
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.actions.selectorLoopTask"
+module "behavior.node.composites.selectorLoopTask"
 ------------------------------------------------------------------------------------------------------
 class("cSelectorLoopTask", d_ms.d_compositeTask.cCompositeTask)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cSelectorLoopTask", cSelectorLoopTask)
@@ -49,7 +49,7 @@ end
 
 function cSelectorLoopTask:onEnter(obj)
     self.m_activeChildIndex = constInvalidChildIndex
-    d_ms.d_compositeTask.cCompositeTask.onEnter(self, obj)
+    return d_ms.d_compositeTask.cCompositeTask.onEnter(self, obj) 
 end
 
 function cSelectorLoopTask:updateCurrent(obj, childStatus)
@@ -73,7 +73,7 @@ function cSelectorLoopTask:update(obj, childStatus)
 
     -- checking the preconditions and take the first action tree
     local index = -1
-    for i = idx + 1, i < #self.m_children do
+    for i = idx + 1, #self.m_children do
         local pSubTree = self.m_children[i]
         _G.BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")
         local preBehaviorTask = pSubTree:preconditionNode()
@@ -89,10 +89,10 @@ function cSelectorLoopTask:update(obj, childStatus)
         if self.m_activeChildIndex ~= constInvalidChildIndex then
             local abortChild = self.m_activeChildIndex ~= index
             if not abortChild then
-                local pSelectorLoop = self:getNode():isSelectorLoop()
+                local pSelectorLoop = self:getNode()
                 _G.BEHAVIAC_ASSERT(pSelectorLoop, "cSelectorLoopTask:update pSelectorLoop")
 
-                if pSelectorLoop then
+                if pSelectorLoop ~= nil then
                     abortChild = pSelectorLoop.m_bResetChildren
                 end
             end
@@ -105,12 +105,12 @@ function cSelectorLoopTask:update(obj, childStatus)
         end
 
         local i = index
-        for i = index, i <= #self.m_children do
+        for i = index, #self.m_children do
             -- WithPreconditionTask
             local pSubTree = self.m_children[i]
             _G.BEHAVIAC_ASSERT(pSubTree:isWithPreconditionTask(), "cSelectorLoopTask:update pSubTree:isWithPreconditionTask")
 
-            if i > index then
+            if i >= index then
                 local pre = pSubTree:preconditionNode()
                 local status = pre:exec(obj)
 

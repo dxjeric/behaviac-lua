@@ -26,56 +26,17 @@ local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local EOperatorType         = d_ms.d_behaviorCommon.EOperatorType
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorTime"
+module "behavior.node.decorators.decoratorEveryTime"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorTime", d_ms.d_decoratorNode.cDecoratorNode)
-_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorTime", cDecoratorTime)
-_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorTime", "cDecoratorNode")
+class("cDecoratorEveryTime", d_ms.d_decoratorTime.cDecoratorTime)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorEveryTime", cDecoratorEveryTime)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorEveryTime", "cDecoratorNode")
 ------------------------------------------------------------------------------------------------------
--- It returns Running result until it reaches the time limit specified, no matter which
--- value its child return. Or return the child's value.
-function cDecoratorTime:__init()
+-- 每隔多少毫秒执行一次
+function cDecoratorEveryTime:__init()
     self.m_time = false
 end
 
-function cDecoratorTime:release()
-    d_ms.d_decoratorNode.cDecoratorNode.release(self)
-    self.m_time = false
-end
-
-function cDecoratorTime:loadByProperties(version, agentType, properties)
-    d_ms.d_decoratorNode.cDecoratorNode.loadByProperties(self, version, agentType, properties)
-
-    for _, p in ipairs(properties) do
-        if p.name == "Time" then
-            local pParenthesis = string.find(p.value, "%(")
-            if not pParenthesis then
-                self.m_time = BehaviorParseFactory.parseProperty(p.value)
-            else
-                self.m_time = BehaviorParseFactory.parseMethod(p.value)
-            end
-        end
-    end
-end
-
-function cDecoratorTime:getTime(obj)
-    local time = 0
-    
-    if self.m_time then
-        time = self.m_time:getValue(obj)
-    end
-    return time
-end
-
-function cDecoratorTime:getIntTime(obj)
-    local time = 0
-    
-    if self.m_time then
-        time = self.m_time:getValue(obj)
-    end
-    return time
-end
-
-function cDecoratorTime:createTask()
-    return d_ms.d_decoratorTimeTask.cDecoratorTimeTask.new()
+function cDecoratorEveryTime:createTask()
+    return d_ms.d_decoratorEveryTimeTask.cDecoratorEveryTimeTask.new()
 end

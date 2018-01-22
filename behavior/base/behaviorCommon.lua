@@ -326,7 +326,7 @@ local function splitTokens(str)
     local ret = {}
     if string.byte(str, 1, 1) == constCharByteDoubleQuote then
         assert(string.byte(str, -1, -1) == constCharByteDoubleQuote, "splitTokens string.byte(str, -1, -1) == constCharByteDoubleQuote")
-        table.inset(ret, str)
+        table.insert(ret, str)
         return ret
     end
     

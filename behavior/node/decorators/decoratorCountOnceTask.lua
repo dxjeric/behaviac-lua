@@ -25,30 +25,35 @@ local d_ms = require "ms"
 local EBTStatus             = d_ms.d_behaviorCommon.EBTStatus
 local BehaviorParseFactory  = d_ms.d_behaviorCommon.BehaviorParseFactory
 ------------------------------------------------------------------------------------------------------
-module "behavior.node.decorators.decoratorCountLimitTask"
+module "behavior.node.decorators.decoratorCountOnceTask"
 ------------------------------------------------------------------------------------------------------
-class("cDecoratorCountLimitTask", d_ms.d_decoratorCountTask.cDecoratorCountTask)
-_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountLimitTask", cDecoratorCountLimitTask)
-_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountLimitTask", "cDecoratorCountTask")
+class("cDecoratorCountOnceTask", d_ms.d_decoratorCountTask.cDecoratorCountTask)
+_G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountOnceTask", cDecoratorCountOnceTask)
+_G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountOnceTask", "cDecoratorCountTask")
 ------------------------------------------------------------------------------------------------------
-function cDecoratorCountLimitTask:__init()
-    self.m_bInited = false
+function cDecoratorCountOnceTask:__init()
+    self.m_bInited  = false
+    self.m_bRunOnce = false
 end
 
-function cDecoratorCountLimitTask:copyTo(target)
+function cDecoratorCountOnceTask:copyTo(target)
     d_ms.d_decoratorCountTask.cDecoratorCountTask.copyTo(self, target)
-    _G.BEHAVIAC_ASSERT(target:isDecoratorCountLimitTask(), "cDecoratorCountLimitTask:copyTo target:isDecoratorCountLimitTask")
+    _G.BEHAVIAC_ASSERT(target:isDecoratorCountOnceTask(), "cDecoratorCountOnceTask:copyTo target:isDecoratorCountOnceTask")
 
     target.m_bInited = self.m_bInited
 end
 
-function cDecoratorCountLimitTask:save(IONode)
+function cDecoratorCountOnceTask:save(IONode)
 end
 
-function cDecoratorCountLimitTask:load(IONode)
+function cDecoratorCountOnceTask:load(IONode)
 end
 
-function cDecoratorCountLimitTask:onEnter(obj)
+function cDecoratorCountOnceTask:onEnter(obj)
+    if self.m_bRunOnce then
+        return false
+    end
+
     if self.m_node:checkIfReInit(obj) then
         self.m_bInited = false
     end
@@ -57,6 +62,7 @@ function cDecoratorCountLimitTask:onEnter(obj)
         self.m_bInited = true
         local count = self:getCount(obj)
         self.m_n = count
+        _G.BEHAVIAC_ASSERT(self.m_n > 0, "cDecoratorCountOnceTask:onEnter false self.m_n > 0")
     end
 
     -- if self.m_n is -1, it is endless
@@ -64,15 +70,17 @@ function cDecoratorCountLimitTask:onEnter(obj)
         self.m_n = self.m_n - 1
         return true
     elseif self.m_n == 0 then
+        self.m_bRunOnce = true
         return false
     elseif self.m_n == -1 then
+        self.m_bRunOnce = true
         return true
     end
-    _G.BEHAVIAC_ASSERT(false, "cDecoratorCountLimitTask:onEnter false")
+    _G.BEHAVIAC_ASSERT(false, "cDecoratorCountOnceTask:onEnter false")
     return false
 end
 
-function cDecoratorCountLimitTask:decorate(status)
-    _G.BEHAVIAC_ASSERT(self.m_n >= 0 or self.m_n == -1, "cDecoratorCountLimitTask:decorate self.m_n >= 0 or self.m_n == -1")
+function cDecoratorCountOnceTask:decorate(status)
+    _G.BEHAVIAC_ASSERT(self.m_n >= 0 or self.m_n == -1, "cDecoratorCountOnceTask:decorate self.m_n >= 0 or self.m_n == -1")
     return status
 end
