@@ -27,10 +27,13 @@
 ## 第三方插件 [LuaXml](https://github.com/LuaDist/luaxml.git)
 	源码： LuaXML_lib.c
 
+## 增加插件 (plugin)
+    behaviacPlugin: 增加了 DecoratorCountOnce 和 DecoratorEveryTime工具支持
+
 ## 原生工具需要修改的地方
 	函数引用部分，这个暂时使用的是原是版本，工具修改之后需要同步修改behaviorCommon.lua中的解析接口(parseMethod,parseProperty)
 # 新增节点
 ## DecoratorCountOnce
 	节点包含Action需要执行的次数，当次数被执行完成之后，将不再执行该子节点
-## ecoratorEveryTime
+## DecoratorEveryTime
 	每隔多久执行一次节点Action
