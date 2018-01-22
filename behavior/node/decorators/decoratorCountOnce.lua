@@ -32,7 +32,7 @@ class("cDecoratorCountOnce", d_ms.d_decoratorCount.cDecoratorCount)
 _G.ADD_BEHAVIAC_DYNAMIC_TYPE("cDecoratorCountOnce", cDecoratorCountOnce)
 _G.BEHAVIAC_DECLARE_DYNAMIC_TYPE("cDecoratorCountOnce", "cDecoratorCount")
 ------------------------------------------------------------------------------------------------------
--- 执行的次数只会被执行一轮，执行过后将不再被执行
+-- 只会执行节n次(n:配置的次数)，执行一轮之后不再会被执行
 function cDecoratorCountOnce:__init()
 end
 
