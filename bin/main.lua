@@ -1,13 +1,11 @@
 package.path = package.path .. ";./?.lua;../?.lua;./lua/?.lua"
 local d_ms = require "ms"
 --------------------------------------------------------------------------------------
-
 local bt = d_ms.d_behaviorTreeMgr.loadBehaviorTree("test")
 local loopCount = 10
 local runTime   = 100
 local EBTStatus = d_ms.d_behaviorCommon.EBTStatus
 --------------------------------------------------------------------------------------
-
 class("cPlayer")
 
 function cPlayer:__init()
@@ -108,13 +106,13 @@ end
 
 --------------------------------------------------------------------------------------
 -- obj需要包含的接口
-function cPlayer:btexec()
+function cPlayer:btExec()
     if self.m_bActive then
-        local s = self:btexec_()
+        local s = self:btExec_()
 
         while self.m_referencetree and s == d_ms.d_behaviorCommon.EBTStatus.BT_RUNNING do
             self.m_referencetree = false
-            s = self:btexec_()
+            s = self:btExec_()
         end
         return s
     end
@@ -126,7 +124,7 @@ function cPlayer:_setCurrentTreeTask(value)
     self.m_currentBT = value 
 end
 
-function cPlayer:btexec_()
+function cPlayer:btExec_()
     if self.m_currentBT ~= nil then
         local pCurrent = self.m_currentBT
         local s = self.m_currentBT:exec(self)
@@ -181,8 +179,7 @@ end
 
 
 -- 这个可以优化下
-function cPlayer:_btsetcurrent(relativePath, triggerMode, bByEvent)
-
+function cPlayer:_btSetCurrent(relativePath, triggerMode, bByEvent)
     if self.m_currentBT then
         if triggerMode == d_ms.d_behaviorCommon.triggerMode.TM_Return then
             local item = {
@@ -231,23 +228,23 @@ function cPlayer:_btsetcurrent(relativePath, triggerMode, bByEvent)
 
     self:_setCurrentTreeTask(pTask)
 
-    print("_btsetcurrent  _btsetcurrent")
+    print("_btSetCurrent  _btSetCurrent")
 end
 
-function cPlayer:btsetcurrent(relativePath)
-    self:_btsetcurrent(relativePath, d_ms.d_behaviorCommon.triggerMode.TM_Transfer, false)
+function cPlayer:btSetCurrent(relativePath)
+    self:_btSetCurrent(relativePath, d_ms.d_behaviorCommon.triggerMode.TM_Transfer, false)
 end
 
 function cPlayer:btReferenceTree(relativePath)
     self.m_referencetree = true
-    self:_btsetcurrent(relativePath, d_ms.d_behaviorCommon.TM_Return, false);
+    self:_btSetCurrent(relativePath, d_ms.d_behaviorCommon.TM_Return, false);
 end
 
 function cPlayer:btEventTree(relativePath, triggerMode)
-    self:_btsetcurrent(relativePath, triggerMode, true)
+    self:_btSetCurrent(relativePath, triggerMode, true)
 end
 
-function cPlayer:btgetcurrent()
+function cPlayer:btGetCurrent()
     return self.m_currentBT
 end
 --------------------------------------------------------------------------------------
@@ -255,10 +252,12 @@ function cPlayer:attackTarget(skillID)
     print("cPlayer:attackTarget", skillID)
     return EBTStatus.BT_SUCCESS
 end
+
 function cPlayer:getBeAttackedCount()
     print("cPlayer:getBeAttackedCount")
     return 1
 end
+
 function cPlayer:getBeAttackedTime()
     print("cPlayer:getBeAttackedTime")
     return 100
@@ -268,6 +267,7 @@ function cPlayer:getCurrentHpPercent()
     print("cPlayer:getCurrentHpPercent")
     return math.random(10000)/10000
 end
+
 -- behaviac::EBTStatus
 function cPlayer:moveToPos(posX, posY, posZ)
     local t = math.random(100)
@@ -280,6 +280,7 @@ function cPlayer:moveToPos(posX, posY, posZ)
         return EBTStatus.BT_FAILURE
     end 
 end
+
 function cPlayer:moveToTarget(isRandom, distanceX, distanceY)
     local t = math.random(100)
     if t < 30 then
@@ -293,6 +294,7 @@ function cPlayer:moveToTarget(isRandom, distanceX, distanceY)
         return EBTStatus.BT_FAILURE
     end 
 end
+
 function cPlayer:randomSearchTargetsFromHateList(targetCount)
     local t = math.random(100)
     if math.random(100) < 50 then
@@ -303,6 +305,7 @@ function cPlayer:randomSearchTargetsFromHateList(targetCount)
         return EBTStatus.BT_SUCCESS
     end
 end
+
 function cPlayer:searchTargetFromHateList(distance, isFirst)
     local t = math.random(100)
     if math.random(100) < 50 then
@@ -313,6 +316,8 @@ function cPlayer:searchTargetFromHateList(distance, isFirst)
         return EBTStatus.BT_SUCCESS
     end
 end
+
+
 function cPlayer:randomSearchTargetsByDistance(distance, targetType, targetCount, isFriend)
     local t = math.random(100)
     if math.random(100) < 50 then
@@ -323,6 +328,7 @@ function cPlayer:randomSearchTargetsByDistance(distance, targetType, targetCount
         return EBTStatus.BT_SUCCESS
     end
 end
+
 function cPlayer:searchTargetByDistance(distance, targetType, isNearest, isFriend)
     local t = math.random(100)
     if math.random(100) < 50 then
@@ -333,6 +339,8 @@ function cPlayer:searchTargetByDistance(distance, targetType, isNearest, isFrien
         return EBTStatus.BT_SUCCESS
     end
 end
+
+
 function cPlayer:searchTargetByHpInterval(distance, targetType, isMax, isFriend)
     local t = math.random(100)
     if math.random(100) < 50 then
@@ -343,6 +351,7 @@ function cPlayer:searchTargetByHpInterval(distance, targetType, isMax, isFriend)
         return EBTStatus.BT_SUCCESS
     end
 end
+
 function cPlayer:searchTargetsByHpInterval(distance, targetType, maxPercent, minPercent, targetCount, isFriend)
     local t = math.random(100)
     if math.random(100) < 50 then
@@ -353,24 +362,40 @@ function cPlayer:searchTargetsByHpInterval(distance, targetType, maxPercent, min
         return EBTStatus.BT_SUCCESS
     end
 end
+
+local a = 0
+function cPlayer:attackTarget(t)
+    if math.random(200) > 50 then
+        print("cPlayer:attackTarget EBTStatus.BT_RUNNING", t)
+        return EBTStatus.BT_RUNNING
+    else
+        a = a + 1
+        print("cPlayer:attackTarget EBTStatus.BT_SUCCESS", t, a)
+        return EBTStatus.BT_SUCCESS
+    end
+end
 --------------------------------------------------------------------------------------
 function cPlayer:isActive()
     return self.m_bActive
 end
 
 math.randomseed(os.time())
+
 local player = cPlayer.new()
 
 local beginTime = os.time()
+runTime = 50
 while os.time() - beginTime <= runTime do
-    player:btexec()
+    player:btExec()
 end
+
 
 -- for i= 1, 50 do
 --     print('-----------------------start-----------------------', i)
 --     player:btExec()
 --     print('end', '----------------------------------------------', i)
 -- end
+
 function main_entrance(con, id, data, len, ses, cid, time)
     return 1
 end
