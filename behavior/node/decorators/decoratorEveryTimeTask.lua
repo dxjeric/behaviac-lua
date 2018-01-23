@@ -80,7 +80,11 @@ end
 
 function cDecoratorEveryTimeTask:onEnter(obj)
     if self.m_bInited then
+        if self.m_status == EBTStatus.BT_RUNNING then
+            return true
+        else
         return self:checkTime(obj)
+        end
     end
 
     if d_ms.d_decoratorTimeTask.cDecoratorTimeTask.onEnter(self, obj) then
@@ -92,8 +96,8 @@ function cDecoratorEveryTimeTask:onEnter(obj)
 end
 
 function cDecoratorEveryTimeTask:getTime(obj)
-    _G.BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorEveryTime(), "cDecoratorEveryTimeTask:getTime self:getNode():isDecoratorEveryTime")
-    return self.getNode():getTime(obj)
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorEveryTime(), "cDecoratorEveryTimeTask:getTime self:getNode():isDecoratorEveryTime")
+    return self:getNode():getTime(obj)
 end
 
 function cDecoratorEveryTimeTask:getIntTime(obj)

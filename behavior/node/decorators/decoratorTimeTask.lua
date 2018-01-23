@@ -97,8 +97,8 @@ function cDecoratorTimeTask:decorate(status)
 end
 
 function cDecoratorTimeTask:getTime(obj)
-    _G.BEHAVIAC_ASSERT(self.getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
-    return self.getNode():getTime(obj)
+    _G.BEHAVIAC_ASSERT(self:getNode() and self:getNode():isDecoratorTime(), "cDecoratorTimeTask:getTime self:getNode():isDecoratorTime")
+    return self:getNode():getTime(obj)
 end
 
 function cDecoratorTimeTask:getIntTime(obj)

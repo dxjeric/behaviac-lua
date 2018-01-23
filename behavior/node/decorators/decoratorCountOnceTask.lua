@@ -54,6 +54,9 @@ function cDecoratorCountOnceTask:onEnter(obj)
         return false
     end
 
+    if self.m_status == EBTStatus.BT_RUNNING then
+        return true
+    end
     if self.m_node:checkIfReInit(obj) then
         self.m_bInited = false
     end
