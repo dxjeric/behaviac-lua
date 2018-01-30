@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: selectorloopTest.xml-->
+<behavior name="selectorloopTest" agenttype="Player" version="5">
+  <node class="SelectorLoop" id="0">
+    <property ResetChildren="false" />
+    <node class="WithPrecondition" id="1">
+      <node class="Condition" id="3">
+        <property Operator="Equal" />
+        <property Opl="float Self.Player::MoveSpeed" />
+        <property Opr="const float 3" />
+      </node>
+      <node class="Action" id="4">
+        <property Method="Self.Player::MoveAhead(float Self.Player::MoveSpeed)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="WithPrecondition" id="2">
+      <node class="Condition" id="6">
+        <property Operator="Equal" />
+        <property Opl="float Self.Player::MoveSpeed" />
+        <property Opr="const float 4" />
+      </node>
+      <node class="Action" id="5">
+        <property Method="Self.Player::MoveBack(float Self.Player::MoveSpeed)" />
+        <property ResultOption="BT_RUNNING" />
+      </node>
+    </node>
+  </node>
+</behavior>

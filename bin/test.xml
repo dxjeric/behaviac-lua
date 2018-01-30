@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: test.xml-->
+<behavior name="test" agenttype="Monster" version="5">
+  <node class="DecoratorCountOnce" id="13">
+    <property DecorateWhenChildEnds="false" />
+    <property Count="const int 10" />
+    <node class="Action" id="16">
+      <property Method="Self.behaviorMonster::attackTarget(20100001)" />
+      <property ResultOption="BT_INVALID" />
+    </node>
+  </node>
+</behavior>

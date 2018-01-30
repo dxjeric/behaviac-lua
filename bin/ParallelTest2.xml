@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: ParallelTest2.xml-->
+<behavior name="ParallelTest2" agenttype="Player" version="5">
+  <node class="Sequence" id="1">
+    <node class="Parallel" id="0">
+      <property ChildFinishPolicy="CHILDFINISH_LOOP" />
+      <property ExitPolicy="EXIT_ABORT_RUNNINGSIBLINGS" />
+      <property FailurePolicy="FAIL_ON_ONE" />
+      <property SuccessPolicy="SUCCEED_ON_ALL" />
+      <node class="Action" id="4">
+        <property Method="Self.Player::MoveAhead(1)" />
+        <property ResultOption="BT_FAILURE" />
+      </node>
+      <node class="Action" id="5">
+        <property Method="Self.Player::MoveAhead(2)" />
+        <property ResultOption="BT_FAILURE" />
+      </node>
+      <node class="Action" id="6">
+        <property Method="Self.Player::MoveAhead(3)" />
+        <property ResultOption="BT_SUCCESS" />
+      </node>
+    </node>
+    <node class="Action" id="2">
+      <property Method="Self.Player::MoveAhead(111111)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+  </node>
+</behavior>

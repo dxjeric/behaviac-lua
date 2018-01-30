@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: waitTime.xml-->
+<behavior name="waitTime" agenttype="Monster" version="5">
+  <node class="DecoratorTime" id="0">
+    <property DecorateWhenChildEnds="false" />
+    <property Time="const float 10" />
+    <node class="Action" id="1">
+      <property Method="Self.Monster::Select1(&quot;123456a&quot;)" />
+      <property ResultOption="BT_SUCCESS" />
+    </node>
+  </node>
+</behavior>

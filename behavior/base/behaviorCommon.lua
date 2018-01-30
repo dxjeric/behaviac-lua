@@ -651,6 +651,7 @@ basicTypesFun.String            = function(str) return str end
 basicTypesFun["std::string"]    = function(str) return str end
 basicTypesFun["char*"]          = function(str) return str end
 basicTypesFun["const char*"]    = function(str) return str end
+basicTypesFun["behaviac::EBTStatus"] = function(str) return EBTStatus[str] end
 
 function getProperty(typeName, valueStr)
     local isArray = false
