@@ -19,6 +19,7 @@ local require       = require
 local getfenv       = getfenv
 local tostring      = tostring
 local tonumber      = tonumber
+local loadstring    = loadstring
 local setmetatable  = setmetatable
 local getmetatable  = getmetatable
 --------------------------------------------------------------------------------------------------------------
@@ -336,8 +337,8 @@ local function splitTokens(str)
     if string.byte(p[len], -1, -1) == constCharByteRightBracket then
         local b = string.find(p[len], '%[')
         assert(b, "splitTokens string.find(p[len], '%[')")
-        p[len] = string.sub(v, 1, b-1)
-        p[len+1] = string.sub(v, b+1, -1)
+        p[len] = string.sub(p[len], 1, b-1)
+        p[len+1] = string.sub(p[len+1], b+1, -1)
     end
     return p
 end
@@ -376,7 +377,7 @@ function BehaviorParseFactory.parseMethod(methodInfo)
         end
         data.valueIsFunction = true
     elseif intanceName == "_G" then
-        data.value = load("return " .. methodName)()
+        data.value = loadstring("return " .. methodName)()
         data.valueIsFunction = true
     else
         BEHAVIAC_ASSERT(false, "BehaviorParseFactory.parseMethod %s intanceName error", methodInfo)
@@ -452,7 +453,7 @@ function BehaviorParseFactory.parseProperty(propertyStr)
             data.valueIsFunction = true
         elseif values[1] == "_G" then
             local fs = string.sub(propStr, 3)
-            data.value = load("return " .. fs)
+            data.value = loadstring("return " .. fs)()
             data.valueIsFunction = true
         end
 
@@ -644,7 +645,7 @@ basicTypesFun.ulong     = tonumber
 basicTypesFun.ullong    = tonumber
 basicTypesFun.Single    = tonumber
 basicTypesFun.number    = tonumber
-basicTypesFun.table     = function(str) return load("return " .. str)() end
+basicTypesFun.table     = function(str) return loadstring("return " .. str)() end
 
 basicTypesFun.string            = function(str) return str end
 basicTypesFun.String            = function(str) return str end

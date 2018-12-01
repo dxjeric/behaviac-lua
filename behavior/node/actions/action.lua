@@ -89,7 +89,7 @@ end
 -- 参数2: 子节点状态
 -- 返回值: 返回 EBTStatus
 -- Execute(Agent* pAgent)method hava be change to Execute(Agent* pAgent, EBTStatus childStatus)
-function cAction:executeByInputChildStatus(obj, childSatus)
+function cAction:executeByInputChildStatus(obj, childStatus)
     local result = EBTStatus.BT_SUCCESS
     if self.m_method then
         if self.m_resultOption ~= EBTStatus.BT_INVALID then
