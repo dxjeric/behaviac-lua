@@ -241,6 +241,7 @@ constCharByteDoubleQuote    = string.byte('\"')
 constCharByteLeftBracket    = string.byte('[')
 constCharByteRightBracket   = string.byte(']')
 constCharByteLeftBraces     = string.byte('{')
+constCharByteRightBraces    = string.byte('}')
 
 local paramMt = {}
 function paramMt:run(obj)
@@ -334,13 +335,19 @@ local function splitTokens(str)
     local p = d_ms.d_str.split(str, ' ')
     local len = #p
 
-    if string.byte(p[len], -1, -1) == constCharByteRightBracket then
-        local b = string.find(p[len], '%[')
-        assert(b, "splitTokens string.find(p[len], '%[')")
-        p[len] = string.sub(p[len], 1, b-1)
-        p[len+1] = string.sub(p[len+1], b+1, -1)
+    -- 数组处理
+    local lastChar = string.byte(p[len], -1, -1)
+    if lastChar == constCharByteRightBracket or  lastChar == constCharByteRightBraces then
+        local b = string.find(p[1], '[%[%{]')       -- 匹配 [
+        assert(b, "splitTokens string.find(p[len], ['%]%}']) not find { or [ in p[1]")
+        -- 数组只能是明确的值，不能是表达式或者函数
+        p[1] = string.sub(p[1], b+1, -1)    -- 删除[
+        p[len] = string.sub(p[len], 1, -2)  -- 删除]
+        table.insert(ret, str)
+        return ret
+    else
+        return p
     end
-    return p
 end
 
 function BehaviorParseFactory.unpackParams(obj, params)
